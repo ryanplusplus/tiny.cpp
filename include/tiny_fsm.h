@@ -18,7 +18,7 @@
 
 namespace tiny
 {
-  enum FsmSignal
+  enum FsmSignal : std::uint8_t
   {
     entry,
     exit,
