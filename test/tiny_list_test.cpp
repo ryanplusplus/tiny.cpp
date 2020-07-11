@@ -162,7 +162,7 @@ TEST(tiny_list, should_indicate_whether_list_contains_a_given_node)
   list.push_back(&node_3);
   CHECK(true == list.contains(&node_1));
   CHECK(true == list.contains(&node_2));
-  CHECK(true == list.contains(&node_3))
+  CHECK(true == list.contains(&node_3));
 }
 
 TEST(tiny_list, should_give_the_index_of_a_specified_node)
