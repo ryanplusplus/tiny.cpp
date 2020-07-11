@@ -13,41 +13,47 @@
 #ifndef tiny_fsm_h
 #define tiny_fsm_h
 
-#include <stdint.h>
+#include <cstddef>
+#include <cstdint>
 
-enum {
-  tiny_fsm_signal_entry,
-  tiny_fsm_signal_exit,
-  tiny_fsm_signal_user_start
-};
-typedef uint8_t tiny_fsm_signal_t;
+namespace tiny
+{
+  enum FsmSignal
+  {
+    entry,
+    exit,
+    user_start
+  };
 
-struct tiny_fsm_t;
+  template <typename T>
+  class Fsm
+  {
+   public:
+    typedef void (*State)(T* context, uint8_t signal, const void* data);
 
-typedef void (*tiny_fsm_state_t)(
-  struct tiny_fsm_t* fsm,
-  tiny_fsm_signal_t signal,
-  const void* data);
+   public:
+    Fsm(State initial, T* context)
+      : current(initial), context(context)
+    {
+      this->current(context, FsmSignal::entry, NULL);
+    };
 
-typedef struct tiny_fsm_t {
-  tiny_fsm_state_t current;
-} tiny_fsm_t;
+    auto send_signal(uint8_t signal, const void* data) -> void
+    {
+      this->current(this->context, signal, data);
+    }
 
-/*!
- * Initializes an FSM with the specified initial state. Sends the entry signal to the
- * initial state.
- */
-void tiny_fsm_init(tiny_fsm_t* self, tiny_fsm_state_t initial);
+    auto transition(State next) -> void
+    {
+      this->current(this->context, FsmSignal::exit, NULL);
+      this->current = next;
+      this->current(this->context, FsmSignal::entry, NULL);
+    }
 
-/*!
- * Sends a signal and optional signal data to the current state.
- */
-void tiny_fsm_send_signal(tiny_fsm_t* self, tiny_fsm_signal_t signal, const void* data);
-
-/*!
- * Transitions the FSM to the target state. Sends exit to the current state, changes
- * state, then sends entry to the target state.
- */
-void tiny_fsm_transition(tiny_fsm_t* self, tiny_fsm_state_t target);
+   private:
+    State current;
+    T* context;
+  };
+}
 
 #endif
