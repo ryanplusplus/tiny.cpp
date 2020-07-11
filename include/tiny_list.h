@@ -17,68 +17,97 @@
 #ifndef tiny_list_h
 #define tiny_list_h
 
-#include <stdbool.h>
-#include <stdint.h>
+#include <cstdbool>
+#include <cstdint>
 
-typedef struct tiny_list_node_t {
-  struct tiny_list_node_t* next;
-} tiny_list_node_t;
+namespace tiny
+{
+  class List
+  {
+   public:
+    class Node
+    {
+      friend class List;
 
-typedef struct {
-  tiny_list_node_t head;
-} tiny_list_t;
+     public:
+      bool operator==(const Node* other)
+      {
+        return this == other;
+      }
 
-typedef bool (*tiny_list_for_each_t)(tiny_list_node_t* node, uint16_t index, void* context);
+     private:
+      Node* next;
+    };
 
-/*!
- * Initializes the list.
- */
-void tiny_list_init(tiny_list_t* self);
+    class Iterator;
 
-/*!
- * Adds the node to the front of the list.
- */
-void tiny_list_push_front(tiny_list_t* self, tiny_list_node_t* node);
+   public:
+    List();
+    auto push_front(Node* node) -> void;
+    auto push_back(Node* node) -> void;
+    auto pop_front() -> Node*;
+    auto pop_back() -> Node*;
+    auto remove(Node* node) -> void;
+    auto count() -> std::uint16_t;
+    auto contains(Node* node) -> bool;
+    auto index_of(Node* node) -> uint16_t;
 
-/*!
- * Adds the node to the back of the list.
- */
-void tiny_list_push_back(tiny_list_t* self, tiny_list_node_t* node);
+    auto begin() const -> Iterator
+    {
+      return Iterator::begin(*this);
+    }
 
-/*!
- * Removes the node from the front of the list. Returns the node.
- */
-tiny_list_node_t* tiny_list_pop_front(tiny_list_t* self);
+    auto end() const -> Iterator
+    {
+      return Iterator::end(*this);
+    }
 
-/*!
- * Removes the node at the back of the list. Returns the node.
- */
-tiny_list_node_t* tiny_list_pop_back(tiny_list_t* self);
+   private:
+    Node head;
 
-/*!
- * Removes a specified node if present in the list.
- */
-void tiny_list_remove(tiny_list_t* self, tiny_list_node_t* node);
+   public:
+    class Iterator
+    {
+     public:
+      Iterator(const Node* current)
+        : current(current)
+      {
+      }
 
-/*!
- * Returns the number of nodes contained in the list.
- */
-uint16_t tiny_list_count(tiny_list_t* self);
+      static auto begin(const List& list) -> Iterator
+      {
+        return Iterator(list.head.next);
+      }
 
-/*!
- * Returns true if the specified node is in the list and false otherwise.
- */
-bool tiny_list_contains(tiny_list_t* self, tiny_list_node_t* node);
+      static auto end(const List& list) -> Iterator
+      {
+        return Iterator(&list.head);
+      }
 
-/*!
- * Gives the index of a given node in the list.
- */
-uint16_t tiny_list_index_of(tiny_list_t* self, tiny_list_node_t* node);
+      bool operator==(const Iterator& other) const
+      {
+        return this->current == other.current;
+      }
 
-/*!
- * Invokes the provided callback for each node in the list.
- * Traverses from head to tail and stops iteration if the callback returns false.
- */
-void tiny_list_for_each(tiny_list_t* self, tiny_list_for_each_t callback, void* context);
+      bool operator!=(const Iterator& other) const
+      {
+        return !operator==(other);
+      }
+
+      void operator++()
+      {
+        this->current = this->current->next;
+      }
+
+      const Node* operator*() const
+      {
+        return this->current;
+      }
+
+     private:
+      const Node* current;
+    };
+  };
+}
 
 #endif
