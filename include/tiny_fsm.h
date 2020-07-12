@@ -25,15 +25,15 @@ namespace tiny
     user_start
   };
 
-  template <typename T>
   class Fsm
   {
    public:
-    typedef void (*State)(T* context, uint8_t signal, const void* data);
+    typedef void (*State)(void* context, uint8_t signal, const void* data);
 
    public:
-    Fsm(State initial, T* context)
-      : current(initial), context(context)
+    template <typename T>
+    Fsm(void (*initial)(T* context, uint8_t signal, const void* data), T* context)
+      : current(reinterpret_cast<State>(initial)), context(reinterpret_cast<void*>(context))
     {
       this->current(context, FsmSignal::entry, NULL);
     };
@@ -43,16 +43,17 @@ namespace tiny
       this->current(this->context, signal, data);
     }
 
-    auto transition(State next) -> void
+    template <typename T>
+    auto transition(void (*next)(T* context, uint8_t signal, const void* data)) -> void
     {
       this->current(this->context, FsmSignal::exit, NULL);
-      this->current = next;
+      this->current = reinterpret_cast<State>(next);
       this->current(this->context, FsmSignal::entry, NULL);
     }
 
    private:
     State current;
-    T* context;
+    void* context;
   };
 }
 

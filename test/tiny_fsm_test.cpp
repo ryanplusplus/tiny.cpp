@@ -15,7 +15,9 @@ using namespace std;
 
 TEST_GROUP(tiny_fsm)
 {
-  static void dummy(uint8_t * context, uint8_t signal, const void* data)
+  typedef void (*State)(uint8_t*, uint8_t, const void*);
+
+  static void state_dummy(uint8_t * context, uint8_t signal, const void* data)
   {
     (void)context;
     (void)signal;
@@ -23,7 +25,7 @@ TEST_GROUP(tiny_fsm)
   };
 
   uint8_t context;
-  Fsm<uint8_t> fsm{dummy, &context};
+  Fsm fsm{state_dummy, &context};
 
   enum
   {
@@ -54,32 +56,32 @@ TEST_GROUP(tiny_fsm)
       .withParameter("data", data);
   }
 
-  void signal_should_be_sent_to_state(Fsm<uint8_t>::State state, uint8_t signal, const void* data)
+  void signal_should_be_sent_to_state(State state, uint8_t signal, const void* data)
   {
-    (state == state_a ? mock().expectOneCall("state_a") : mock().expectOneCall("state_b"))
+    ((state == state_a) ? mock().expectOneCall("state_a") : mock().expectOneCall("state_b"))
       .withParameter("context", &context)
       .withParameter("signal", (uint8_t)signal)
       .withParameter("data", data);
   }
 
-  void when_the_fsm_is_initialized_with_state(Fsm<uint8_t>::State state)
+  void when_the_fsm_is_initialized_with_state(State state)
   {
-    fsm = Fsm<uint8_t>{state, &context};
+    fsm = Fsm(state, &context);
   }
 
-  void given_that_the_fsm_has_been_initialized_with_state(Fsm<uint8_t>::State state)
+  void given_that_the_fsm_has_been_initialized_with_state(State state)
   {
     mock().disable();
     when_the_fsm_is_initialized_with_state(state);
     mock().enable();
   }
 
-  void when_the_fsm_is_transitioned_to(Fsm<uint8_t>::State state)
+  void when_the_fsm_is_transitioned_to(State state)
   {
     fsm.transition(state);
   }
 
-  void given_that_the_fsm_has_been_transitioned_to(Fsm<uint8_t>::State state)
+  void given_that_the_fsm_has_been_transitioned_to(State state)
   {
     mock().disable();
     when_the_fsm_is_transitioned_to(state);

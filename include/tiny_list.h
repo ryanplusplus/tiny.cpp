@@ -3,14 +3,14 @@
  * @brief Linked list that contains nodes allocated by clients.
  *
  * Nodes can contain arbitrary data by defining a type that contains
- * a tiny_list_node_t:
+ * a tiny::List::Node:
  *
  * typedef struct client_node_t {
- *   tiny_list_node_t node;
+ *   tiny::List::Node;
  *   int data;
  * }
  *
- * This type must be cast to a tiny_list_node_t to be added but can
+ * This type must be cast to a tiny::List::Node to be added but can
  * be cast back by the client so that the data can be accessed.
  */
 
