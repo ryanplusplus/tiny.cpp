@@ -4,13 +4,13 @@
  */
 
 #include <cstdint>
-#include "tiny_single_subscriber_event.h"
+#include "tiny_SingleSubscriberEvent.h"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
 
 using namespace tiny;
 
-TEST_GROUP(tiny_single_subscriber_event)
+TEST_GROUP(tiny_SingleSubscriberEvent)
 {
   uint16_t context;
   SingleSubscriberEvent<uint8_t> event;
@@ -25,12 +25,12 @@ TEST_GROUP(tiny_single_subscriber_event)
   }
 };
 
-TEST(tiny_single_subscriber_event, should_do_nothing_when_published_with_no_subscribers)
+TEST(tiny_SingleSubscriberEvent, should_do_nothing_when_published_with_no_subscribers)
 {
   event.publish((const uint8_t*)0x1234);
 }
 
-TEST(tiny_single_subscriber_event, should_publish_to_all_subscribers)
+TEST(tiny_SingleSubscriberEvent, should_publish_to_all_subscribers)
 {
   event.subscribe(&subscription);
 
@@ -41,7 +41,7 @@ TEST(tiny_single_subscriber_event, should_publish_to_all_subscribers)
   event.publish((const uint8_t*)0x1234);
 }
 
-TEST(tiny_single_subscriber_event, should_not_publish_to_subscribers_that_have_unsubscribed)
+TEST(tiny_SingleSubscriberEvent, should_not_publish_to_subscribers_that_have_unsubscribed)
 {
   event.subscribe(&subscription);
   event.unsubscribe(&subscription);

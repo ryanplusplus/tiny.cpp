@@ -7,8 +7,8 @@
 #define tiny_timer_h
 
 #include <cstdint>
-#include "i_tiny_time_source.h"
-#include "tiny_list.h"
+#include "tiny_ITimeSource.h"
+#include "tiny_List.h"
 
 #include <iostream>
 
@@ -40,7 +40,7 @@ namespace tiny
   class TimerGroup
   {
    public:
-    TimerGroup(I_TimeSource* time_source)
+    TimerGroup(ITimeSource* time_source)
       : time_source(time_source), timers(), last_ticks(time_source->ticks())
     {
     }
@@ -104,9 +104,9 @@ namespace tiny
     }
 
    private:
-    I_TimeSource* time_source;
+    ITimeSource* time_source;
     List timers;
-    I_TimeSource::TickCount last_ticks;
+    ITimeSource::TickCount last_ticks;
   };
 }
 

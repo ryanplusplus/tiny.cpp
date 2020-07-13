@@ -4,13 +4,13 @@
  */
 
 #include <cstdint>
-#include "tiny_event.h"
+#include "tiny_Event.h"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
 
 using namespace tiny;
 
-TEST_GROUP(tiny_event)
+TEST_GROUP(tiny_Event)
 {
   Event<uint8_t> event;
 
@@ -37,12 +37,12 @@ TEST_GROUP(tiny_event)
   }
 };
 
-TEST(tiny_event, should_do_nothing_when_published_with_no_subscribers)
+TEST(tiny_Event, should_do_nothing_when_published_with_no_subscribers)
 {
   event.publish((const uint8_t*)0x1234);
 }
 
-TEST(tiny_event, should_publish_to_all_subscribers)
+TEST(tiny_Event, should_publish_to_all_subscribers)
 {
   event.subscribe(&subscription_1);
   event.subscribe(&subscription_2);
@@ -58,7 +58,7 @@ TEST(tiny_event, should_publish_to_all_subscribers)
   event.publish((const uint8_t*)0x1234);
 }
 
-TEST(tiny_event, should_not_publish_to_subscribers_that_have_unsubscribed)
+TEST(tiny_Event, should_not_publish_to_subscribers_that_have_unsubscribed)
 {
   event.subscribe(&subscription_1);
   event.subscribe(&subscription_2);
@@ -71,7 +71,7 @@ TEST(tiny_event, should_not_publish_to_subscribers_that_have_unsubscribed)
   event.publish((const uint8_t*)0x5678);
 }
 
-TEST(tiny_event, should_allow_subscribers_to_resubscribe)
+TEST(tiny_Event, should_allow_subscribers_to_resubscribe)
 {
   event.subscribe(&subscription_1);
   event.subscribe(&subscription_2);

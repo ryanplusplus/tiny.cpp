@@ -7,13 +7,13 @@
 #ifndef tiny_event_h
 #define tiny_event_h
 
-#include "i_tiny_event.h"
-#include "tiny_list.h"
+#include "tiny_IEvent.h"
+#include "tiny_List.h"
 
 namespace tiny
 {
   template <typename Args>
-  class Event : public I_Event<Args>
+  class Event : public IEvent<Args>
   {
    public:
     Event()

@@ -3,7 +3,7 @@
  * @brief
  */
 
-#include "tiny_crc16.h"
+#include "tiny_Crc16.h"
 
 auto tiny::Crc16::calculate(uint16_t seed, uint8_t byte) -> uint16_t
 {

@@ -9,12 +9,12 @@
 #define tiny_single_subscriber_event_h
 
 #include <cstddef>
-#include "i_tiny_event.h"
+#include "tiny_IEvent.h"
 
 namespace tiny
 {
   template <typename Args>
-  class SingleSubscriberEvent : public I_Event<Args>
+  class SingleSubscriberEvent : public IEvent<Args>
   {
    public:
     SingleSubscriberEvent()

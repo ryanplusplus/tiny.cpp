@@ -7,7 +7,7 @@
 #ifndef tiny_event_subscription_h
 #define tiny_event_subscription_h
 
-#include "tiny_list.h"
+#include "tiny_List.h"
 
 namespace tiny
 {

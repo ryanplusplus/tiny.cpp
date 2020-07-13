@@ -3,7 +3,7 @@
  * @brief
  */
 
-#include "tiny_fsm.h"
+#include "tiny_Fsm.h"
 
 auto tiny::Fsm::_transition(State next) -> void
 {

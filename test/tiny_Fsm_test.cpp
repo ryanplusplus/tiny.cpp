@@ -4,7 +4,7 @@
  */
 
 #include <cstdint>
-#include "tiny_fsm.h"
+#include "tiny_Fsm.h"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
 
@@ -13,7 +13,7 @@ using namespace std;
 
 #define then
 
-TEST_GROUP(tiny_fsm)
+TEST_GROUP(tiny_Fsm)
 {
   typedef void (*State)(uint8_t*, uint8_t, const void*);
 
@@ -94,13 +94,13 @@ TEST_GROUP(tiny_fsm)
   }
 };
 
-TEST(tiny_fsm, should_send_entry_to_the_initial_state)
+TEST(tiny_Fsm, should_send_entry_to_the_initial_state)
 {
   signal_should_be_sent_to_state(state_a, FsmSignal::entry, nullptr);
   when_the_fsm_is_initialized_with_state(state_a);
 }
 
-TEST(tiny_fsm, should_send_exit_to_current_state_then_entry_to_new_state_during_transition)
+TEST(tiny_Fsm, should_send_exit_to_current_state_then_entry_to_new_state_during_transition)
 {
   given_that_the_fsm_has_been_initialized_with_state(state_a);
 
@@ -109,7 +109,7 @@ TEST(tiny_fsm, should_send_exit_to_current_state_then_entry_to_new_state_during_
   when_the_fsm_is_transitioned_to(state_b);
 }
 
-TEST(tiny_fsm, should_send_signals_to_the_current_state)
+TEST(tiny_Fsm, should_send_signals_to_the_current_state)
 {
   given_that_the_fsm_has_been_initialized_with_state(state_a);
   signal_should_be_sent_to_state(state_a, signal_1, (const void*)0x1234);

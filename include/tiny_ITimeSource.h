@@ -12,7 +12,7 @@
 
 namespace tiny
 {
-  class I_TimeSource
+  class ITimeSource
   {
    public:
     typedef uint16_t TickCount;

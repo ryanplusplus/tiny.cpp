@@ -4,13 +4,13 @@
  */
 
 #include <cstdint>
-#include "tiny_event_subscription.h"
+#include "tiny_EventSubscription.h"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
 
 using namespace tiny;
 
-TEST_GROUP(tiny_event_subscription)
+TEST_GROUP(tiny_EventSubscription)
 {
   uint8_t context;
   EventSubscription<uint16_t> subscription{&context, callback};
@@ -24,7 +24,7 @@ TEST_GROUP(tiny_event_subscription)
   }
 };
 
-TEST(tiny_event_subscription, should_invoke_callback_when_published)
+TEST(tiny_EventSubscription, should_invoke_callback_when_published)
 {
   mock()
     .expectOneCall("callback")

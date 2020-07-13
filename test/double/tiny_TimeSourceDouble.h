@@ -6,35 +6,35 @@
 #ifndef tiny_time_source_double_h
 #define tiny_time_source_double_h
 
-#include "i_tiny_time_source.h"
+#include "tiny_ITimeSource.h"
 
 namespace tiny
 {
-  class TimeSourceTestDouble : public I_TimeSource
+  class TimeSourceDouble : public ITimeSource
   {
    public:
-    TimeSourceTestDouble()
+    TimeSourceDouble()
       : _ticks()
     {
     }
 
-    auto ticks() -> I_TimeSource::TickCount
+    auto ticks() -> ITimeSource::TickCount
     {
       return this->_ticks;
     }
 
-    auto set_ticks(I_TimeSource::TickCount ticks) -> void
+    auto set_ticks(ITimeSource::TickCount ticks) -> void
     {
       this->_ticks = ticks;
     }
 
-    auto tick(I_TimeSource::TickCount ticks = 1) -> void
+    auto tick(ITimeSource::TickCount ticks = 1) -> void
     {
       this->_ticks += ticks;
     }
 
    private:
-    I_TimeSource::TickCount _ticks;
+    ITimeSource::TickCount _ticks;
   };
 }
 
