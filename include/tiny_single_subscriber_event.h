@@ -8,21 +8,44 @@
 #ifndef tiny_single_subscriber_event_h
 #define tiny_single_subscriber_event_h
 
+#include <cstddef>
 #include "i_tiny_event.h"
 
-typedef struct {
-  i_tiny_event_t interface;
-  tiny_event_subscription_t* subscriber;
-} tiny_single_subscriber_event_t;
+namespace tiny
+{
+  template <typename Args>
+  class SingleSubscriberEvent : public I_Event<Args>
+  {
+   public:
+    SingleSubscriberEvent()
+      : subscription()
+    {
+    }
 
-/*!
- * Initializes the event.
- */
-void tiny_single_subscriber_event_init(tiny_single_subscriber_event_t* self);
+    auto publish(const Args* args)
+    {
+      if(this->subscription)
+      {
+        this->subscription->publish(args);
+      }
+    }
 
-/*!
- * Publishes the event with the given arguments.
- */
-void tiny_single_subscriber_event_publish(tiny_single_subscriber_event_t* self, const void* args);
+    auto subscribe(EventSubscription<Args>* subscription) -> void
+    {
+      this->subscription = subscription;
+    }
+
+    auto unsubscribe(EventSubscription<Args>* subscription) -> void
+    {
+      if(this->subscription == subscription)
+      {
+        this->subscription = NULL;
+      }
+    }
+
+   private:
+    EventSubscription<Args>* subscription;
+  };
+}
 
 #endif

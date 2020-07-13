@@ -9,27 +9,34 @@
 
 #include "tiny_list.h"
 
-typedef void (*tiny_event_subscription_callback_t)(void* context, const void* args);
+namespace tiny
+{
+  template <typename Args>
+  class EventSubscription
+  {
+   public:
+    typedef void (*Callback)(void* context, const Args* args);
 
-typedef struct {
-  tiny_list_node_t node;
-  void* context;
-  tiny_event_subscription_callback_t callback;
-} tiny_event_subscription_t;
+    EventSubscription() = delete;
 
-/*!
- * Initializes an event subscription;
- */
-void tiny_event_subscription_init(
-  tiny_event_subscription_t* self,
-  void* context,
-  tiny_event_subscription_callback_t callback);
+    template <typename Context>
+    EventSubscription(Context* context, void (*callback)(Context*, const Args*))
+      : node(),
+        context(reinterpret_cast<void*>(context)),
+        callback(reinterpret_cast<Callback>(callback))
+    {
+    }
 
-/*!
- * Publishes to the event subscriber.
- */
-void tiny_event_subscription_publish(
-  tiny_event_subscription_t* self,
-  const void* args);
+    auto publish(const Args* args) -> void
+    {
+      this->callback(this->context, args);
+    }
+
+   private:
+    List::Node node;
+    void* context;
+    Callback callback;
+  };
+}
 
 #endif
