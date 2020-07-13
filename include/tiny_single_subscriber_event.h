@@ -22,7 +22,7 @@ namespace tiny
     {
     }
 
-    auto publish(const Args* args)
+    auto publish(const Args* args) const -> void
     {
       if(this->subscription)
       {

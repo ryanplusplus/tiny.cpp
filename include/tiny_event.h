@@ -10,19 +10,39 @@
 #include "i_tiny_event.h"
 #include "tiny_list.h"
 
-typedef struct {
-  i_tiny_event_t interface;
-  tiny_list_t subscribers;
-} tiny_event_t;
+namespace tiny
+{
+  template <typename Args>
+  class Event : public I_Event<Args>
+  {
+   public:
+    Event()
+      : subscribers()
+    {
+    }
 
-/*!
- * Initializes the event.
- */
-void tiny_event_init(tiny_event_t* self);
+    auto publish(const Args* args) const -> void
+    {
+      for(auto i = this->subscribers.begin(); i != this->subscribers.end(); ++i)
+      {
+        reinterpret_cast<const EventSubscription<Args>*>(*i)->publish(args);
+      }
+    }
 
-/*!
- * Publishes the event with the given arguments.
- */
-void tiny_event_publish(tiny_event_t* self, const void* args);
+    auto subscribe(EventSubscription<Args>* subscription) -> void
+    {
+      this->subscribers.remove(reinterpret_cast<List::Node*>(subscription));
+      this->subscribers.push_back(reinterpret_cast<List::Node*>(subscription));
+    }
+
+    auto unsubscribe(EventSubscription<Args>* subscription) -> void
+    {
+      this->subscribers.remove(reinterpret_cast<List::Node*>(subscription));
+    }
+
+   private:
+    List subscribers;
+  };
+}
 
 #endif
