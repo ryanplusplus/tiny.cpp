@@ -18,7 +18,7 @@
 
 namespace tiny
 {
-  enum FsmSignal : std::uint8_t
+  enum FsmSignal : uint8_t
   {
     entry,
     exit,
@@ -46,10 +46,11 @@ namespace tiny
     template <typename T>
     auto transition(void (*next)(T* context, uint8_t signal, const void* data)) -> void
     {
-      this->current(this->context, FsmSignal::exit, NULL);
-      this->current = reinterpret_cast<State>(next);
-      this->current(this->context, FsmSignal::entry, NULL);
+      this->_transition(reinterpret_cast<State>(next));
     }
+
+   private:
+    auto _transition(State next) -> void;
 
    private:
     State current;

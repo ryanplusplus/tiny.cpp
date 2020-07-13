@@ -48,7 +48,7 @@ namespace tiny
     auto pop_front() -> Node*;
     auto pop_back() -> Node*;
     auto remove(Node* node) -> void;
-    auto count() -> std::uint16_t;
+    auto count() -> uint16_t;
     auto contains(Node* node) -> bool;
     auto index_of(Node* node) -> uint16_t;
 

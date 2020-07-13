@@ -73,7 +73,7 @@ namespace tiny
     }
   }
 
-  auto List::count() -> std::uint16_t
+  auto List::count() -> uint16_t
   {
     Node* current = this->head.next;
     uint16_t count = 0;
