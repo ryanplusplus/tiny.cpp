@@ -5,8 +5,8 @@
  * a single subscriber.
  */
 
-#ifndef tiny_single_subscriber_event_h
-#define tiny_single_subscriber_event_h
+#ifndef tiny_SingleSubscriberEvent_h
+#define tiny_SingleSubscriberEvent_h
 
 #include <cstddef>
 #include "tiny_IEvent.h"

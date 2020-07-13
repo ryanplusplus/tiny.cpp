@@ -3,8 +3,8 @@
  * @brief Runs one-shot timers using client-allocated memory.
  */
 
-#ifndef tiny_timer_h
-#define tiny_timer_h
+#ifndef tiny_TimerGroup_h
+#define tiny_TimerGroup_h
 
 #include <cstdint>
 #include "tiny_ITimeSource.h"

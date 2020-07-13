@@ -3,8 +3,8 @@
  * @brief Abstract event.
  */
 
-#ifndef i_tiny_event_h
-#define i_tiny_event_h
+#ifndef tiny_IEvent_h
+#define tiny_IEvent_h
 
 #include "tiny_EventSubscription.h"
 

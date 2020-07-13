@@ -3,8 +3,8 @@
  * @brief Implements CRC16-CCITT (polynomial 0x1021).
  */
 
-#ifndef tiny_crc16_h
-#define tiny_crc16_h
+#ifndef tiny_Crc16_h
+#define tiny_Crc16_h
 
 #include <cstdint>
 
