@@ -64,16 +64,18 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#define tiny_hsm_no_parent NULL
+#define tiny_hsm_no_parent nullptr
 
-enum {
+enum
+{
   tiny_hsm_signal_entry,
   tiny_hsm_signal_exit,
   tiny_hsm_signal_user_start
 };
 typedef uint8_t tiny_hsm_signal_t;
 
-enum {
+enum
+{
   tiny_hsm_result_signal_deferred,
   tiny_hsm_result_signal_consumed
 };
@@ -87,20 +89,23 @@ typedef tiny_hsm_result_t (*tiny_hsm_state_t)(
   const void* data);
 
 /*!
- * Configures the parent of each state. Use NULL for the parent to indicate that a state
+ * Configures the parent of each state. Use nullptr for the parent to indicate that a state
  * has no parent.
  */
-typedef struct {
+typedef struct
+{
   tiny_hsm_state_t state;
   tiny_hsm_state_t parent;
 } tiny_hsm_state_descriptor_t;
 
-typedef struct {
+typedef struct
+{
   const tiny_hsm_state_descriptor_t* states;
   uint8_t state_count;
 } tiny_hsm_configuration_t;
 
-typedef struct tiny_hsm_t {
+typedef struct tiny_hsm_t
+{
   const tiny_hsm_configuration_t* configuration;
   tiny_hsm_state_t current;
 } tiny_hsm_t;

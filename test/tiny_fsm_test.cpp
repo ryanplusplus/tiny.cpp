@@ -96,7 +96,7 @@ TEST_GROUP(tiny_fsm)
 
 TEST(tiny_fsm, should_send_entry_to_the_initial_state)
 {
-  signal_should_be_sent_to_state(state_a, FsmSignal::entry, NULL);
+  signal_should_be_sent_to_state(state_a, FsmSignal::entry, nullptr);
   when_the_fsm_is_initialized_with_state(state_a);
 }
 
@@ -104,8 +104,8 @@ TEST(tiny_fsm, should_send_exit_to_current_state_then_entry_to_new_state_during_
 {
   given_that_the_fsm_has_been_initialized_with_state(state_a);
 
-  signal_should_be_sent_to_state(state_a, FsmSignal::exit, NULL);
-  then signal_should_be_sent_to_state(state_b, FsmSignal::entry, NULL);
+  signal_should_be_sent_to_state(state_a, FsmSignal::exit, nullptr);
+  then signal_should_be_sent_to_state(state_b, FsmSignal::entry, nullptr);
   when_the_fsm_is_transitioned_to(state_b);
 }
 

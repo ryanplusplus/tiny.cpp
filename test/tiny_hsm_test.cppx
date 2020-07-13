@@ -69,12 +69,12 @@ static const tiny_hsm_state_t states[] = {
 };
 
 static const tiny_hsm_state_descriptor_t descriptors[] = {
-  { _state_a, NULL },
+  { _state_a, nullptr },
   { _state_b, _state_a },
   { _state_c, _state_b },
   { _state_d, _state_a },
   { _state_e, _state_d },
-  { _state_f, NULL }
+  { _state_f, nullptr }
 };
 
 static const tiny_hsm_configuration_t configuration = {
@@ -102,7 +102,7 @@ TEST_GROUP(tiny_hsm) {
   void signal_should_be_sent_to_state(
     state_t state,
     tiny_hsm_signal_t signal,
-    const void* data = NULL,
+    const void* data = nullptr,
     tiny_hsm_result_t result = tiny_hsm_result_signal_consumed) {
     mock()
       .expectOneCall(state_names[state])

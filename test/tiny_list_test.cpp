@@ -143,6 +143,22 @@ TEST(tiny_list, should_iterate)
   CHECK(list.end() == iter);
 }
 
+TEST(tiny_list, should_allow_the_current_node_to_be_removed_during_iteration)
+{
+  list.push_back(&node_1);
+  list.push_back(&node_2);
+  list.push_back(&node_3);
+
+  auto iter = list.begin();
+
+  CHECK(*iter == &node_1);
+  list.remove(&node_1);
+  list.push_back(&node_1);
+
+  ++iter;
+  CHECK(*iter == &node_2);
+}
+
 TEST(tiny_list, should_indicate_whether_list_contains_a_given_node)
 {
   CHECK(false == list.contains(&node_1));

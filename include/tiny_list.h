@@ -30,7 +30,7 @@ namespace tiny
       friend class List;
 
      public:
-      bool operator==(const Node* other)
+      auto operator==(const Node* other) -> bool
       {
         return this == other;
       }
@@ -43,6 +43,7 @@ namespace tiny
 
    public:
     List();
+    List(const List& other) = delete;
     auto push_front(Node* node) -> void;
     auto push_back(Node* node) -> void;
     auto pop_front() -> Node*;
@@ -52,12 +53,14 @@ namespace tiny
     auto contains(Node* node) -> bool;
     auto index_of(Node* node) -> uint16_t;
 
-    auto begin() const -> Iterator
+    auto operator=(const List& other) -> void = delete;
+
+    auto begin() -> Iterator
     {
       return Iterator::begin(*this);
     }
 
-    auto end() const -> Iterator
+    auto end() -> Iterator
     {
       return Iterator::end(*this);
     }
@@ -69,43 +72,45 @@ namespace tiny
     class Iterator
     {
      public:
-      Iterator(const Node* current)
-        : current(current)
+      Iterator(Node* current)
+        : current(current), next(current->next)
       {
       }
 
-      static auto begin(const List& list) -> Iterator
+      static auto begin(List& list) -> Iterator
       {
         return Iterator(list.head.next);
       }
 
-      static auto end(const List& list) -> Iterator
+      static auto end(List& list) -> Iterator
       {
         return Iterator(&list.head);
       }
 
-      bool operator==(const Iterator& other) const
+      bool operator==(Iterator& other)
       {
         return this->current == other.current;
       }
 
-      bool operator!=(const Iterator& other) const
+      bool operator!=(Iterator other)
       {
         return !operator==(other);
       }
 
       void operator++()
       {
-        this->current = this->current->next;
+        this->current = this->next;
+        this->next = this->current->next;
       }
 
-      const Node* operator*() const
+      Node* operator*() const
       {
         return this->current;
       }
 
      private:
-      const Node* current;
+      Node* current;
+      Node* next;
     };
   };
 }

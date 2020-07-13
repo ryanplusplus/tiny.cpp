@@ -35,7 +35,7 @@ namespace tiny
     Fsm(void (*initial)(T* context, uint8_t signal, const void* data), T* context)
       : current(reinterpret_cast<State>(initial)), context(reinterpret_cast<void*>(context))
     {
-      this->current(context, FsmSignal::entry, NULL);
+      this->current(context, FsmSignal::entry, nullptr);
     };
 
     auto send_signal(uint8_t signal, const void* data) -> void

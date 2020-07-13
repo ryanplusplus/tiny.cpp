@@ -6,73 +6,108 @@
 #ifndef tiny_timer_h
 #define tiny_timer_h
 
-#include <stdint.h>
-#include <stdbool.h>
+#include <cstdint>
 #include "i_tiny_time_source.h"
 #include "tiny_list.h"
 
-typedef uint16_t tiny_timer_ticks_t;
+#include <iostream>
 
-struct tiny_timer_group_t;
+namespace tiny
+{
+  typedef uint16_t TimerTicks;
 
-typedef void (*tiny_timer_callback_t)(struct tiny_timer_group_t* group, void* context);
+  class TimerGroup;
 
-typedef struct {
-  tiny_list_node_t node;
-  tiny_timer_callback_t callback;
-  void* context;
-  tiny_timer_ticks_t remaining_ticks;
-} tiny_timer_t;
+  class Timer
+  {
+    friend class TimerGroup;
 
-typedef struct tiny_timer_group_t {
-  i_tiny_time_source_t* time_source;
-  tiny_list_t timers;
-  tiny_time_source_ticks_t last_ticks;
-} tiny_timer_group_t;
+   public:
+    typedef void (*Callback)(void* context, TimerGroup* group);
 
-/*!
- * Initializes a timer group.
- */
-void tiny_timer_group_init(
-  tiny_timer_group_t* self,
-  i_tiny_time_source_t* time_source);
+    Timer()
+      : node(), context(nullptr), callback(nullptr), remaining_ticks()
+    {
+    }
 
-/*!
- * Runs a timer group. Services at most one timer per call. Returns true if a timer
- * expired and was serviced and false otherwise.
- */
-bool tiny_timer_group_run(
-  tiny_timer_group_t* self);
+   private:
+    List::Node node;
+    void* context;
+    Callback callback;
+    TimerTicks remaining_ticks;
+  };
 
-/*!
- * Starts a timer.
- */
-void tiny_timer_start(
-  tiny_timer_group_t* self,
-  tiny_timer_t* timer,
-  tiny_timer_ticks_t ticks,
-  tiny_timer_callback_t callback,
-  void* context);
+  class TimerGroup
+  {
+   public:
+    TimerGroup(I_TimeSource* time_source)
+      : time_source(time_source), timers(), last_ticks(time_source->ticks())
+    {
+    }
 
-/*!
- * Stops a timer.
- */
-void tiny_timer_stop(
-  tiny_timer_group_t* self,
-  tiny_timer_t* timer);
+    auto run() -> bool
+    {
+      auto current_ticks = this->time_source->ticks();
+      auto delta = current_ticks - this->last_ticks;
+      this->last_ticks = current_ticks;
 
-/*!
- * Returns true if the specified timer is running and false otherwise.
- */
-bool tiny_timer_is_running(
-  tiny_timer_group_t* self,
-  tiny_timer_t* timer);
+      auto invoked_callback = false;
 
-/*!
- * Returns the remaining ticks for a running timer.
- */
-tiny_timer_ticks_t tiny_timer_remaining_ticks(
-  tiny_timer_group_t* self,
-  tiny_timer_t* timer);
+      for(auto i = this->timers.begin(); i != this->timers.end(); ++i)
+      {
+        auto timer = reinterpret_cast<Timer*>(*i);
+
+        if(delta < timer->remaining_ticks)
+        {
+          timer->remaining_ticks -= delta;
+        }
+        else
+        {
+          timer->remaining_ticks = 0;
+
+          if(!invoked_callback)
+          {
+            invoked_callback = true;
+            this->timers.remove(*i);
+            timer->callback(timer->context, this);
+          }
+        }
+      }
+
+      return invoked_callback;
+    }
+
+    template <typename Context>
+    auto start(Timer* timer, TimerTicks ticks, Context* context, void (*callback)(Context* context, TimerGroup* group)) -> void
+    {
+      timer->context = reinterpret_cast<void*>(context);
+      timer->callback = reinterpret_cast<Timer::Callback>(callback);
+      timer->remaining_ticks = ticks;
+
+      this->timers.remove(reinterpret_cast<List::Node*>(timer));
+      this->timers.push_back(reinterpret_cast<List::Node*>(timer));
+    }
+
+    auto stop(Timer* timer) -> void
+    {
+      this->timers.remove(reinterpret_cast<List::Node*>(timer));
+    }
+
+    auto is_running(Timer* timer) -> bool
+    {
+      return this->timers.contains(reinterpret_cast<List::Node*>(timer));
+    }
+
+    auto remaining_ticks(Timer* timer) -> TimerTicks
+    {
+      return timer->remaining_ticks;
+    }
+
+   private:
+    I_TimeSource* time_source;
+    List timers;
+    I_TimeSource::TickCount last_ticks;
+  };
+}
 
 #endif

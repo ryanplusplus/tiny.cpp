@@ -21,11 +21,11 @@ namespace tiny
     {
     }
 
-    auto publish(const Args* args) const -> void
+    auto publish(const Args* args) -> void
     {
       for(auto i = this->subscribers.begin(); i != this->subscribers.end(); ++i)
       {
-        reinterpret_cast<const EventSubscription<Args>*>(*i)->publish(args);
+        reinterpret_cast<EventSubscription<Args>*>(*i)->publish(args);
       }
     }
 

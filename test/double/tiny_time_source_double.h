@@ -8,24 +8,34 @@
 
 #include "i_tiny_time_source.h"
 
-typedef struct {
-  i_tiny_time_source_t interface;
-  tiny_time_source_ticks_t ticks;
-} tiny_time_source_double_t;
+namespace tiny
+{
+  class TimeSourceTestDouble : public I_TimeSource
+  {
+   public:
+    TimeSourceTestDouble()
+      : _ticks()
+    {
+    }
 
-/*!
- * Initializes a time source double. Sets ticks to 0.
- */
-void tiny_time_source_double_init(tiny_time_source_double_t* self);
+    auto ticks() -> I_TimeSource::TickCount
+    {
+      return this->_ticks;
+    }
 
-/*!
- * Sets the current ticks.
- */
-void tiny_time_source_double_set_ticks(tiny_time_source_double_t* self, tiny_time_source_ticks_t ticks);
+    auto set_ticks(I_TimeSource::TickCount ticks) -> void
+    {
+      this->_ticks = ticks;
+    }
 
-/*!
- * Moves the current ticks forward by the specified number of ticks.
- */
-void tiny_time_source_double_tick(tiny_time_source_double_t* self, tiny_time_source_ticks_t ticks = 1);
+    auto tick(I_TimeSource::TickCount ticks = 1) -> void
+    {
+      this->_ticks += ticks;
+    }
+
+   private:
+    I_TimeSource::TickCount _ticks;
+  };
+}
 
 #endif

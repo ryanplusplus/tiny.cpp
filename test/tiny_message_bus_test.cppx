@@ -19,8 +19,8 @@ TEST_GROUP(tiny_message_bus) {
 
   void setup() {
     tiny_message_bus_init(&self);
-    tiny_event_subscription_init(&subscription_1, NULL, subscriber_1);
-    tiny_event_subscription_init(&subscription_2, NULL, subscriber_2);
+    tiny_event_subscription_init(&subscription_1, nullptr, subscriber_1);
+    tiny_event_subscription_init(&subscription_2, nullptr, subscriber_2);
   }
 
   static void subscriber_1(void* context, const void* _args) {

@@ -3,138 +3,156 @@
  * @brief
  */
 
-extern "C" {
 #include "tiny_timer.h"
-}
-
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
 #include "double/tiny_time_source_double.h"
 
-static tiny_timer_ticks_t restart_ticks;
+using namespace tiny;
 
-TEST_GROUP(tiny_timer) {
-  tiny_timer_group_t group;
+static TimerTicks restart_ticks;
 
-  tiny_timer_t timer_1;
-  tiny_timer_t timer_2;
-  tiny_timer_t timer_3;
-  tiny_timer_t timer_with_restart;
+TEST_GROUP(tiny_timer)
+{
+  TimeSourceTestDouble time_source;
 
-  tiny_time_source_double_t time_source;
+  Timer timer_1;
+  Timer timer_2;
+  Timer timer_3;
+  Timer timer_with_restart;
 
-  void setup() {
+  TimerGroup group{&time_source};
+
+  void setup()
+  {
     mock().strictOrder();
-
-    tiny_time_source_double_init(&time_source);
-    tiny_time_source_double_set_ticks(&time_source, 1234);
-
-    tiny_timer_group_init(&group, &time_source.interface);
   }
 
-  static void callback(tiny_timer_group_t * group, void* context) {
+  static void callback(Timer * timer, TimerGroup * group)
+  {
     mock()
       .actualCall("callback")
       .withParameter("group", group)
-      .withParameter("context", context);
+      .withParameter("context", timer);
   }
 
-  static void callback_with_restart(tiny_timer_group_t * group, void* context) {
-    callback(group, context);
-    tiny_timer_start(group, (tiny_timer_t*)context, restart_ticks, callback_with_restart, context);
+  static void callback_with_restart(Timer * timer, TimerGroup * group)
+  {
+    callback(timer, group);
+    group->start(timer, restart_ticks, timer, callback_with_restart);
   }
 
-  void after_timer_with_restart_is_started(tiny_timer_t * timer, tiny_timer_ticks_t ticks) {
+  void after_timer_with_restart_is_started(Timer * timer, TimerTicks ticks)
+  {
     restart_ticks = ticks;
-    tiny_timer_start(&group, timer, ticks, callback_with_restart, timer);
+    group.start(timer, ticks, timer, callback_with_restart);
   }
 
-  void given_that_timer_with_restart_has_been_started(tiny_timer_t * timer, tiny_timer_ticks_t ticks) {
+  void given_that_timer_with_restart_has_been_started(Timer * timer, TimerTicks ticks)
+  {
     after_timer_with_restart_is_started(timer, ticks);
   }
 
-  void after_timer_is_started(tiny_timer_t * timer, tiny_timer_ticks_t ticks) {
-    tiny_timer_start(&group, timer, ticks, callback, timer);
+  void after_timer_is_started(Timer * timer, TimerTicks ticks)
+  {
+    group.start(timer, ticks, timer, callback);
   }
 
-  void given_that_timer_has_been_started(tiny_timer_t * timer, tiny_timer_ticks_t ticks) {
+  void given_that_timer_has_been_started(Timer * timer, TimerTicks ticks)
+  {
     after_timer_is_started(timer, ticks);
   }
 
-  void after_timer_is_stopped(tiny_timer_t * timer) {
-    tiny_timer_stop(&group, timer);
+  void after_timer_is_stopped(Timer * timer)
+  {
+    group.stop(timer);
   }
 
-  void given_that_timer_has_been_stopped(tiny_timer_t * timer) {
+  void given_that_timer_has_been_stopped(Timer * timer)
+  {
     after_timer_is_stopped(timer);
   }
 
-  void should_invoke_timer_callback(tiny_timer_t * timer) {
+  void should_invoke_timer_callback(Timer * timer)
+  {
     mock()
       .expectOneCall("callback")
       .withParameter("group", &group)
       .withParameter("context", timer);
   }
 
-  void after(tiny_time_source_ticks_t ticks) {
-    tiny_time_source_double_tick(&time_source, ticks);
+  void after(I_TimeSource::TickCount ticks)
+  {
+    time_source.tick(ticks);
   }
 
-  void after_the_group_is_run() {
-    tiny_timer_group_run(&group);
+  void after_the_group_is_run()
+  {
+    group.run();
   }
 
-  void after_time_passes_and_the_group_is_run(tiny_time_source_ticks_t ticks) {
+  void after_time_passes_and_the_group_is_run(I_TimeSource::TickCount ticks)
+  {
     after(ticks);
     after_the_group_is_run();
   }
 
-  void given_that_time_has_passed_and_the_group_has_been_run(tiny_time_source_ticks_t ticks) {
+  void given_that_time_has_passed_and_the_group_has_been_run(I_TimeSource::TickCount ticks)
+  {
     mock().disable();
     after_time_passes_and_the_group_is_run(ticks);
     mock().enable();
   }
 
-  void should_invoke_timer_callback_after(tiny_timer_t * timer, tiny_timer_ticks_t ticks) {
+  void should_invoke_timer_callback_after(Timer * timer, TimerTicks ticks)
+  {
     after_time_passes_and_the_group_is_run(ticks - 1);
     should_invoke_timer_callback(timer);
     after_time_passes_and_the_group_is_run(1);
   }
 
-  void timer_should_not_be_running(tiny_timer_t * timer) {
-    CHECK_FALSE(tiny_timer_is_running(&group, timer));
+  void timer_should_not_be_running(Timer * timer)
+  {
+    CHECK_FALSE(group.is_running(timer));
   }
 
-  void timer_should_be_running(tiny_timer_t * timer) {
-    CHECK_TRUE(tiny_timer_is_running(&group, timer));
+  void timer_should_be_running(Timer * timer)
+  {
+    CHECK_TRUE(group.is_running(timer));
   }
 
-  void should_indicate_that_a_callback_was_invoked_during_run() {
+  void should_indicate_that_a_callback_was_invoked_during_run()
+  {
     mock().disable();
-    CHECK_TRUE(tiny_timer_group_run(&group));
+    CHECK_TRUE(group.run());
     mock().enable();
   }
 
-  void should_indicate_that_a_callback_was_not_invoked_during_run() {
+  void should_indicate_that_a_callback_was_not_invoked_during_run()
+  {
     mock().disable();
-    CHECK_FALSE(tiny_timer_group_run(&group));
+    CHECK_FALSE(group.run());
     mock().enable();
   }
 
-  void remaining_timer_for_timer_should_be(tiny_timer_t * timer, tiny_timer_ticks_t ticks) {
-    CHECK_EQUAL(ticks, tiny_timer_remaining_ticks(&group, timer));
+  void remaining_timer_for_timer_should_be(Timer * timer, TimerTicks ticks)
+  {
+    CHECK_EQUAL(ticks, group.remaining_ticks(timer));
   }
 
-  void nothing_should_happen() {
+  void nothing_should_happen()
+  {
   }
 };
 
-TEST(tiny_timer, should_invoke_timer_callback_on_expiration) {
+TEST(tiny_timer, should_invoke_timer_callback_on_expiration)
+{
   given_that_timer_has_been_started(&timer_1, 7);
   should_invoke_timer_callback_after(&timer_1, 7);
 }
 
-TEST(tiny_timer, should_invoke_timer_callback_even_if_run_after_expiration) {
+TEST(tiny_timer, should_invoke_timer_callback_even_if_run_after_expiration)
+{
   given_that_timer_has_been_started(&timer_1, 7);
 
   after(10);
@@ -142,7 +160,8 @@ TEST(tiny_timer, should_invoke_timer_callback_even_if_run_after_expiration) {
   after_the_group_is_run();
 }
 
-TEST(tiny_timer, should_not_call_back_timer_again_after_expiration) {
+TEST(tiny_timer, should_not_call_back_timer_again_after_expiration)
+{
   given_that_timer_has_been_started(&timer_1, 7);
   given_that_time_has_passed_and_the_group_has_been_run(7);
 
@@ -150,7 +169,8 @@ TEST(tiny_timer, should_not_call_back_timer_again_after_expiration) {
   after_time_passes_and_the_group_is_run(100);
 }
 
-TEST(tiny_timer, should_allow_a_timer_to_be_stopped_prior_to_expiration) {
+TEST(tiny_timer, should_allow_a_timer_to_be_stopped_prior_to_expiration)
+{
   given_that_timer_has_been_started(&timer_1, 7);
   given_that_time_has_passed_and_the_group_has_been_run(3);
   given_that_timer_has_been_stopped(&timer_1);
@@ -159,7 +179,8 @@ TEST(tiny_timer, should_allow_a_timer_to_be_stopped_prior_to_expiration) {
   after_time_passes_and_the_group_is_run(10);
 }
 
-TEST(tiny_timer, should_allow_a_running_timer_to_be_restarted) {
+TEST(tiny_timer, should_allow_a_running_timer_to_be_restarted)
+{
   given_that_timer_has_been_started(&timer_2, 7);
   given_that_timer_has_been_started(&timer_1, 7);
   given_that_timer_has_been_started(&timer_3, 9);
@@ -173,7 +194,8 @@ TEST(tiny_timer, should_allow_a_running_timer_to_be_restarted) {
   after_time_passes_and_the_group_is_run(10);
 }
 
-TEST(tiny_timer, should_manage_multiple_timers_simultaneously) {
+TEST(tiny_timer, should_manage_multiple_timers_simultaneously)
+{
   given_that_timer_has_been_started(&timer_1, 7);
   given_that_timer_has_been_started(&timer_2, 3);
 
@@ -181,7 +203,8 @@ TEST(tiny_timer, should_manage_multiple_timers_simultaneously) {
   should_invoke_timer_callback_after(&timer_1, 4);
 }
 
-TEST(tiny_timer, should_invoke_at_most_one_callback_per_run) {
+TEST(tiny_timer, should_invoke_at_most_one_callback_per_run)
+{
   given_that_timer_has_been_started(&timer_1, 7);
   given_that_timer_has_been_started(&timer_2, 7);
 
@@ -193,7 +216,8 @@ TEST(tiny_timer, should_invoke_at_most_one_callback_per_run) {
   after_the_group_is_run();
 }
 
-TEST(tiny_timer, should_indicate_whether_a_callback_was_invoked_during_run) {
+TEST(tiny_timer, should_indicate_whether_a_callback_was_invoked_during_run)
+{
   given_that_timer_has_been_started(&timer_1, 3);
   given_that_timer_has_been_started(&timer_2, 5);
 
@@ -208,7 +232,8 @@ TEST(tiny_timer, should_indicate_whether_a_callback_was_invoked_during_run) {
   should_indicate_that_a_callback_was_not_invoked_during_run();
 }
 
-TEST(tiny_timer, should_indicate_whether_a_timer_is_running) {
+TEST(tiny_timer, should_indicate_whether_a_timer_is_running)
+{
   timer_should_not_be_running(&timer_1);
   timer_should_not_be_running(&timer_2);
 
@@ -221,7 +246,8 @@ TEST(tiny_timer, should_indicate_whether_a_timer_is_running) {
   timer_should_not_be_running(&timer_2);
 }
 
-TEST(tiny_timer, should_give_the_remaining_ticks_for_a_running_timer) {
+TEST(tiny_timer, should_give_the_remaining_ticks_for_a_running_timer)
+{
   given_that_timer_has_been_started(&timer_1, 7);
   remaining_timer_for_timer_should_be(&timer_1, 7);
 
@@ -229,7 +255,8 @@ TEST(tiny_timer, should_give_the_remaining_ticks_for_a_running_timer) {
   remaining_timer_for_timer_should_be(&timer_1, 2);
 }
 
-TEST(tiny_timer, should_allow_a_timer_to_be_restarted_in_its_callback) {
+TEST(tiny_timer, should_allow_a_timer_to_be_restarted_in_its_callback)
+{
   given_that_timer_with_restart_has_been_started(&timer_with_restart, 5);
 
   should_invoke_timer_callback_after(&timer_with_restart, 5);
@@ -237,13 +264,14 @@ TEST(tiny_timer, should_allow_a_timer_to_be_restarted_in_its_callback) {
   should_invoke_timer_callback_after(&timer_with_restart, 5);
 }
 
-TEST(tiny_timer, should_not_allow_a_timer_to_be_starved) {
+TEST(tiny_timer, should_not_allow_a_timer_to_be_starved)
+{
   given_that_timer_with_restart_has_been_started(&timer_with_restart, 0);
   given_that_timer_has_been_started(&timer_1, 3);
 
   should_invoke_timer_callback(&timer_with_restart);
   after_time_passes_and_the_group_is_run(3);
 
-  should_invoke_timer_callback(&timer_with_restart);
+  should_invoke_timer_callback(&timer_1);
   after_the_group_is_run();
 }

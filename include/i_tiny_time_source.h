@@ -8,24 +8,18 @@
 #ifndef i_tiny_time_source_h
 #define i_tiny_time_source_h
 
-#include <stdint.h>
+#include <cstdint>
 
-typedef uint16_t tiny_time_source_ticks_t;
+namespace tiny
+{
+  class I_TimeSource
+  {
+   public:
+    typedef uint16_t TickCount;
 
-struct i_tiny_time_source_api_t;
-
-typedef struct {
-  const struct i_tiny_time_source_api_t* api;
-} i_tiny_time_source_t;
-
-typedef struct i_tiny_time_source_api_t {
-  /*!
-   * Returns the current time source tick count.
-   */
-  tiny_time_source_ticks_t (*ticks)(i_tiny_time_source_t* self);
-} i_tiny_time_source_api_t;
-
-#define tiny_time_source_ticks(self) \
-  (self)->api->ticks((self))
+   public:
+    auto virtual ticks() -> TickCount = 0;
+  };
+}
 
 #endif

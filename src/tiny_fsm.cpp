@@ -7,7 +7,7 @@
 
 auto tiny::Fsm::_transition(State next) -> void
 {
-  this->current(this->context, FsmSignal::exit, NULL);
+  this->current(this->context, FsmSignal::exit, nullptr);
   this->current = next;
-  this->current(this->context, FsmSignal::entry, NULL);
+  this->current(this->context, FsmSignal::entry, nullptr);
 }

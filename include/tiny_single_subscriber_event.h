@@ -39,7 +39,7 @@ namespace tiny
     {
       if(this->subscription == subscription)
       {
-        this->subscription = NULL;
+        this->subscription = nullptr;
       }
     }
 

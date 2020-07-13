@@ -49,7 +49,7 @@ TEST_GROUP(tiny_ram_key_value_store) {
 
   void setup() {
     memset(&storage, 0xA5, sizeof(storage));
-    tiny_event_subscription_init(&on_change_subscription, NULL, value_changed);
+    tiny_event_subscription_init(&on_change_subscription, nullptr, value_changed);
     tiny_ram_key_value_store_init(&self, &configuration, &storage);
   }
 
