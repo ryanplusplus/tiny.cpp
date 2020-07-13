@@ -6,11 +6,15 @@
 #ifndef tiny_crc16_h
 #define tiny_crc16_h
 
-#include <stdint.h>
+#include <cstdint>
 
-/*!
- * Calculate CRC given seed and next byte.
- */
-uint16_t tiny_crc16_calculate(uint16_t seed, uint8_t byte);
+namespace tiny
+{
+  class Crc16
+  {
+   public:
+    auto static calculate(uint16_t seed, uint8_t byte) -> uint16_t;
+  };
+}
 
 #endif
