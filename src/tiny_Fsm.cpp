@@ -5,7 +5,9 @@
 
 #include "tiny_Fsm.h"
 
-auto tiny::Fsm::_transition(State next) -> void
+using namespace tiny;
+
+auto Fsm::_transition(State next) -> void
 {
   this->current(this->context, FsmSignal::exit, nullptr);
   this->current = next;

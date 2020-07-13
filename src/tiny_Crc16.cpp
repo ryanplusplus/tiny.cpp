@@ -5,7 +5,9 @@
 
 #include "tiny_Crc16.h"
 
-auto tiny::Crc16::calculate(uint16_t seed, uint8_t byte) -> uint16_t
+using namespace tiny;
+
+auto Crc16::calculate(uint16_t seed, uint8_t byte) -> uint16_t
 {
   uint16_t crc = seed;
   byte = crc >> 8 ^ byte;
