@@ -1,10 +1,10 @@
 {
-  "name": "tiny",
+  "name": "tiny-cpp",
   "keywords": "tiny, timer, event, state machine, hal",
-  "description": "Simple library that includes support for timers, events, state machines, etc.",
+  "description": "Simple library that includes support for timers, events, state machines, etc. The C++ equivalent of tiny.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ryanplusplus/tiny.git"
+    "url": "https://github.com/ryanplusplus/tiny.cpp.git"
   },
   "authors": [
     {
@@ -13,7 +13,7 @@
       "maintainer": true
     }
   ],
-  "version": "3.0.2",
+  "version": "0.0.1",
   "frameworks": "*",
   "platforms": "*",
   "export": {
