@@ -30,8 +30,11 @@
  * };
  */
 
-#ifndef ram_key_value_store_macros_h
-#define ram_key_value_store_macros_h
+#ifndef RamKeyValueStoreMacros_h
+#define RamKeyValueStoreMacros_h
+
+#include <cstdint>
+#include <cstddef>
 
 #define ram_key_value_pairs_expand_as_enumeration(_key, value_type) _key,
 
