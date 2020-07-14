@@ -58,76 +58,82 @@
  * (thus there are not more entry signals that are going to be sent).
  */
 
-#ifndef hsm_h
-#define hsm_h
+#ifndef Hsm_h
+#define Hsm_h
 
-#include <stddef.h>
-#include <stdint.h>
+#include <cstddef>
+#include <cstdint>
 
-#define hsm_no_parent nullptr
-
-enum
+namespace tiny
 {
-  tiny_hsm_signal_entry,
-  tiny_hsm_signal_exit,
-  tiny_hsm_signal_user_start
-};
-typedef uint8_t tiny_hsm_signal_t;
+  enum HsmSignal : uint8_t
+  {
+    entry,
+    exit,
+    user_start
+  };
 
-enum
-{
-  tiny_hsm_result_signal_deferred,
-  tiny_hsm_result_signal_consumed
-};
-typedef uint8_t tiny_hsm_result_t;
+  class Hsm
+  {
+   public:
+    enum class Result : uint8_t
+    {
+      deferred,
+      consumed
+    };
 
-struct tiny_hsm_t;
+    typedef Result (*State)(void* context, uint8_t signal, const void* data);
 
-typedef tiny_hsm_result_t (*tiny_hsm_state_t)(
-  struct tiny_hsm_t* hsm,
-  tiny_hsm_signal_t signal,
-  const void* data);
+    static constexpr State no_parent = nullptr;
+    static constexpr State top = nullptr; // fixme to .cpp?
 
-/*!
- * Configures the parent of each state. Use nullptr for the parent to indicate that a state
- * has no parent.
- */
-typedef struct
-{
-  tiny_hsm_state_t state;
-  tiny_hsm_state_t parent;
-} tiny_hsm_state_descriptor_t;
+    typedef struct
+    {
+      State state;
+      State parent;
+    } StateDescriptor;
 
-typedef struct
-{
-  const tiny_hsm_state_descriptor_t* states;
-  uint8_t state_count;
-} tiny_hsm_configuration_t;
+    typedef struct
+    {
+      const StateDescriptor* states;
+      uint8_t state_count;
+    } Configuration;
 
-typedef struct tiny_hsm_t
-{
-  const tiny_hsm_configuration_t* configuration;
-  tiny_hsm_state_t current;
-} tiny_hsm_t;
+   public:
+    template <typename Context>
+    Hsm(
+      Context* context,
+      const Configuration* configuration,
+      Result (*initial)(Context* context, uint8_t signal, const void* data))
+      : context(reinterpret_cast<void*>(context)),
+        configuration(configuration),
+        current(reinterpret_cast<State>(initial))
+    {
+      this->send_entries(top, this->current);
+    }
 
-/*!
- * Initializes an HSM with the specified initial state. Sends entry signals down the
- * ancestor chain to the initial state.
- */
-void tiny_hsm_init(
-  tiny_hsm_t* self,
-  const tiny_hsm_configuration_t* configuration,
-  tiny_hsm_state_t initial);
+    auto send_signal(uint8_t signal, const void* data) -> void;
 
-/*!
- * Sends a signal and optional signal data to the current state and, potentially, to
- * all of the state's parents.
- */
-void tiny_hsm_send_signal(tiny_hsm_t* self, tiny_hsm_signal_t signal, const void* data);
+    template <typename Context>
+    auto transition(Hsm::Result (*next)(Context* context, uint8_t signal, const void* data)) -> void
+    {
+      this->_transition(reinterpret_cast<State>(next));
+    }
 
-/*!
- * Transitions the HSM to the target state.
- */
-void tiny_hsm_transition(tiny_hsm_t* self, tiny_hsm_state_t target);
+   private:
+    auto _transition(State next) -> void;
+    auto parent_of(State child) -> State;
+    auto distance_between(State child, State parent) -> uint8_t;
+    auto nth_parent(State state, uint8_t n) -> State;
+    auto send_entries(State after, State to) -> void;
+    auto send_exits(State from, State before) -> void;
+    auto nearest_common_ancestor_of(State a, State b) -> State;
+
+   private:
+    void* context;
+    const Configuration* configuration;
+    State current;
+  };
+}
 
 #endif

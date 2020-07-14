@@ -31,8 +31,8 @@ namespace tiny
     typedef void (*State)(void* context, uint8_t signal, const void* data);
 
    public:
-    template <typename T>
-    Fsm(void (*initial)(T* context, uint8_t signal, const void* data), T* context)
+    template <typename Context>
+    Fsm(void (*initial)(Context* context, uint8_t signal, const void* data), Context* context)
       : current(reinterpret_cast<State>(initial)), context(reinterpret_cast<void*>(context))
     {
       this->current(context, FsmSignal::entry, nullptr);
@@ -43,8 +43,8 @@ namespace tiny
       this->current(this->context, signal, data);
     }
 
-    template <typename T>
-    auto transition(void (*next)(T* context, uint8_t signal, const void* data)) -> void
+    template <typename Context>
+    auto transition(void (*next)(Context* context, uint8_t signal, const void* data)) -> void
     {
       this->_transition(reinterpret_cast<State>(next));
     }
