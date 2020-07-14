@@ -20,9 +20,9 @@ namespace tiny
     };
 
    public:
-    auto virtual set_direction(Direction direction) -> void;
-    auto virtual read() -> bool;
-    auto virtual write(bool state) -> void;
+    auto virtual set_direction(Direction direction) -> void = 0;
+    auto virtual read() -> bool = 0;
+    auto virtual write(bool state) -> void = 0;
   };
 }
 
