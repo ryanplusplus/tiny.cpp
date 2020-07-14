@@ -10,7 +10,7 @@
 
 namespace tiny
 {
-  class IUart
+  class IGpio
   {
    public:
     enum class Direction : uint8_t
