@@ -10,8 +10,6 @@
 #include "tiny/ITimeSource.h"
 #include "tiny/List.h"
 
-#include <iostream>
-
 namespace tiny
 {
   typedef uint16_t TimerTicks;
