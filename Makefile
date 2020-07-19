@@ -16,10 +16,10 @@ DEPS := $(OBJS:.o=.d)
 INC_DIRS += $(shell find $(SRC_DIRS) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
-CFLAGS +=
+CFLAGS += -std=c17
 CPPFLAGS += -fsanitize=address -fno-omit-frame-pointer
 CPPFLAGS += $(INC_FLAGS) -MMD -MP -g -Wall -Wextra -Wcast-qual -Werror
-CXXFLAGS +=
+CXXFLAGS += -std=c++17
 LDFLAGS := -fsanitize=address -lstdc++ -lCppUTest -lCppUTestExt -lm
 
 .PHONY: test
