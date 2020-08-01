@@ -11,6 +11,7 @@ namespace tiny
   class IDigitalInput
   {
    public:
+    virtual ~IDigitalInput(){};
     auto virtual read() -> bool = 0;
   };
 }

@@ -16,6 +16,8 @@ namespace tiny
     typedef void (*Callback)(void* context);
 
    public:
+    virtual ~IAsyncSpi(){};
+
     auto virtual transfer(
       const uint8_t* write_buffer,
       uint8_t* read_buffer,

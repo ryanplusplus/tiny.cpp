@@ -17,6 +17,7 @@ namespace tiny
     typedef uint16_t Counts;
 
    public:
+    virtual ~IAnalogOutputGroup(){};
     auto virtual write(Channel channel, Counts counts) -> void = 0;
   };
 }

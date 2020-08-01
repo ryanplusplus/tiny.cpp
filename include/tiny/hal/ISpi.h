@@ -13,6 +13,8 @@ namespace tiny
   class ISpi
   {
    public:
+    virtual ~ISpi(){};
+
     auto virtual transfer(
       const uint8_t* write_buffer,
       uint8_t* read_buffer,

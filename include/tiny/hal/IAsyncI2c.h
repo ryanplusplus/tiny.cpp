@@ -16,6 +16,8 @@ namespace tiny
     typedef void (*Callback)(void* context, bool success);
 
    public:
+    virtual ~IAsyncI2c(){};
+
     auto virtual write(
       uint8_t address,
       bool prepare_for_restart,

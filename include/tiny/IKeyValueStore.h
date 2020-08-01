@@ -23,6 +23,7 @@ namespace tiny
     } OnChangeArgs;
 
    public:
+    virtual ~IKeyValueStore(){};
     auto virtual read(Key key, void* value) -> void = 0;
     auto virtual write(Key key, const void* value) -> void = 0;
     auto virtual contains(Key key) -> bool = 0;

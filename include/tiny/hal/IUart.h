@@ -14,6 +14,7 @@ namespace tiny
   class IUart
   {
    public:
+    virtual ~IUart(){};
     auto virtual send(uint8_t byte) -> void = 0;
     auto virtual on_send_complete() -> IEvent<void> = 0;
     auto virtual on_receive() -> IEvent<uint8_t> = 0;

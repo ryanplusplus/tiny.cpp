@@ -11,6 +11,7 @@ namespace tiny
   class IDigitalOutput
   {
    public:
+    virtual ~IDigitalOutput(){};
     auto virtual write(bool state) -> void = 0;
   };
 }

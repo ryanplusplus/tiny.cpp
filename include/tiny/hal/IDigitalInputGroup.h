@@ -16,6 +16,7 @@ namespace tiny
     typedef uint8_t Channel;
 
    public:
+    virtual ~IDigitalInputGroup(){};
     auto virtual read(Channel channel) -> bool = 0;
   };
 }

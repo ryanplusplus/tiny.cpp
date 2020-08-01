@@ -13,6 +13,8 @@ namespace tiny
   class II2c
   {
    public:
+    virtual ~II2c(){};
+
     auto virtual write(
       uint8_t address,
       bool prepare_for_restart,

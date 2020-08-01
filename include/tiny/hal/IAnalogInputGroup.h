@@ -10,13 +10,14 @@
 
 namespace tiny
 {
-  class IAnalogOutput
+  class IAnalogInputGroup
   {
    public:
     typedef uint8_t Channel;
     typedef uint16_t Counts;
 
    public:
+    virtual ~IAnalogInputGroup(){};
     auto virtual read(Channel channel) -> Counts = 0;
   };
 }

@@ -18,6 +18,7 @@ namespace tiny
     typedef uint16_t TickCount;
 
    public:
+    virtual ~ITimeSource(){};
     auto virtual ticks() -> TickCount = 0;
   };
 }

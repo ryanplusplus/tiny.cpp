@@ -16,6 +16,7 @@ namespace tiny
     typedef uint8_t Channel;
 
    public:
+    virtual ~IDigitalOutputGroup(){};
     auto virtual write(Channel channel, bool state) -> void;
   };
 }
