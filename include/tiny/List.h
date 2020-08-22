@@ -20,13 +20,10 @@
 #include <cstdbool>
 #include <cstdint>
 
-namespace tiny
-{
-  class List
-  {
+namespace tiny {
+  class List {
    public:
-    class Node
-    {
+    class Node {
       friend class List;
 
      public:
@@ -69,8 +66,7 @@ namespace tiny
     Node head;
 
    public:
-    class Iterator
-    {
+    class Iterator {
      public:
       Iterator(Node* current)
         : current(current), next(current->next)

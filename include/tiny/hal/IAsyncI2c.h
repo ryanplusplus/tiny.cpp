@@ -8,10 +8,8 @@
 
 #include <cstdint>
 
-namespace tiny
-{
-  class IAsyncI2c
-  {
+namespace tiny {
+  class IAsyncI2c {
    public:
     typedef void (*Callback)(void* context, bool success);
 

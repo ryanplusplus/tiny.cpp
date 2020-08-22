@@ -9,11 +9,9 @@
 
 #include "tiny/List.h"
 
-namespace tiny
-{
+namespace tiny {
   template <typename Args>
-  class EventSubscription
-  {
+  class EventSubscription {
    public:
     typedef void (*Callback)(void* context, const Args* args);
 

@@ -8,10 +8,8 @@
 
 #include <cstdint>
 
-namespace tiny
-{
-  class IAsyncSpi
-  {
+namespace tiny {
+  class IAsyncSpi {
    public:
     typedef void (*Callback)(void* context);
 

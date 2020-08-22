@@ -8,10 +8,8 @@
 
 #include "tiny/ITimeSource.h"
 
-namespace tiny
-{
-  class TimeSourceDouble : public ITimeSource
-  {
+namespace tiny {
+  class TimeSourceDouble : public ITimeSource {
    public:
     TimeSourceDouble()
       : _ticks()

@@ -9,10 +9,8 @@
 #include <cstdint>
 #include "tiny/IEvent.h"
 
-namespace tiny
-{
-  class IMessageBus
-  {
+namespace tiny {
+  class IMessageBus {
    public:
     typedef uint16_t Message;
 

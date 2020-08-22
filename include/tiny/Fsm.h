@@ -16,17 +16,14 @@
 #include <cstddef>
 #include <cstdint>
 
-namespace tiny
-{
-  enum FsmSignal : uint8_t
-  {
+namespace tiny {
+  enum FsmSignal : uint8_t {
     entry,
     exit,
     user_start
   };
 
-  class Fsm
-  {
+  class Fsm {
    public:
     typedef void (*State)(void* context, uint8_t signal, const void* data);
 

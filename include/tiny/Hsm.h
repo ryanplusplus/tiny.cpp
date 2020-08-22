@@ -64,20 +64,16 @@
 #include <cstddef>
 #include <cstdint>
 
-namespace tiny
-{
-  enum HsmSignal : uint8_t
-  {
+namespace tiny {
+  enum HsmSignal : uint8_t {
     entry,
     exit,
     user_start
   };
 
-  class Hsm
-  {
+  class Hsm {
    public:
-    enum class Result : uint8_t
-    {
+    enum class Result : uint8_t {
       deferred,
       consumed
     };

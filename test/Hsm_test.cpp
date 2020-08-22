@@ -22,8 +22,7 @@
 
 using namespace tiny;
 
-enum State : uint8_t
-{
+enum State : uint8_t {
   state_a,
   state_b,
   state_c,
@@ -92,8 +91,7 @@ TEST_GROUP(Hsm)
   uint16_t context;
   Hsm* hsm;
 
-  enum
-  {
+  enum {
     signal_1 = HsmSignal::user_start,
     signal_2
   };

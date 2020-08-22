@@ -111,6 +111,13 @@ TEST_GROUP(TimerGroup)
     after_time_passes_and_the_group_is_run(1);
   }
 
+  void should_run_and_indicate_that_the_next_timer_will_be_ready_in(TimerTicks ticks)
+  {
+    mock().disable();
+    CHECK_EQUAL(ticks, group.run());
+    mock().enable();
+  }
+
   void timer_should_not_be_running(Timer * timer)
   {
     CHECK_FALSE(group.is_running(timer));
@@ -119,20 +126,6 @@ TEST_GROUP(TimerGroup)
   void timer_should_be_running(Timer * timer)
   {
     CHECK_TRUE(group.is_running(timer));
-  }
-
-  void should_indicate_that_a_callback_was_invoked_during_run()
-  {
-    mock().disable();
-    CHECK_TRUE(group.run());
-    mock().enable();
-  }
-
-  void should_indicate_that_a_callback_was_not_invoked_during_run()
-  {
-    mock().disable();
-    CHECK_FALSE(group.run());
-    mock().enable();
   }
 
   void remaining_timer_for_timer_should_be(Timer * timer, TimerTicks ticks)
@@ -220,16 +213,22 @@ TEST(TimerGroup, should_indicate_whether_a_callback_was_invoked_during_run)
 {
   given_that_timer_has_been_started(&timer_1, 3);
   given_that_timer_has_been_started(&timer_2, 5);
+  given_that_timer_has_been_started(&timer_3, 5);
 
-  should_indicate_that_a_callback_was_not_invoked_during_run();
+  should_run_and_indicate_that_the_next_timer_will_be_ready_in(3);
 
-  after(3);
-  should_indicate_that_a_callback_was_invoked_during_run();
-  should_indicate_that_a_callback_was_not_invoked_during_run();
+  after(1);
+  should_run_and_indicate_that_the_next_timer_will_be_ready_in(2);
+
+  after(1);
+  should_run_and_indicate_that_the_next_timer_will_be_ready_in(1);
+
+  after(1);
+  should_run_and_indicate_that_the_next_timer_will_be_ready_in(2);
 
   after(2);
-  should_indicate_that_a_callback_was_invoked_during_run();
-  should_indicate_that_a_callback_was_not_invoked_during_run();
+  should_run_and_indicate_that_the_next_timer_will_be_ready_in(0);
+  should_run_and_indicate_that_the_next_timer_will_be_ready_in(0xFFFF);
 }
 
 TEST(TimerGroup, should_indicate_whether_a_timer_is_running)

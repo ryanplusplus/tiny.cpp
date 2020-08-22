@@ -8,10 +8,8 @@
 
 #include <cstdint>
 
-namespace
-{
-  class IAnalogInput
-  {
+namespace {
+  class IAnalogInput {
    public:
     typedef uint16_t Counts;
 

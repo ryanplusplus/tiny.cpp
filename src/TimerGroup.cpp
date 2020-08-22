@@ -3,6 +3,7 @@
  * @brief
  */
 
+#include <limits>
 #include "tiny/TimerGroup.h"
 
 using namespace tiny;
@@ -17,28 +18,32 @@ TimerGroup::TimerGroup(ITimeSource* time_source)
 {
 }
 
-auto TimerGroup::run() -> bool
+auto TimerGroup::run() -> TimerTicks
 {
   auto current_ticks = this->time_source->ticks();
   auto delta = current_ticks - this->last_ticks;
   this->last_ticks = current_ticks;
 
   auto invoked_callback = false;
+  auto next_ready = std::numeric_limits<TimerTicks>::max();
 
-  for(auto i = this->timers.begin(); i != this->timers.end(); ++i)
-  {
+  for(auto i = this->timers.begin(); i != this->timers.end(); ++i) {
     auto timer = reinterpret_cast<Timer*>(*i);
 
-    if(delta < timer->remaining_ticks)
-    {
+    if(delta < timer->remaining_ticks) {
       timer->remaining_ticks -= delta;
+
+      if(timer->remaining_ticks < next_ready) {
+        next_ready = timer->remaining_ticks;
+      }
     }
-    else
-    {
+    else {
       timer->remaining_ticks = 0;
 
-      if(!invoked_callback)
-      {
+      if(invoked_callback) {
+        next_ready = 0;
+      }
+      else {
         invoked_callback = true;
         this->timers.remove(*i);
         timer->callback(timer->context, this);
@@ -46,7 +51,7 @@ auto TimerGroup::run() -> bool
     }
   }
 
-  return invoked_callback;
+  return next_ready;
 }
 
 auto TimerGroup::stop(Timer* timer) -> void

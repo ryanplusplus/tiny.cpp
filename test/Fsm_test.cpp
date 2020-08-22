@@ -27,8 +27,7 @@ TEST_GROUP(Fsm)
   uint8_t context;
   Fsm fsm{state_dummy, &context};
 
-  enum
-  {
+  enum {
     signal_1 = FsmSignal::user_start,
     signal_2
   };

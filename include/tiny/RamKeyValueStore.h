@@ -17,10 +17,8 @@
 #include "tiny/Event.h"
 #include "tiny/RamKeyValueStoreMacros.h"
 
-namespace tiny
-{
-  class RamKeyValueStore : public IKeyValueStore
-  {
+namespace tiny {
+  class RamKeyValueStore : public IKeyValueStore {
    public:
     typedef struct
     {

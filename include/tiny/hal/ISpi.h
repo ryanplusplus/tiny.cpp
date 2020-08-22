@@ -8,10 +8,8 @@
 
 #include <cstdint>
 
-namespace tiny
-{
-  class ISpi
-  {
+namespace tiny {
+  class ISpi {
    public:
     virtual ~ISpi(){};
 

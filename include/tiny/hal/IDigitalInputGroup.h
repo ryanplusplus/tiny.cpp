@@ -8,10 +8,8 @@
 
 #include <cstdint>
 
-namespace tiny
-{
-  class IDigitalInputGroup
-  {
+namespace tiny {
+  class IDigitalInputGroup {
    public:
     typedef uint8_t Channel;
 

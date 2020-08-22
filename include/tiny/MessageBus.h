@@ -9,10 +9,8 @@
 #include "tiny/IMessageBus.h"
 #include "tiny/Event.h"
 
-namespace tiny
-{
-  class MessageBus : public IMessageBus
-  {
+namespace tiny {
+  class MessageBus : public IMessageBus {
    public:
     MessageBus();
     auto send(Message message, const void* data) -> void;

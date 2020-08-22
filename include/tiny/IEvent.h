@@ -8,11 +8,9 @@
 
 #include "tiny/EventSubscription.h"
 
-namespace tiny
-{
+namespace tiny {
   template <typename Args>
-  class IEvent
-  {
+  class IEvent {
    public:
     virtual ~IEvent(){};
     auto virtual subscribe(EventSubscription<Args>* subscription) -> void = 0;

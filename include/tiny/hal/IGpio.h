@@ -8,13 +8,10 @@
 
 #include <cstdint>
 
-namespace tiny
-{
-  class IGpio
-  {
+namespace tiny {
+  class IGpio {
    public:
-    enum class Direction : uint8_t
-    {
+    enum class Direction : uint8_t {
       Input,
       Output
     };

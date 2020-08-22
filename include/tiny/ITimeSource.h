@@ -10,10 +10,8 @@
 
 #include <cstdint>
 
-namespace tiny
-{
-  class ITimeSource
-  {
+namespace tiny {
+  class ITimeSource {
    public:
     typedef uint16_t TickCount;
 

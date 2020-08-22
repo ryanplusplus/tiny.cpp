@@ -9,10 +9,8 @@
 #include <cstdint>
 #include "tiny/IEvent.h"
 
-namespace tiny
-{
-  class IUart
-  {
+namespace tiny {
+  class IUart {
    public:
     virtual ~IUart(){};
     auto virtual send(uint8_t byte) -> void = 0;

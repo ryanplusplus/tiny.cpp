@@ -8,10 +8,8 @@
 
 #include <cstdint>
 
-namespace tiny
-{
-  class Crc16
-  {
+namespace tiny {
+  class Crc16 {
    public:
     auto static calculate(uint16_t seed, uint8_t byte) -> uint16_t;
   };

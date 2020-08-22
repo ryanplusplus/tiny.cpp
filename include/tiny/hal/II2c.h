@@ -8,10 +8,8 @@
 
 #include <cstdint>
 
-namespace tiny
-{
-  class II2c
-  {
+namespace tiny {
+  class II2c {
    public:
     virtual ~II2c(){};
 

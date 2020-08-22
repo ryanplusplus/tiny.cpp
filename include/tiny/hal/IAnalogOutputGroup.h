@@ -8,10 +8,8 @@
 
 #include <cstdint>
 
-namespace tiny
-{
-  class IAnalogOutputGroup
-  {
+namespace tiny {
+  class IAnalogOutputGroup {
    public:
     typedef uint8_t Channel;
     typedef uint16_t Counts;

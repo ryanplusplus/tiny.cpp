@@ -24,8 +24,7 @@ auto List::push_back(Node* node) -> void
 {
   Node* current = this->head.next;
 
-  while(current->next != &this->head)
-  {
+  while(current->next != &this->head) {
     current = current->next;
   }
 
@@ -45,8 +44,7 @@ auto List::pop_back() -> Node*
   Node* previous = this->head.next;
   Node* current = this->head.next;
 
-  while(current->next != &this->head)
-  {
+  while(current->next != &this->head) {
     previous = current;
     current = current->next;
   }
@@ -60,10 +58,8 @@ auto List::remove(Node* node) -> void
   Node* previous = &this->head;
   Node* current = this->head.next;
 
-  while(current != &this->head)
-  {
-    if(current == node)
-    {
+  while(current != &this->head) {
+    if(current == node) {
       previous->next = current->next;
       return;
     }
@@ -78,8 +74,7 @@ auto List::count() -> uint16_t
   Node* current = this->head.next;
   uint16_t count = 0;
 
-  while(current != &this->head)
-  {
+  while(current != &this->head) {
     count++;
     current = current->next;
   }
@@ -91,10 +86,8 @@ auto List::contains(Node* node) -> bool
 {
   Node* current = this->head.next;
 
-  while(current != &this->head)
-  {
-    if(current == node)
-    {
+  while(current != &this->head) {
+    if(current == node) {
       return true;
     }
 
@@ -109,8 +102,7 @@ auto List::index_of(Node* node) -> uint16_t
   Node* current = this->head.next;
   uint16_t index = 0;
 
-  while(current != node)
-  {
+  while(current != node) {
     index++;
     current = current->next;
   }

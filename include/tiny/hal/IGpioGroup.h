@@ -9,15 +9,12 @@
 #include <cstdint>
 #include "tiny/hal/IGpio.h"
 
-namespace tiny
-{
-  class IGpioGroup
-  {
+namespace tiny {
+  class IGpioGroup {
    public:
     typedef uint8_t Channel;
 
-    enum class Direction : uint8_t
-    {
+    enum class Direction : uint8_t {
       Input,
       Output
     };

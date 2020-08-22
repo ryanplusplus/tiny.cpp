@@ -9,10 +9,8 @@
 #include <cstdint>
 #include "tiny/IEvent.h"
 
-namespace tiny
-{
-  class IKeyValueStore
-  {
+namespace tiny {
+  class IKeyValueStore {
    public:
     typedef uint8_t Key;
 

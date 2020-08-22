@@ -27,8 +27,7 @@ auto RamKeyValueStore::write(Key key, const void* value) -> void
   uint8_t value_size = this->size(key);
   void* location = (uint8_t*)this->storage + this->offset(key);
 
-  if(memcmp(location, value, value_size))
-  {
+  if(memcmp(location, value, value_size)) {
     memcpy(location, value, value_size);
 
     OnChangeArgs args{key, value};

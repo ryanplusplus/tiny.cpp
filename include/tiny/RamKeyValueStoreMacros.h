@@ -39,8 +39,7 @@
 #define ram_key_value_pairs_expand_as_enumeration(_key, value_type) _key,
 
 #define enumerate_ram_key_value_pairs(_key_value_pairs)         \
-  enum                                                          \
-  {                                                             \
+  enum {                                                        \
     _key_value_pairs(ram_key_value_pairs_expand_as_enumeration) \
   }
 

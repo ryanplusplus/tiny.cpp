@@ -10,11 +10,9 @@
 #include "tiny/IEvent.h"
 #include "tiny/List.h"
 
-namespace tiny
-{
+namespace tiny {
   template <typename Args>
-  class Event : public IEvent<Args>
-  {
+  class Event : public IEvent<Args> {
    public:
     Event()
       : subscribers()
@@ -23,8 +21,7 @@ namespace tiny
 
     auto publish(const Args* args) -> void
     {
-      for(auto i = this->subscribers.begin(); i != this->subscribers.end(); ++i)
-      {
+      for(auto i = this->subscribers.begin(); i != this->subscribers.end(); ++i) {
         reinterpret_cast<EventSubscription<Args>*>(*i)->publish(args);
       }
     }

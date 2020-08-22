@@ -8,10 +8,8 @@
 
 #include <cstdint>
 
-namespace tiny
-{
-  class IPwm
-  {
+namespace tiny {
+  class IPwm {
    public:
     typedef uint16_t DutyCycle;
     typedef uint16_t FrequencyHz;

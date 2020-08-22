@@ -11,11 +11,9 @@
 #include <cstddef>
 #include "tiny/IEvent.h"
 
-namespace tiny
-{
+namespace tiny {
   template <typename Args>
-  class SingleSubscriberEvent : public IEvent<Args>
-  {
+  class SingleSubscriberEvent : public IEvent<Args> {
    public:
     SingleSubscriberEvent()
       : subscription()
@@ -24,8 +22,7 @@ namespace tiny
 
     auto publish(const Args* args) const -> void
     {
-      if(this->subscription)
-      {
+      if(this->subscription) {
         this->subscription->publish(args);
       }
     }
@@ -37,8 +34,7 @@ namespace tiny
 
     auto unsubscribe(EventSubscription<Args>* subscription) -> void
     {
-      if(this->subscription == subscription)
-      {
+      if(this->subscription == subscription) {
         this->subscription = nullptr;
       }
     }

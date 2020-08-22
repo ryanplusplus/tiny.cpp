@@ -38,7 +38,7 @@ namespace tiny
    public:
     TimerGroup(ITimeSource* time_source);
 
-    auto run() -> bool;
+    auto run() -> TimerTicks;
     auto stop(Timer* timer) -> void;
     auto is_running(Timer* timer) -> bool;
     auto remaining_ticks(Timer* timer) -> TimerTicks;
