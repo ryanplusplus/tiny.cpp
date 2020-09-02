@@ -34,6 +34,8 @@ namespace tiny {
 
    public:
     RamKeyValueStore(const Configuration* configuration, void* storage);
+    RamKeyValueStore(const RamKeyValueStore&) = delete;
+    bool operator=(const RamKeyValueStore&) = delete;
     auto read(Key key, void* value) -> void;
     auto write(Key key, const void* value) -> void;
     auto contains(Key key) -> bool;

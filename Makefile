@@ -19,7 +19,7 @@ INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 CFLAGS += -std=c17
 CPPFLAGS += -fsanitize=address -fno-omit-frame-pointer
 CPPFLAGS += $(INC_FLAGS) -MMD -MP -g -Wall -Wextra -Wcast-qual -Werror
-CXXFLAGS += -std=c++17
+CXXFLAGS += -std=c++17 -Weffc++
 LDFLAGS := -fsanitize=address -lstdc++ -lCppUTest -lCppUTestExt -lm
 
 .PHONY: test

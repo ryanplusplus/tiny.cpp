@@ -20,6 +20,9 @@ namespace tiny {
     {
     }
 
+    SingleSubscriberEvent(const SingleSubscriberEvent&) = delete;
+    bool operator=(const SingleSubscriberEvent&) = delete;
+
     auto publish(const Args* args) const -> void
     {
       if(this->subscription) {

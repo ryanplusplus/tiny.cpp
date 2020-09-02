@@ -17,15 +17,8 @@ TEST_GROUP(Fsm)
 {
   typedef void (*State)(uint8_t*, uint8_t, const void*);
 
-  static void state_dummy(uint8_t * context, uint8_t signal, const void* data)
-  {
-    (void)context;
-    (void)signal;
-    (void)data;
-  };
-
   uint8_t context;
-  Fsm fsm{state_dummy, &context};
+  Fsm* fsm;
 
   enum {
     signal_1 = FsmSignal::user_start,
@@ -35,6 +28,11 @@ TEST_GROUP(Fsm)
   void setup()
   {
     mock().strictOrder();
+  }
+
+  void teardown()
+  {
+    delete fsm;
   }
 
   static void state_a(uint8_t * context, uint8_t signal, const void* data)
@@ -65,7 +63,7 @@ TEST_GROUP(Fsm)
 
   void when_the_fsm_is_initialized_with_state(State state)
   {
-    fsm = Fsm(state, &context);
+    fsm = new Fsm(state, &context);
   }
 
   void given_that_the_fsm_has_been_initialized_with_state(State state)
@@ -77,7 +75,7 @@ TEST_GROUP(Fsm)
 
   void when_the_fsm_is_transitioned_to(State state)
   {
-    fsm.transition(state);
+    fsm->transition(state);
   }
 
   void given_that_the_fsm_has_been_transitioned_to(State state)
@@ -89,7 +87,7 @@ TEST_GROUP(Fsm)
 
   void when_signal_is_sent(uint8_t signal, const void* data)
   {
-    fsm.send_signal(signal, data);
+    fsm->send_signal(signal, data);
   }
 };
 

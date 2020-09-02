@@ -93,10 +93,11 @@ namespace tiny {
         return !operator==(other);
       }
 
-      void operator++()
+      Iterator& operator++()
       {
         this->current = this->next;
         this->next = this->current->next;
+        return *this;
       }
 
       Node* operator*() const
