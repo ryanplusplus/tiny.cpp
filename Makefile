@@ -9,7 +9,9 @@ SRC_DIRS ?= \
   src \
   test \
 
-SRCS := $(shell find $(SRC_DIRS) -name *.cpp -or -name *.c -or -name *.s)
+SRC_FILES ?=
+
+SRCS := $(SRC_FILES) $(shell find $(SRC_DIRS) -name *.cpp -or -name *.c -or -name *.s)
 OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
 DEPS := $(OBJS:.o=.d)
 
@@ -20,7 +22,8 @@ CFLAGS += -std=c17
 CPPFLAGS += -fsanitize=address -fno-omit-frame-pointer
 CPPFLAGS += $(INC_FLAGS) -MMD -MP -g -Wall -Wextra -Wcast-qual -Werror
 CXXFLAGS += -std=c++17 -Weffc++
-LDFLAGS := -fsanitize=address -lstdc++ -lCppUTest -lCppUTestExt -lm
+LDFLAGS := -fsanitize=address
+LDLIBS := -lstdc++ -lCppUTest -lCppUTestExt -lm
 
 .PHONY: test
 test: $(BUILD_DIR)/$(TARGET)
@@ -30,7 +33,7 @@ test: $(BUILD_DIR)/$(TARGET)
 $(BUILD_DIR)/$(TARGET): $(OBJS)
 	@echo Linking $@...
 	@$(MKDIR_P) $(dir $@)
-	@$(CC) $(OBJS) -o $@ $(LDFLAGS)
+	@$(CC) $(LDFLAGS) $(OBJS) -o $@ $(LDLIBS)
 
 $(BUILD_DIR)/%.s.o: %.s
 	@echo Assembling $<...

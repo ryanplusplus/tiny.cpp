@@ -10,14 +10,12 @@
 #include "tiny/ITimeSource.h"
 #include "tiny/List.h"
 
-namespace tiny
-{
+namespace tiny {
   typedef uint16_t TimerTicks;
 
   class TimerGroup;
 
-  class Timer
-  {
+  class Timer {
     friend class TimerGroup;
 
    public:
@@ -33,8 +31,7 @@ namespace tiny
     TimerTicks remaining_ticks;
   };
 
-  class TimerGroup
-  {
+  class TimerGroup {
    public:
     TimerGroup(ITimeSource* time_source);
 
