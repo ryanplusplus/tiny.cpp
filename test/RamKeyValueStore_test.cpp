@@ -3,7 +3,7 @@
  * @brief
  */
 
-#include <string.h>
+#include <cstring>
 #include "tiny/RamKeyValueStore.h"
 #include "tiny/utils.h"
 #include "CppUTest/TestHarness.h"
