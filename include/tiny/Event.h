@@ -19,22 +19,22 @@ namespace tiny {
     {
     }
 
-    auto publish(const Args* args) -> void
+    auto publish(const Args& args) -> void
     {
       for(auto i = this->subscribers.begin(); i != this->subscribers.end(); ++i) {
         reinterpret_cast<EventSubscription<Args>*>(*i)->publish(args);
       }
     }
 
-    auto subscribe(EventSubscription<Args>* subscription) -> void
+    auto subscribe(EventSubscription<Args>& subscription) -> void
     {
-      this->subscribers.remove(reinterpret_cast<List::Node*>(subscription));
-      this->subscribers.push_back(reinterpret_cast<List::Node*>(subscription));
+      this->subscribers.remove(reinterpret_cast<List::Node*>(&subscription));
+      this->subscribers.push_back(reinterpret_cast<List::Node*>(&subscription));
     }
 
-    auto unsubscribe(EventSubscription<Args>* subscription) -> void
+    auto unsubscribe(EventSubscription<Args>& subscription) -> void
     {
-      this->subscribers.remove(reinterpret_cast<List::Node*>(subscription));
+      this->subscribers.remove(reinterpret_cast<List::Node*>(&subscription));
     }
 
    private:

@@ -8,10 +8,10 @@
 
 using namespace tiny;
 
-RamKeyValueStore::RamKeyValueStore(const Configuration* configuration, void* storage)
+RamKeyValueStore::RamKeyValueStore(const Configuration& configuration, void* storage)
   : _on_change(), configuration(configuration), storage(storage)
 {
-  Key last_key = this->configuration->key_value_pair_count - 1;
+  Key last_key = this->configuration.key_value_pair_count - 1;
   uint16_t last_offset = this->offset(last_key);
   uint8_t last_size = this->size(last_key);
   memset(this->storage, 0, last_offset + last_size);
@@ -31,26 +31,26 @@ auto RamKeyValueStore::write(Key key, const void* value) -> void
     memcpy(location, value, value_size);
 
     OnChangeArgs args{key, value};
-    this->_on_change.publish(&args);
+    this->_on_change.publish(args);
   }
 }
 
 auto RamKeyValueStore::contains(Key key) -> bool
 {
-  return key < this->configuration->key_value_pair_count;
+  return key < this->configuration.key_value_pair_count;
 }
 
 auto RamKeyValueStore::size(Key key) -> uint8_t
 {
-  return this->configuration->key_value_pairs[key].size;
+  return this->configuration.key_value_pairs[key].size;
 }
 
-auto RamKeyValueStore::on_change() -> IEvent<OnChangeArgs>*
+auto RamKeyValueStore::on_change() -> IEvent<OnChangeArgs>&
 {
-  return &this->_on_change;
+  return this->_on_change;
 }
 
 auto RamKeyValueStore::offset(Key key) -> uint16_t
 {
-  return this->configuration->key_value_pairs[key].value_offset;
+  return this->configuration.key_value_pairs[key].value_offset;
 }

@@ -16,7 +16,7 @@ TEST_GROUP(SingleSubscriberEvent)
   SingleSubscriberEvent<uint8_t> event;
   EventSubscription<uint8_t> subscription{&context, subscriber};
 
-  static void subscriber(uint16_t * context, const uint8_t* args)
+  static void subscriber(uint16_t * context, const uint8_t& args)
   {
     mock()
       .actualCall("subscriber")
@@ -27,24 +27,24 @@ TEST_GROUP(SingleSubscriberEvent)
 
 TEST(SingleSubscriberEvent, should_do_nothing_when_published_with_no_subscribers)
 {
-  event.publish((const uint8_t*)0x1234);
+  event.publish((uint8_t)0x12);
 }
 
 TEST(SingleSubscriberEvent, should_publish_to_all_subscribers)
 {
-  event.subscribe(&subscription);
+  event.subscribe(subscription);
 
   mock()
     .expectOneCall("subscriber")
     .withParameter("context", &context)
-    .withParameter("args", (const void*)0x1234);
-  event.publish((const uint8_t*)0x1234);
+    .withParameter("args", (uint8_t)0x12);
+  event.publish((uint8_t)0x12);
 }
 
 TEST(SingleSubscriberEvent, should_not_publish_to_subscribers_that_have_unsubscribed)
 {
-  event.subscribe(&subscription);
-  event.unsubscribe(&subscription);
+  event.subscribe(subscription);
+  event.unsubscribe(subscription);
 
-  event.publish((const uint8_t*)0x1234);
+  event.publish((uint8_t)0x12);
 }

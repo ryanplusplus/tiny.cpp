@@ -19,7 +19,7 @@ namespace tiny {
     friend class TimerGroup;
 
    public:
-    typedef void (*Callback)(void* context, TimerGroup* group);
+    typedef void (*Callback)(void* context, TimerGroup& group);
 
    public:
     Timer();
@@ -33,24 +33,24 @@ namespace tiny {
 
   class TimerGroup {
    public:
-    TimerGroup(ITimeSource* time_source);
+    TimerGroup(ITimeSource& time_source);
 
     auto run() -> TimerTicks;
-    auto stop(Timer* timer) -> void;
-    auto is_running(Timer* timer) -> bool;
-    auto remaining_ticks(Timer* timer) -> TimerTicks;
+    auto stop(Timer& timer) -> void;
+    auto is_running(Timer& timer) -> bool;
+    auto remaining_ticks(Timer& timer) -> TimerTicks;
 
     template <typename Context>
-    auto start(Timer* timer, TimerTicks ticks, Context* context, void (*callback)(Context* context, TimerGroup* group)) -> void
+    auto start(Timer& timer, TimerTicks ticks, Context* context, void (*callback)(Context* context, TimerGroup& group)) -> void
     {
       this->_start(timer, ticks, reinterpret_cast<void*>(context), reinterpret_cast<Timer::Callback>(callback));
     }
 
    private:
-    auto _start(Timer* timer, TimerTicks ticks, void* context, Timer::Callback callback) -> void;
+    auto _start(Timer& timer, TimerTicks ticks, void* context, Timer::Callback callback) -> void;
 
    private:
-    ITimeSource* time_source;
+    ITimeSource& time_source;
     List timers;
     ITimeSource::TickCount last_ticks;
   };

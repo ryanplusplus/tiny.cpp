@@ -99,7 +99,7 @@ namespace tiny {
     template <typename Context>
     Hsm(
       Context* context,
-      const Configuration* configuration,
+      const Configuration& configuration,
       Result (*initial)(Context* context, uint8_t signal, const void* data))
       : context(reinterpret_cast<void*>(context)),
         configuration(configuration),
@@ -127,7 +127,7 @@ namespace tiny {
 
    private:
     void* context;
-    const Configuration* configuration;
+    const Configuration& configuration;
     State current;
   };
 }

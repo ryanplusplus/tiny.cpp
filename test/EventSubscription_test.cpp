@@ -15,7 +15,7 @@ TEST_GROUP(EventSubscription)
   uint8_t context;
   EventSubscription<uint16_t> subscription{&context, callback};
 
-  static void callback(uint8_t * context, const uint16_t* args)
+  static void callback(uint8_t * context, const uint16_t& args)
   {
     mock()
       .actualCall("callback")
@@ -29,7 +29,7 @@ TEST(EventSubscription, should_invoke_callback_when_published)
   mock()
     .expectOneCall("callback")
     .withParameter("context", &context)
-    .withParameter("args", (const uint16_t*)0x1234);
+    .withParameter("args", (uint16_t)0x1234);
 
-  subscription.publish((const uint16_t*)0x1234);
+  subscription.publish((uint16_t)0x1234);
 }

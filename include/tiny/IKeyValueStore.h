@@ -26,7 +26,7 @@ namespace tiny {
     auto virtual write(Key key, const void* value) -> void = 0;
     auto virtual contains(Key key) -> bool = 0;
     auto virtual size(Key key) -> uint8_t = 0;
-    auto virtual on_change() -> IEvent<OnChangeArgs>* = 0;
+    auto virtual on_change() -> IEvent<OnChangeArgs>& = 0;
   };
 }
 

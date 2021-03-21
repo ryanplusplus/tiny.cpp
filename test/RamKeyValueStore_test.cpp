@@ -34,16 +34,16 @@ static const RamKeyValueStore::Configuration configuration = {
 TEST_GROUP(ram_key_value_store)
 {
   Storage storage{0xA5, 0xA5, 0xA5, 0xA5, 0xA5};
-  RamKeyValueStore kvs{&configuration, &storage};
+  RamKeyValueStore kvs{configuration, &storage};
   EventSubscription<RamKeyValueStore::OnChangeArgs> on_change_subscription{(void*)nullptr, value_changed};
 
-  static void value_changed(void* context, const RamKeyValueStore::OnChangeArgs* args)
+  static void value_changed(void* context, const RamKeyValueStore::OnChangeArgs& args)
   {
     (void)context;
     mock()
       .actualCall("value_changed")
-      .withParameter("key", args->key)
-      .withParameter("value", *(const uint32_t*)args->value);
+      .withParameter("key", args.key)
+      .withParameter("value", *(const uint32_t*)args.value);
   }
 
   void should_contain_key(IKeyValueStore::Key key)
@@ -87,7 +87,7 @@ TEST_GROUP(ram_key_value_store)
 
   void given_that_an_on_change_subscription_is_active()
   {
-    kvs.on_change()->subscribe(&on_change_subscription);
+    kvs.on_change().subscribe(on_change_subscription);
   }
 
   void an_on_change_publication_should_be_received(IKeyValueStore::Key key, uint32_t value)

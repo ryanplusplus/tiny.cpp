@@ -35,9 +35,9 @@ auto Hsm::_transition(State next) -> void
 
 auto Hsm::parent_of(State child) -> State
 {
-  for(uint8_t i = 0; i < this->configuration->state_count; i++) {
-    if(this->configuration->states[i].state == child) {
-      return this->configuration->states[i].parent;
+  for(uint8_t i = 0; i < this->configuration.state_count; i++) {
+    if(this->configuration.states[i].state == child) {
+      return this->configuration.states[i].parent;
     }
   }
 

@@ -14,7 +14,7 @@ namespace tiny {
    public:
     MessageBus();
     auto send(Message message, const void* data) -> void;
-    auto on_receive() -> IEvent<OnReceiveArgs>*;
+    auto on_receive() -> IEvent<OnReceiveArgs>&;
 
    private:
     Event<OnReceiveArgs> _on_receive;

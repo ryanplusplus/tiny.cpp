@@ -17,29 +17,29 @@ TEST_GROUP(MessageBus)
   EventSubscription<MessageBus::OnReceiveArgs> subscription_1{(void*)nullptr, subscriber_1};
   EventSubscription<MessageBus::OnReceiveArgs> subscription_2{(void*)nullptr, subscriber_2};
 
-  static void subscriber_1(void* context, const MessageBus::OnReceiveArgs* args)
+  static void subscriber_1(void* context, const MessageBus::OnReceiveArgs& args)
   {
     (void)context;
     mock()
       .actualCall("subscriber_1")
-      .withParameter("message", args->message)
-      .withParameter("data", args->data);
+      .withParameter("message", args.message)
+      .withParameter("data", args.data);
   }
 
-  static void subscriber_2(void* context, const MessageBus::OnReceiveArgs* args)
+  static void subscriber_2(void* context, const MessageBus::OnReceiveArgs& args)
   {
     (void)context;
     mock()
       .actualCall("subscriber_2")
-      .withParameter("message", args->message)
-      .withParameter("data", args->data);
+      .withParameter("message", args.message)
+      .withParameter("data", args.data);
   }
 };
 
 TEST(MessageBus, should_send_messages_to_all_subscribers)
 {
-  bus.on_receive()->subscribe(&subscription_1);
-  bus.on_receive()->subscribe(&subscription_2);
+  bus.on_receive().subscribe(subscription_1);
+  bus.on_receive().subscribe(subscription_2);
 
   mock()
     .expectOneCall("subscriber_1")

@@ -125,7 +125,7 @@ TEST_GROUP(Hsm)
 
   void when_the_hsm_is_initialized_with_state(State state)
   {
-    hsm = new Hsm(&context, &configuration, states[state]);
+    hsm = new Hsm(&context, configuration, states[state]);
   }
 
   void given_that_the_hsm_has_been_initialized_with_state(State state)

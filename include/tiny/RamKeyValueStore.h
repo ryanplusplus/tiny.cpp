@@ -33,21 +33,21 @@ namespace tiny {
     } Configuration;
 
    public:
-    RamKeyValueStore(const Configuration* configuration, void* storage);
+    RamKeyValueStore(const Configuration& configuration, void* storage);
     RamKeyValueStore(const RamKeyValueStore&) = delete;
     bool operator=(const RamKeyValueStore&) = delete;
     auto read(Key key, void* value) -> void;
     auto write(Key key, const void* value) -> void;
     auto contains(Key key) -> bool;
     auto size(Key key) -> uint8_t;
-    auto on_change() -> IEvent<OnChangeArgs>*;
+    auto on_change() -> IEvent<OnChangeArgs>&;
 
    private:
     auto offset(Key key) -> uint16_t;
 
    private:
     Event<IKeyValueStore::OnChangeArgs> _on_change;
-    const Configuration* configuration;
+    const Configuration& configuration;
     void* storage;
   };
 }

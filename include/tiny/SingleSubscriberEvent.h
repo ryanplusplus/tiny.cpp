@@ -23,21 +23,21 @@ namespace tiny {
     SingleSubscriberEvent(const SingleSubscriberEvent&) = delete;
     bool operator=(const SingleSubscriberEvent&) = delete;
 
-    auto publish(const Args* args) const -> void
+    auto publish(const Args& args) const -> void
     {
       if(this->subscription) {
         this->subscription->publish(args);
       }
     }
 
-    auto subscribe(EventSubscription<Args>* subscription) -> void
+    auto subscribe(EventSubscription<Args>& subscription) -> void
     {
-      this->subscription = subscription;
+      this->subscription = &subscription;
     }
 
-    auto unsubscribe(EventSubscription<Args>* subscription) -> void
+    auto unsubscribe(EventSubscription<Args>& subscription) -> void
     {
-      if(this->subscription == subscription) {
+      if(this->subscription == &subscription) {
         this->subscription = nullptr;
       }
     }

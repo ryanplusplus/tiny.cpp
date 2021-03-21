@@ -4,7 +4,7 @@
  */
 
 #include <limits>
-#include "tiny/TimerGroup.h"
+#include "tiny/Timer.h"
 
 using namespace tiny;
 
@@ -13,14 +13,14 @@ Timer::Timer()
 {
 }
 
-TimerGroup::TimerGroup(ITimeSource* time_source)
-  : time_source(time_source), timers(), last_ticks(time_source->ticks())
+TimerGroup::TimerGroup(ITimeSource& time_source)
+  : time_source(time_source), timers(), last_ticks(time_source.ticks())
 {
 }
 
 auto TimerGroup::run() -> TimerTicks
 {
-  auto current_ticks = this->time_source->ticks();
+  auto current_ticks = this->time_source.ticks();
   auto delta = current_ticks - this->last_ticks;
   this->last_ticks = current_ticks;
 
@@ -46,7 +46,7 @@ auto TimerGroup::run() -> TimerTicks
       else {
         invoked_callback = true;
         this->timers.remove(*i);
-        timer->callback(timer->context, this);
+        timer->callback(timer->context, *this);
       }
     }
   }
@@ -54,27 +54,27 @@ auto TimerGroup::run() -> TimerTicks
   return next_ready;
 }
 
-auto TimerGroup::stop(Timer* timer) -> void
+auto TimerGroup::stop(Timer& timer) -> void
 {
-  this->timers.remove(reinterpret_cast<List::Node*>(timer));
+  this->timers.remove(reinterpret_cast<List::Node*>(&timer));
 }
 
-auto TimerGroup::is_running(Timer* timer) -> bool
+auto TimerGroup::is_running(Timer& timer) -> bool
 {
-  return this->timers.contains(reinterpret_cast<List::Node*>(timer));
+  return this->timers.contains(reinterpret_cast<List::Node*>(&timer));
 }
 
-auto TimerGroup::remaining_ticks(Timer* timer) -> TimerTicks
+auto TimerGroup::remaining_ticks(Timer& timer) -> TimerTicks
 {
-  return timer->remaining_ticks;
+  return timer.remaining_ticks;
 }
 
-auto TimerGroup::_start(Timer* timer, TimerTicks ticks, void* context, Timer::Callback callback) -> void
+auto TimerGroup::_start(Timer& timer, TimerTicks ticks, void* context, Timer::Callback callback) -> void
 {
-  timer->context = context;
-  timer->callback = callback;
-  timer->remaining_ticks = ticks;
+  timer.context = context;
+  timer.callback = callback;
+  timer.remaining_ticks = ticks;
 
-  this->timers.remove(reinterpret_cast<List::Node*>(timer));
-  this->timers.push_back(reinterpret_cast<List::Node*>(timer));
+  this->timers.remove(reinterpret_cast<List::Node*>(&timer));
+  this->timers.push_back(reinterpret_cast<List::Node*>(&timer));
 }

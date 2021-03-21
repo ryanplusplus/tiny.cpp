@@ -13,8 +13,8 @@ namespace tiny {
   class IEvent {
    public:
     virtual ~IEvent(){};
-    auto virtual subscribe(EventSubscription<Args>* subscription) -> void = 0;
-    auto virtual unsubscribe(EventSubscription<Args>* subscription) -> void = 0;
+    auto virtual subscribe(EventSubscription<Args>& subscription) -> void = 0;
+    auto virtual unsubscribe(EventSubscription<Args>& subscription) -> void = 0;
   };
 }
 
