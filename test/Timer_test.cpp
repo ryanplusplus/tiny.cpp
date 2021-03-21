@@ -53,6 +53,29 @@ TEST_GROUP(Timer)
     after_timer_with_restart_is_started(timer, ticks);
   }
 
+  static void callback_with_stop(Timer * timer, TimerGroup & group)
+  {
+    callback(timer, group);
+    group.stop(*timer);
+  }
+
+  void given_that_periodic_timer_with_stop_has_been_started(Timer & timer, TimerTicks ticks)
+  {
+    group.start_periodic(timer, ticks, &timer, callback_with_stop);
+  }
+
+  static void callback_with_periodic_restart(Timer * timer, TimerGroup & group)
+  {
+    callback(timer, group);
+    group.start_periodic(*timer, restart_ticks, timer, callback);
+  }
+
+  void given_that_periodic_timer_with_restart_has_been_started(Timer & timer, TimerTicks ticks, TimerTicks _restart_ticks)
+  {
+    restart_ticks = _restart_ticks;
+    group.start_periodic(timer, ticks, &timer, callback_with_periodic_restart);
+  }
+
   void after_timer_is_started(Timer & timer, TimerTicks ticks)
   {
     group.start(timer, ticks, &timer, callback);
@@ -61,6 +84,16 @@ TEST_GROUP(Timer)
   void given_that_timer_has_been_started(Timer & timer, TimerTicks ticks)
   {
     after_timer_is_started(timer, ticks);
+  }
+
+  void after_periodic_timer_is_started(Timer & timer, TimerTicks ticks)
+  {
+    group.start_periodic(timer, ticks, &timer, callback);
+  }
+
+  void given_that_periodic_timer_has_been_started(Timer & timer, TimerTicks ticks)
+  {
+    after_periodic_timer_is_started(timer, ticks);
   }
 
   void after_timer_is_stopped(Timer & timer)
@@ -111,10 +144,11 @@ TEST_GROUP(Timer)
     after_time_passes_and_the_group_is_run(1);
   }
 
-  void should_run_and_indicate_that_the_next_timer_will_be_ready_in(TimerTicks ticks)
+  void should_run_and_indicate_that_the_next_timer_will_be_ready_in(TimerTicks expected)
   {
     mock().disable();
-    CHECK_EQUAL(ticks, group.run());
+    auto actual = group.run();
+    CHECK_EQUAL(expected, actual);
     mock().enable();
   }
 
@@ -196,6 +230,33 @@ TEST(Timer, should_manage_multiple_timers_simultaneously)
   should_invoke_timer_callback_after(timer_1, 4);
 }
 
+TEST(Timer, should_run_periodic_timers)
+{
+  given_that_periodic_timer_has_been_started(timer_1, 7);
+
+  should_invoke_timer_callback_after(timer_1, 7);
+  should_invoke_timer_callback_after(timer_1, 7);
+}
+
+TEST(Timer, should_allow_periodic_timers_to_be_stopped_from_their_callback)
+{
+  given_that_periodic_timer_with_stop_has_been_started(timer_1, 7);
+
+  should_invoke_timer_callback_after(timer_1, 7);
+
+  nothing_should_happen();
+  after(7);
+}
+
+TEST(Timer, should_allow_periodic_timers_to_have_period_changed_in_callback)
+{
+  given_that_periodic_timer_with_restart_has_been_started(timer_1, 7, 5);
+
+  should_invoke_timer_callback_after(timer_1, 7);
+  should_invoke_timer_callback_after(timer_1, 5);
+  should_invoke_timer_callback_after(timer_1, 5);
+}
+
 TEST(Timer, should_invoke_at_most_one_callback_per_run)
 {
   given_that_timer_has_been_started(timer_1, 7);
@@ -229,6 +290,15 @@ TEST(Timer, should_indicate_whether_a_callback_was_invoked_during_run)
   after(2);
   should_run_and_indicate_that_the_next_timer_will_be_ready_in(0);
   should_run_and_indicate_that_the_next_timer_will_be_ready_in(0xFFFF);
+}
+
+TEST(Timer, should_account_for_periodic_timers_when_giving_time_until_next_ready)
+{
+  given_that_periodic_timer_has_been_started(timer_1, 2);
+  given_that_timer_has_been_started(timer_2, 7);
+
+  after(2);
+  should_run_and_indicate_that_the_next_timer_will_be_ready_in(2);
 }
 
 TEST(Timer, should_indicate_whether_a_timer_is_running)

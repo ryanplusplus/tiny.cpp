@@ -7,6 +7,7 @@
 #define TimerGroup_h
 
 #include <cstdint>
+#include <cstdbool>
 #include "tiny/ITimeSource.h"
 #include "tiny/List.h"
 
@@ -28,7 +29,9 @@ namespace tiny {
     List::Node node;
     void* context;
     Callback callback;
+    TimerTicks start_ticks;
     TimerTicks remaining_ticks;
+    bool periodic;
   };
 
   class TimerGroup {
@@ -43,16 +46,24 @@ namespace tiny {
     template <typename Context>
     auto start(Timer& timer, TimerTicks ticks, Context* context, void (*callback)(Context* context, TimerGroup& group)) -> void
     {
-      this->_start(timer, ticks, reinterpret_cast<void*>(context), reinterpret_cast<Timer::Callback>(callback));
+      this->_start(timer, ticks, reinterpret_cast<void*>(context), reinterpret_cast<Timer::Callback>(callback), false);
+    }
+
+    template <typename Context>
+    auto start_periodic(Timer& timer, TimerTicks ticks, Context* context, void (*callback)(Context* context, TimerGroup& group)) -> void
+    {
+      this->_start(timer, ticks, reinterpret_cast<void*>(context), reinterpret_cast<Timer::Callback>(callback), true);
     }
 
    private:
-    auto _start(Timer& timer, TimerTicks ticks, void* context, Timer::Callback callback) -> void;
+    auto _start(Timer& timer, TimerTicks ticks, void* context, Timer::Callback callback, bool periodic) -> void;
+    auto add_timer(Timer& timer) -> void;
 
    private:
     ITimeSource& time_source;
     List timers;
     ITimeSource::TickCount last_ticks;
+    TimerTicks next_ready;
   };
 }
 
