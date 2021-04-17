@@ -19,7 +19,7 @@ TEST_GROUP(MessageBus)
 
   static void subscriber_1(void* context, const MessageBus::OnReceiveArgs& args)
   {
-    (void)context;
+    static_cast<void>(context);
     mock()
       .actualCall("subscriber_1")
       .withParameter("message", args.message)
@@ -28,7 +28,7 @@ TEST_GROUP(MessageBus)
 
   static void subscriber_2(void* context, const MessageBus::OnReceiveArgs& args)
   {
-    (void)context;
+    static_cast<void>(context);
     mock()
       .actualCall("subscriber_2")
       .withParameter("message", args.message)

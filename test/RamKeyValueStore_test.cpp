@@ -39,7 +39,7 @@ TEST_GROUP(ram_key_value_store)
 
   static void value_changed(void* context, const RamKeyValueStore::OnChangeArgs& args)
   {
-    (void)context;
+    static_cast<void>(context);
     mock()
       .actualCall("value_changed")
       .withParameter("key", args.key)
