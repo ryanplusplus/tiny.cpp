@@ -46,13 +46,13 @@ namespace tiny {
     template <typename Context>
     auto start(Timer& timer, TimerTicks ticks, Context* context, void (*callback)(Context* context, TimerGroup& group)) -> void
     {
-      this->_start(timer, ticks, reinterpret_cast<void*>(context), reinterpret_cast<Timer::Callback>(callback), false);
+      this->_start(timer, ticks, context, reinterpret_cast<Timer::Callback>(callback), false);
     }
 
     template <typename Context>
     auto start_periodic(Timer& timer, TimerTicks ticks, Context* context, void (*callback)(Context* context, TimerGroup& group)) -> void
     {
-      this->_start(timer, ticks, reinterpret_cast<void*>(context), reinterpret_cast<Timer::Callback>(callback), true);
+      this->_start(timer, ticks, context, reinterpret_cast<Timer::Callback>(callback), true);
     }
 
    private:

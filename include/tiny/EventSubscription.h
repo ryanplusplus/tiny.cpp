@@ -20,7 +20,7 @@ namespace tiny {
     template <typename Context>
     EventSubscription(Context* context, void (*callback)(Context*, const Args&))
       : node(),
-        context(reinterpret_cast<void*>(context)),
+        context(context),
         callback(reinterpret_cast<Callback>(callback))
     {
     }

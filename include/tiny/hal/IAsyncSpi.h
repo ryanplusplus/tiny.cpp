@@ -22,13 +22,13 @@ namespace tiny {
       uint8_t* read_buffer,
       uint16_t buffer_size,
       Context& context,
-      Callback callback) -> void
+      void (*callback)(Context* context)) -> void
     {
       this->transfer(
         write_buffer,
         read_buffer,
         buffer_size,
-        reinterpret_cast<void*>(context),
+        context,
         reinterpret_cast<IAsyncSpi::Callback>(callback));
     }
 
