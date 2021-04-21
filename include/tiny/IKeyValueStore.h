@@ -14,19 +14,13 @@ namespace tiny {
    public:
     typedef uint8_t Key;
 
-    typedef struct
-    {
-      Key key;
-      const void* value;
-    } OnChangeArgs;
-
    public:
     virtual ~IKeyValueStore(){};
-    auto virtual read(Key key, void* value) -> void = 0;
-    auto virtual write(Key key, const void* value) -> void = 0;
-    auto virtual contains(Key key) -> bool = 0;
-    auto virtual size(Key key) -> uint8_t = 0;
-    auto virtual on_change() -> IEvent<OnChangeArgs>& = 0;
+    virtual auto read(Key key, void* value) -> void = 0;
+    virtual auto write(Key key, const void* value) -> void = 0;
+    virtual auto contains(Key key) -> bool = 0;
+    virtual auto size(Key key) -> uint8_t = 0;
+    virtual auto on_change() -> IEvent<Key, const void*>& = 0;
   };
 }
 

@@ -14,25 +14,28 @@ TEST_GROUP(MessageBus)
 {
   MessageBus bus;
 
-  EventSubscription<MessageBus::OnReceiveArgs> subscription_1{(void*)nullptr, subscriber_1};
-  EventSubscription<MessageBus::OnReceiveArgs> subscription_2{(void*)nullptr, subscriber_2};
+  EventSubscription<MessageBus::Message, const void*> subscription_1{(void*)nullptr, subscriber_1};
+  EventSubscription<MessageBus::Message, const void*> subscription_2{(void*)nullptr, subscriber_2};
 
-  static void subscriber_1(void* context, const MessageBus::OnReceiveArgs& args)
+  // EventSubscription<MessageBus::Message, const void*> subscription_1 = EventSubscription<MessageBus::Message, const void*>((void*)nullptr, subscriber_1);
+  // EventSubscription<MessageBus::Message, const void*> subscription_2 = EventSubscription<MessageBus::Message, const void*>((void*)nullptr, subscriber_2);
+
+  static void subscriber_1(void* context, MessageBus::Message message, const void* data)
   {
     static_cast<void>(context);
     mock()
       .actualCall("subscriber_1")
-      .withParameter("message", args.message)
-      .withParameter("data", args.data);
+      .withParameter("message", message)
+      .withParameter("data", data);
   }
 
-  static void subscriber_2(void* context, const MessageBus::OnReceiveArgs& args)
+  static void subscriber_2(void* context, MessageBus::Message message, const void* data)
   {
     static_cast<void>(context);
     mock()
       .actualCall("subscriber_2")
-      .withParameter("message", args.message)
-      .withParameter("data", args.data);
+      .withParameter("message", message)
+      .withParameter("data", data);
   }
 };
 

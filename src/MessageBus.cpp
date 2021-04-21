@@ -14,11 +14,10 @@ MessageBus::MessageBus()
 
 auto MessageBus::send(Message message, const void* data) -> void
 {
-  OnReceiveArgs args{message, data};
-  this->_on_receive.publish(args);
+  this->_on_receive.publish(message, data);
 }
 
-auto MessageBus::on_receive() -> IEvent<OnReceiveArgs>&
+auto MessageBus::on_receive() -> IEvent<Message, const void*>&
 {
   return this->_on_receive;
 }

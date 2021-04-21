@@ -13,7 +13,7 @@ namespace tiny {
    public:
     virtual ~ISpi(){};
 
-    auto virtual transfer(
+    virtual auto transfer(
       const uint8_t* write_buffer,
       uint8_t* read_buffer,
       uint16_t buffer_size) -> void = 0;

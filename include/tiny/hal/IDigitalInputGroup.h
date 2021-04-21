@@ -15,7 +15,7 @@ namespace tiny {
 
    public:
     virtual ~IDigitalInputGroup(){};
-    auto virtual read(Channel channel) -> bool = 0;
+    virtual auto read(Channel channel) -> bool = 0;
   };
 }
 

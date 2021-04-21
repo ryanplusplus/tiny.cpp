@@ -18,9 +18,9 @@ namespace tiny {
 
    public:
     virtual ~IGpio(){};
-    auto virtual set_direction(Direction direction) -> void = 0;
-    auto virtual read() -> bool = 0;
-    auto virtual write(bool state) -> void = 0;
+    virtual auto set_direction(Direction direction) -> void = 0;
+    virtual auto read() -> bool = 0;
+    virtual auto write(bool state) -> void = 0;
   };
 }
 

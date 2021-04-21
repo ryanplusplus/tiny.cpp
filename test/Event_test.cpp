@@ -20,7 +20,7 @@ TEST_GROUP(Event)
   uint32_t context_2;
   EventSubscription<uint8_t> subscription_2{&context_2, subscriber_2};
 
-  static void subscriber_1(uint16_t * context, const uint8_t& args)
+  static void subscriber_1(uint16_t * context, uint8_t args)
   {
     mock()
       .actualCall("subscriber_1")
@@ -28,7 +28,7 @@ TEST_GROUP(Event)
       .withParameter("args", args);
   }
 
-  static void subscriber_2(uint32_t * context, const uint8_t& args)
+  static void subscriber_2(uint32_t * context, uint8_t args)
   {
     mock()
       .actualCall("subscriber_2")

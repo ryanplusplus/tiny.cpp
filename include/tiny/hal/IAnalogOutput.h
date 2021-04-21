@@ -15,7 +15,7 @@ namespace tiny {
 
    public:
     virtual ~IAnalogOutput(){};
-    auto virtual write(Counts counts) -> void = 0;
+    virtual auto write(Counts counts) -> void = 0;
   };
 }
 

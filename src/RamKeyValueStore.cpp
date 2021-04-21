@@ -29,9 +29,7 @@ auto RamKeyValueStore::write(Key key, const void* value) -> void
 
   if(memcmp(location, value, value_size)) {
     memcpy(location, value, value_size);
-
-    OnChangeArgs args{key, value};
-    this->_on_change.publish(args);
+    this->_on_change.publish(key, value);
   }
 }
 
@@ -45,7 +43,7 @@ auto RamKeyValueStore::size(Key key) -> uint8_t
   return this->configuration.key_value_pairs[key].size;
 }
 
-auto RamKeyValueStore::on_change() -> IEvent<OnChangeArgs>&
+auto RamKeyValueStore::on_change() -> IEvent<Key, const void*>&
 {
   return this->_on_change;
 }

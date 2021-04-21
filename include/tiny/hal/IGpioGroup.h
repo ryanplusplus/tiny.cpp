@@ -21,9 +21,9 @@ namespace tiny {
 
    public:
     virtual ~IGpioGroup(){};
-    auto virtual set_direction(Channel channel, Direction direction) -> void = 0;
-    auto virtual read(Channel channel) -> bool = 0;
-    auto virtual Write(Channel channel, bool state) -> void = 0;
+    virtual auto set_direction(Channel channel, Direction direction) -> void = 0;
+    virtual auto read(Channel channel) -> bool = 0;
+    virtual auto Write(Channel channel, bool state) -> void = 0;
   };
 }
 

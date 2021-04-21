@@ -13,11 +13,11 @@ namespace tiny {
   class MessageBus : public IMessageBus {
    public:
     MessageBus();
-    auto send(Message message, const void* data) -> void;
-    auto on_receive() -> IEvent<OnReceiveArgs>&;
+    auto send(Message message, const void* data) -> void override;
+    auto on_receive() -> IEvent<Message, const void*>& override;
 
    private:
-    Event<OnReceiveArgs> _on_receive;
+    Event<Message, const void*> _on_receive;
   };
 }
 

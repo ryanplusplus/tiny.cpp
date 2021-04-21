@@ -35,15 +35,15 @@ TEST_GROUP(ram_key_value_store)
 {
   Storage storage{0xA5, 0xA5, 0xA5, 0xA5, 0xA5};
   RamKeyValueStore kvs{configuration, &storage};
-  EventSubscription<RamKeyValueStore::OnChangeArgs> on_change_subscription{(void*)nullptr, value_changed};
+  EventSubscription<RamKeyValueStore::Key, const void*> on_change_subscription{(void*)nullptr, value_changed};
 
-  static void value_changed(void* context, const RamKeyValueStore::OnChangeArgs& args)
+  static void value_changed(void* context, RamKeyValueStore::Key key, const void* value)
   {
     static_cast<void>(context);
     mock()
       .actualCall("value_changed")
-      .withParameter("key", args.key)
-      .withParameter("value", *(const uint32_t*)args.value);
+      .withParameter("key", key)
+      .withParameter("value", *(const uint32_t*)value);
   }
 
   void should_contain_key(IKeyValueStore::Key key)

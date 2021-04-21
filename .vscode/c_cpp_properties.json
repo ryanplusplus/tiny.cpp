@@ -6,7 +6,8 @@
       "cStandard": "c99",
       "cppStandard": "c++17",
       "includePath": [
-        "include"
+        "include",
+        "test"
       ]
     }
   ],

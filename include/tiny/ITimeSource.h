@@ -17,7 +17,7 @@ namespace tiny {
 
    public:
     virtual ~ITimeSource(){};
-    auto virtual ticks() -> TickCount = 0;
+    virtual auto ticks() -> TickCount = 0;
   };
 }
 

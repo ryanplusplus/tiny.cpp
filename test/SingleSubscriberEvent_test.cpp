@@ -16,7 +16,7 @@ TEST_GROUP(SingleSubscriberEvent)
   SingleSubscriberEvent<uint8_t> event;
   EventSubscription<uint8_t> subscription{&context, subscriber};
 
-  static void subscriber(uint16_t * context, const uint8_t& args)
+  static void subscriber(uint16_t * context, uint8_t args)
   {
     mock()
       .actualCall("subscriber")

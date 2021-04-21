@@ -14,16 +14,10 @@ namespace tiny {
    public:
     typedef uint16_t Message;
 
-    typedef struct
-    {
-      Message message;
-      const void* data;
-    } OnReceiveArgs;
-
    public:
     virtual ~IMessageBus(){};
-    auto virtual send(Message message, const void* data) -> void = 0;
-    auto virtual on_receive() -> IEvent<OnReceiveArgs>& = 0;
+    virtual auto send(Message message, const void* data) -> void = 0;
+    virtual auto on_receive() -> IEvent<Message, const void*>& = 0;
   };
 }
 

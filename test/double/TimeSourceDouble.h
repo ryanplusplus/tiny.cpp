@@ -3,8 +3,8 @@
  * @brief
  */
 
-#ifndef time_source_double_h
-#define time_source_double_h
+#ifndef TimeSourceDouble_h
+#define TimeSourceDouble_h
 
 #include "tiny/ITimeSource.h"
 
@@ -16,7 +16,7 @@ namespace tiny {
     {
     }
 
-    auto ticks() -> ITimeSource::TickCount
+    auto ticks() -> ITimeSource::TickCount override
     {
       return this->_ticks;
     }

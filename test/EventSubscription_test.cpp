@@ -15,7 +15,7 @@ TEST_GROUP(EventSubscription)
   uint8_t context;
   EventSubscription<uint16_t> subscription{&context, callback};
 
-  static void callback(uint8_t * context, const uint16_t& args)
+  static void callback(uint8_t * context, uint16_t args)
   {
     mock()
       .actualCall("callback")

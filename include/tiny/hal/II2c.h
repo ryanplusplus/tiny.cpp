@@ -13,19 +13,19 @@ namespace tiny {
    public:
     virtual ~II2c(){};
 
-    auto virtual write(
+    virtual auto write(
       uint8_t address,
       bool prepare_for_restart,
       const uint8_t* buffer,
       uint16_t buffer_size) -> bool = 0;
 
-    auto virtual read(
+    virtual auto read(
       uint8_t address,
       bool prepare_for_restart,
       uint8_t* buffer,
       uint16_t buffer_size) -> bool = 0;
 
-    auto virtual reset() -> void = 0;
+    virtual auto reset() -> void = 0;
   };
 }
 

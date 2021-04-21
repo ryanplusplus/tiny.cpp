@@ -16,7 +16,7 @@ namespace tiny {
    public:
     virtual ~IAsyncI2c(){};
 
-    auto virtual write(
+    virtual auto write(
       uint8_t address,
       bool prepare_for_restart,
       const uint8_t* buffer,
@@ -24,7 +24,7 @@ namespace tiny {
       Callback callback,
       void* context) -> void = 0;
 
-    auto virtual read(
+    virtual auto read(
       uint8_t address,
       bool prepare_for_restart,
       uint8_t* buffer,
@@ -32,7 +32,7 @@ namespace tiny {
       Callback callback,
       void* context) -> void = 0;
 
-    auto virtual reset() -> void = 0;
+    virtual auto reset() -> void = 0;
   };
 }
 

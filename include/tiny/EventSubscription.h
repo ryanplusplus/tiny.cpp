@@ -10,24 +10,24 @@
 #include "tiny/List.h"
 
 namespace tiny {
-  template <typename Args>
+  template <typename... Args>
   class EventSubscription {
    public:
-    typedef void (*Callback)(void* context, const Args& args);
+    typedef void (*Callback)(void* context, Args... args);
 
     EventSubscription() = delete;
 
     template <typename Context>
-    EventSubscription(Context* context, void (*callback)(Context*, const Args&))
+    EventSubscription(Context* context, void (*callback)(Context*, Args...))
       : node(),
         context(context),
         callback(reinterpret_cast<Callback>(callback))
     {
     }
 
-    auto publish(const Args& args) const -> void
+    auto publish(Args... args) const -> void
     {
-      this->callback(this->context, args);
+      this->callback(this->context, args...);
     }
 
    private:
