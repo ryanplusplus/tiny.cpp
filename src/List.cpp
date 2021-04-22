@@ -8,18 +8,6 @@
 
 using namespace tiny;
 
-List::List()
-  : head()
-{
-  head.next = &head;
-}
-
-auto List::push_front(Node* node) -> void
-{
-  node->next = this->head.next;
-  this->head.next = node;
-}
-
 auto List::push_back(Node* node) -> void
 {
   Node* current = this->head.next;
@@ -30,13 +18,6 @@ auto List::push_back(Node* node) -> void
 
   current->next = node;
   node->next = &this->head;
-}
-
-auto List::pop_front() -> Node*
-{
-  Node* popped = this->head.next;
-  this->head.next = this->head.next->next;
-  return popped;
 }
 
 auto List::pop_back() -> Node*

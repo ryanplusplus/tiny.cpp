@@ -39,11 +39,29 @@ namespace tiny {
     class Iterator;
 
    public:
-    List();
+    List()
+      : head()
+    {
+      head.next = &head;
+    }
+
     List(const List& other) = delete;
-    auto push_front(Node* node) -> void;
+
+    auto push_front(Node* node) -> void
+    {
+      node->next = this->head.next;
+      this->head.next = node;
+    }
+
     auto push_back(Node* node) -> void;
-    auto pop_front() -> Node*;
+
+    auto pop_front() -> Node*
+    {
+      Node* popped = this->head.next;
+      this->head.next = this->head.next->next;
+      return popped;
+    }
+
     auto pop_back() -> Node*;
     auto remove(Node* node) -> void;
     auto count() -> uint16_t;
