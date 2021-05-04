@@ -39,20 +39,32 @@ namespace tiny {
     TimerGroup(ITimeSource& time_source);
 
     auto run() -> TimerTicks;
-    auto stop(Timer& timer) -> void;
-    auto is_running(Timer& timer) -> bool;
-    auto remaining_ticks(Timer& timer) -> TimerTicks;
+
+    auto stop(Timer& timer) -> void
+    {
+      timers.remove(reinterpret_cast<List::Node*>(&timer));
+    }
+
+    auto is_running(Timer& timer) -> bool
+    {
+      return timers.contains(reinterpret_cast<List::Node*>(&timer));
+    }
+
+    auto remaining_ticks(Timer& timer) -> TimerTicks
+    {
+      return timer.remaining_ticks;
+    }
 
     template <typename Context>
     auto start(Timer& timer, TimerTicks ticks, Context* context, void (*callback)(Context* context, TimerGroup& group)) -> void
     {
-      this->_start(timer, ticks, context, reinterpret_cast<Timer::Callback>(callback), false);
+      _start(timer, ticks, context, reinterpret_cast<Timer::Callback>(callback), false);
     }
 
     template <typename Context>
     auto start_periodic(Timer& timer, TimerTicks ticks, Context* context, void (*callback)(Context* context, TimerGroup& group)) -> void
     {
-      this->_start(timer, ticks, context, reinterpret_cast<Timer::Callback>(callback), true);
+      _start(timer, ticks, context, reinterpret_cast<Timer::Callback>(callback), true);
     }
 
    private:

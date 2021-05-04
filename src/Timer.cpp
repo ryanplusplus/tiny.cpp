@@ -72,21 +72,6 @@ auto TimerGroup::run() -> TimerTicks
   return this->next_ready;
 }
 
-auto TimerGroup::stop(Timer& timer) -> void
-{
-  this->timers.remove(reinterpret_cast<List::Node*>(&timer));
-}
-
-auto TimerGroup::is_running(Timer& timer) -> bool
-{
-  return this->timers.contains(reinterpret_cast<List::Node*>(&timer));
-}
-
-auto TimerGroup::remaining_ticks(Timer& timer) -> TimerTicks
-{
-  return timer.remaining_ticks;
-}
-
 auto TimerGroup::_start(Timer& timer, TimerTicks ticks, void* context, Timer::Callback callback, bool periodic) -> void
 {
   timer.context = context;
