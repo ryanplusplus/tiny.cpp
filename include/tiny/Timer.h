@@ -12,7 +12,7 @@
 #include "tiny/List.h"
 
 namespace tiny {
-  typedef uint16_t TimerTicks;
+  typedef uint32_t TimerTicks;
 
   class TimerGroup;
 

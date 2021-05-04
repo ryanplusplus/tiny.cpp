@@ -21,7 +21,7 @@ TimerGroup::TimerGroup(ITimeSource& time_source)
 auto TimerGroup::run() -> TimerTicks
 {
   auto current_ticks = this->time_source.ticks();
-  auto delta = current_ticks - this->last_ticks;
+  auto delta = static_cast<ITimeSource::TickCount>(current_ticks - this->last_ticks);
   this->last_ticks = current_ticks;
 
   auto timer_ready = false;

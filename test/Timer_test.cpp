@@ -289,7 +289,7 @@ TEST(Timer, should_indicate_whether_a_callback_was_invoked_during_run)
 
   after(2);
   should_run_and_indicate_that_the_next_timer_will_be_ready_in(0);
-  should_run_and_indicate_that_the_next_timer_will_be_ready_in(0xFFFF);
+  should_run_and_indicate_that_the_next_timer_will_be_ready_in(0xFFFFFFFF);
 }
 
 TEST(Timer, should_account_for_periodic_timers_when_giving_time_until_next_ready)
