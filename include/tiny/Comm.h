@@ -87,6 +87,6 @@ namespace tiny {
     // while waiting for packet to be processed
     volatile bool received_packet_ready;
   };
-};
+}
 
 #endif

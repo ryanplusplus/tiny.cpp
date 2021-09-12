@@ -33,7 +33,7 @@ namespace tiny {
       : current(reinterpret_cast<State>(initial)), context(context)
     {
       this->current(context, FsmSignal::entry, nullptr);
-    };
+    }
 
     auto send_signal(uint8_t signal, const void* data) -> void
     {

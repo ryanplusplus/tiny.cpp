@@ -18,6 +18,6 @@ namespace tiny {
     virtual auto sending() -> bool = 0;
     virtual auto on_receive() -> IEvent<const void*, uint8_t>& = 0;
   };
-};
+}
 
 #endif
