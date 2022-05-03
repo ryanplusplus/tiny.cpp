@@ -47,10 +47,9 @@
   uint8_t _key[sizeof(_value_type)];
 
 #define generate_storage_type_for_ram_key_value_pairs(_key_value_pairs) \
-  typedef struct                                                        \
-  {                                                                     \
+  struct _storage_type_name {                                           \
     _key_value_pairs(ram_key_value_pairs_expand_as_storage_item)        \
-  } _storage_type_name
+  }
 
 #define ram_key_value_pairs_expand_as_configuration_item(_key, _value_type) \
   {offsetof(_storage_type_name, _key), sizeof(_value_type)},

@@ -29,8 +29,6 @@ enum {
   receive_state_receive_payload
 };
 
-// typedef tiny_comm_t self_t;
-
 using namespace tiny;
 
 auto Comm::send_control_character(uint8_t byte) -> void

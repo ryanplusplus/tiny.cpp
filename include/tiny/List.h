@@ -5,7 +5,7 @@
  * Nodes can contain arbitrary data by defining a type that contains
  * a tiny::List::Node:
  *
- * typedef struct client_node_t {
+ * struct ClientNode {
  *   tiny::List::Node;
  *   int data;
  * }

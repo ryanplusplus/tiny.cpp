@@ -20,17 +20,15 @@
 namespace tiny {
   class RamKeyValueStore : public IKeyValueStore {
    public:
-    typedef struct
-    {
+    struct KeyValuePair {
       uint16_t value_offset;
       uint8_t size;
-    } KeyValuePair;
+    };
 
-    typedef struct
-    {
+    struct Configuration {
       const KeyValuePair* key_value_pairs;
       uint8_t key_value_pair_count;
-    } Configuration;
+    };
 
    public:
     RamKeyValueStore(const Configuration& configuration, void* storage);

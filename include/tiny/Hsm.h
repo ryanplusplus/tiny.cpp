@@ -83,17 +83,15 @@ namespace tiny {
     static constexpr State no_parent = nullptr;
     static constexpr State top = nullptr; // fixme to .cpp?
 
-    typedef struct
-    {
+    struct StateDescriptor {
       State state;
       State parent;
-    } StateDescriptor;
+    };
 
-    typedef struct
-    {
+    struct Configuration {
       const StateDescriptor* states;
       uint8_t state_count;
-    } Configuration;
+    };
 
    public:
     template <typename Context>
