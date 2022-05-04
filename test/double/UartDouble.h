@@ -14,7 +14,7 @@ namespace tiny {
   class UartDouble : public IUart {
    public:
     UartDouble()
-      : receive(), send_complete(), _sending(false)
+      : receive{}, send_complete{}, _sending{false}
     {
     }
 

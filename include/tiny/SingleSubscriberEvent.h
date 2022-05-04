@@ -16,7 +16,7 @@ namespace tiny {
   class SingleSubscriberEvent : public IEvent<Args...> {
    public:
     SingleSubscriberEvent()
-      : subscription()
+      : subscription{}
     {
     }
 

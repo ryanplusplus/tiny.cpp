@@ -88,16 +88,16 @@ static const Hsm::Configuration configuration = {
 
 TEST_GROUP(Hsm)
 {
-  uint16_t context;
-  Hsm* hsm;
+  uint16_t context{};
+  Hsm* hsm{};
 
   enum {
     signal_1 = HsmSignal::user_start,
     signal_2
   };
 
-  static constexpr Hsm::Result deferred = Hsm::Result::deferred;
-  static constexpr Hsm::Result consumed = Hsm::Result::consumed;
+  static constexpr Hsm::Result deferred{Hsm::Result::deferred};
+  static constexpr Hsm::Result consumed{Hsm::Result::consumed};
 
   void setup()
   {

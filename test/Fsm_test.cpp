@@ -17,8 +17,8 @@ TEST_GROUP(Fsm)
 {
   typedef void (*State)(uint8_t*, uint8_t, const void*);
 
-  uint8_t context;
-  Fsm* fsm;
+  uint8_t context{};
+  Fsm* fsm{};
 
   enum {
     signal_1 = FsmSignal::user_start,

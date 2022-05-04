@@ -81,7 +81,7 @@ namespace tiny {
     typedef Result (*State)(void* context, uint8_t signal, const void* data);
 
     static constexpr State no_parent = nullptr;
-    static constexpr State top = nullptr; // fixme to .cpp?
+    static constexpr State top = nullptr;
 
     struct StateDescriptor {
       State state;
@@ -99,9 +99,9 @@ namespace tiny {
       Context* context,
       const Configuration& configuration,
       Result (*initial)(Context* context, uint8_t signal, const void* data))
-      : context(context),
-        configuration(configuration),
-        current(reinterpret_cast<State>(initial))
+      : context{context},
+        configuration{configuration},
+        current{reinterpret_cast<State>(initial)}
     {
       this->send_entries(top, this->current);
     }

@@ -14,12 +14,12 @@ static TimerTicks restart_ticks;
 
 TEST_GROUP(Timer)
 {
-  TimeSourceDouble time_source;
+  TimeSourceDouble time_source{};
 
-  Timer timer_1;
-  Timer timer_2;
-  Timer timer_3;
-  Timer timer_with_restart;
+  Timer timer_1{};
+  Timer timer_2{};
+  Timer timer_3{};
+  Timer timer_with_restart{};
 
   TimerGroup group{time_source};
 

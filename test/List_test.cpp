@@ -12,7 +12,7 @@ using namespace tiny;
 TEST_GROUP(List)
 {
   List list{};
-  List::Node node_1, node_2, node_3;
+  List::Node node_1{}, node_2{}, node_3{};
 };
 
 TEST(List, should_be_empty_after_init)

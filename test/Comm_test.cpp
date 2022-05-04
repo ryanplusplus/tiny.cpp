@@ -26,7 +26,7 @@ TEST_GROUP(Comm)
     receive_buffer_size = 4
   };
 
-  UartDouble uart;
+  UartDouble uart{};
 
   uint8_t send_buffer[send_buffer_size];
   uint8_t receive_buffer[receive_buffer_size];

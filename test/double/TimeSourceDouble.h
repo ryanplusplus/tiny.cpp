@@ -12,7 +12,7 @@ namespace tiny {
   class TimeSourceDouble : public ITimeSource {
    public:
     TimeSourceDouble()
-      : _ticks()
+      : _ticks{}
     {
     }
 

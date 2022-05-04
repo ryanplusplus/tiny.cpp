@@ -30,7 +30,7 @@ namespace tiny {
    public:
     template <typename Context>
     Fsm(void (*initial)(Context* context, uint8_t signal, const void* data), Context* context)
-      : current(reinterpret_cast<State>(initial)), context(context)
+      : current{reinterpret_cast<State>(initial)}, context{context}
     {
       this->current(context, FsmSignal::entry, nullptr);
     }

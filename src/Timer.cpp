@@ -9,12 +9,12 @@
 using namespace tiny;
 
 Timer::Timer()
-  : node(), context(nullptr), callback(nullptr), start_ticks(), remaining_ticks(), periodic()
+  : node{}, context{nullptr}, callback{nullptr}, start_ticks{}, remaining_ticks{}, periodic{}
 {
 }
 
 TimerGroup::TimerGroup(ITimeSource& time_source)
-  : time_source(time_source), timers(), last_ticks(time_source.ticks()), next_ready()
+  : time_source{time_source}, timers{}, last_ticks{time_source.ticks()}, next_ready{}
 {
 }
 

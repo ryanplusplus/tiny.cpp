@@ -12,13 +12,10 @@ using namespace tiny;
 
 TEST_GROUP(MessageBus)
 {
-  MessageBus bus;
+  MessageBus bus{};
 
   EventSubscription<MessageBus::Message, const void*> subscription_1{(void*)nullptr, subscriber_1};
   EventSubscription<MessageBus::Message, const void*> subscription_2{(void*)nullptr, subscriber_2};
-
-  // EventSubscription<MessageBus::Message, const void*> subscription_1 = EventSubscription<MessageBus::Message, const void*>((void*)nullptr, subscriber_1);
-  // EventSubscription<MessageBus::Message, const void*> subscription_2 = EventSubscription<MessageBus::Message, const void*>((void*)nullptr, subscriber_2);
 
   static void subscriber_1(void* context, MessageBus::Message message, const void* data)
   {
