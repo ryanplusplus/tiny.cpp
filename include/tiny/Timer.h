@@ -1,6 +1,6 @@
 /*!
  * @file
- * @brief Runs one-shot timers using client-allocated memory.
+ * @brief Runs one-shot and periodic timers using client-allocated memory.
  */
 
 #ifndef TimerGroup_h
