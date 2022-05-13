@@ -40,7 +40,6 @@ namespace tiny {
 
    public:
     List()
-      : head{}
     {
       head.next = &head;
     }
