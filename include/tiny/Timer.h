@@ -20,7 +20,7 @@ namespace tiny {
     friend class TimerGroup;
 
    public:
-    typedef void (*Callback)(void* context, TimerGroup& group);
+    typedef void (*Callback)(void* context);
 
    public:
     Timer();
@@ -56,13 +56,13 @@ namespace tiny {
     }
 
     template <typename Context>
-    auto start(Timer& timer, TimerTicks ticks, Context* context, void (*callback)(Context* context, TimerGroup& group)) -> void
+    auto start(Timer& timer, TimerTicks ticks, Context* context, void (*callback)(Context* context)) -> void
     {
       _start(timer, ticks, context, reinterpret_cast<Timer::Callback>(callback), false);
     }
 
     template <typename Context>
-    auto start_periodic(Timer& timer, TimerTicks ticks, Context* context, void (*callback)(Context* context, TimerGroup& group)) -> void
+    auto start_periodic(Timer& timer, TimerTicks ticks, Context* context, void (*callback)(Context* context)) -> void
     {
       _start(timer, ticks, context, reinterpret_cast<Timer::Callback>(callback), true);
     }

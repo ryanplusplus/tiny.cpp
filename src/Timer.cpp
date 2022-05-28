@@ -57,7 +57,7 @@ auto TimerGroup::run() -> TimerTicks
           this->timers.remove(*i);
         }
 
-        timer->callback(timer->context, *this);
+        timer->callback(timer->context);
 
         if(timer->periodic && this->is_running(*timer)) {
           timer->remaining_ticks = timer->start_ticks;

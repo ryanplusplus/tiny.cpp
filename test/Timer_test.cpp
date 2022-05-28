@@ -11,6 +11,7 @@
 using namespace tiny;
 
 static TimerTicks restart_ticks;
+static TimerGroup* static_group;
 
 TEST_GROUP(Timer)
 {
@@ -26,20 +27,21 @@ TEST_GROUP(Timer)
   void setup()
   {
     mock().strictOrder();
+
+    static_group = &group;
   }
 
-  static void callback(Timer * timer, TimerGroup & group)
+  static void callback(Timer * timer)
   {
     mock()
       .actualCall("callback")
-      .withParameter("group", &group)
       .withParameter("context", timer);
   }
 
-  static void callback_with_restart(Timer * timer, TimerGroup & group)
+  static void callback_with_restart(Timer * timer)
   {
-    callback(timer, group);
-    group.start(*timer, restart_ticks, timer, callback_with_restart);
+    callback(timer);
+    static_group->start(*timer, restart_ticks, timer, callback_with_restart);
   }
 
   void after_timer_with_restart_is_started(Timer & timer, TimerTicks ticks)
@@ -53,10 +55,10 @@ TEST_GROUP(Timer)
     after_timer_with_restart_is_started(timer, ticks);
   }
 
-  static void callback_with_stop(Timer * timer, TimerGroup & group)
+  static void callback_with_stop(Timer * timer)
   {
-    callback(timer, group);
-    group.stop(*timer);
+    callback(timer);
+    static_group->stop(*timer);
   }
 
   void given_that_periodic_timer_with_stop_has_been_started(Timer & timer, TimerTicks ticks)
@@ -64,10 +66,10 @@ TEST_GROUP(Timer)
     group.start_periodic(timer, ticks, &timer, callback_with_stop);
   }
 
-  static void callback_with_periodic_restart(Timer * timer, TimerGroup & group)
+  static void callback_with_periodic_restart(Timer * timer)
   {
-    callback(timer, group);
-    group.start_periodic(*timer, restart_ticks, timer, callback);
+    callback(timer);
+    static_group->start_periodic(*timer, restart_ticks, timer, callback);
   }
 
   void given_that_periodic_timer_with_restart_has_been_started(Timer & timer, TimerTicks ticks, TimerTicks _restart_ticks)
@@ -110,7 +112,6 @@ TEST_GROUP(Timer)
   {
     mock()
       .expectOneCall("callback")
-      .withParameter("group", &group)
       .withParameter("context", &timer);
   }
 
