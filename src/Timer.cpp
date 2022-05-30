@@ -9,7 +9,7 @@
 using namespace tiny;
 
 Timer::Timer()
-  : node{}, context{nullptr}, callback{nullptr}, start_ticks{}, remaining_ticks{}, periodic{}
+  : context{nullptr}, callback{nullptr}, start_ticks{}, remaining_ticks{}, periodic{}
 {
 }
 
@@ -84,8 +84,8 @@ auto TimerGroup::_start(Timer& timer, TimerTicks ticks, void* context, Timer::Ca
 
 auto TimerGroup::add_timer(Timer& timer) -> void
 {
-  timers.remove(reinterpret_cast<List::Node*>(&timer));
-  timers.push_back(reinterpret_cast<List::Node*>(&timer));
+  timers.remove(&timer);
+  timers.push_back(&timer);
 
   if(timer.remaining_ticks < next_ready) {
     next_ready = timer.remaining_ticks;

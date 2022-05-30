@@ -13,8 +13,6 @@
 #ifndef EventQueue_h
 #define EventQueue_h
 
-// #include <cstddef>
-// #include <cstdbool>
 #include "tiny/IEventQueue.h"
 #include "tiny/RingBuffer.h"
 

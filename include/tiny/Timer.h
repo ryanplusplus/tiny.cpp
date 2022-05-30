@@ -16,7 +16,7 @@ namespace tiny {
 
   class TimerGroup;
 
-  class Timer {
+  class Timer : public List::Node {
     friend class TimerGroup;
 
    public:
@@ -26,7 +26,6 @@ namespace tiny {
     typedef void (*Callback)(void* context);
 
    private:
-    List::Node node;
     void* context;
     Callback callback;
     TimerTicks start_ticks;
