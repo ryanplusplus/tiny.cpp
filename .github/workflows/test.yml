@@ -21,8 +21,8 @@ jobs:
       with:
         all: cpputest
 
-    - name: cpu-cores
-      uses: SimenB/github-actions-cpu-cores@v1
+    - uses: SimenB/github-actions-cpu-cores@v1
+      id: cpu-cores
 
     - uses: actions/checkout@v3
       with:
