@@ -1,0 +1,30 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-18.04, ubuntu-20.04, ubuntu-latest, macos-11, macos-latest]
+
+    steps:
+    - name: Install CppUTest
+      uses: lyricwulf/abc@v1
+      with:
+        all: cpputest
+
+    - uses: SimenB/github-actions-cpu-cores@v1
+
+    - uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+
+    - run: make -j${{ steps.cpu-cores.outputs.count }}
