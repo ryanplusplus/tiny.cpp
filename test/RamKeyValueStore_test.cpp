@@ -33,7 +33,7 @@ static const RamKeyValueStore::Configuration configuration = {
 
 TEST_GROUP(ram_key_value_store)
 {
-  Storage storage{0xA5, 0xA5, 0xA5, 0xA5, 0xA5};
+  Storage storage{{0xA5}, {0xA5, 0xA5, 0xA5, 0xA5}};
   RamKeyValueStore kvs{configuration, &storage};
   EventSubscription<RamKeyValueStore::Key, const void*> on_change_subscription{(void*)nullptr, value_changed};
 
