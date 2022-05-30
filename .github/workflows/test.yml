@@ -21,9 +21,10 @@ jobs:
       with:
         all: cpputest
 
-    - uses: SimenB/github-actions-cpu-cores@v1
+    - name: cpu-cores
+      uses: SimenB/github-actions-cpu-cores@v1
 
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         submodules: 'recursive'
 
