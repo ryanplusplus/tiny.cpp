@@ -11,7 +11,7 @@
 
 namespace tiny {
   template <typename... Args>
-  class EventSubscription {
+  class EventSubscription : public List::Node {
    public:
     typedef void (*Callback)(void* context, Args... args);
 
@@ -19,8 +19,7 @@ namespace tiny {
 
     template <typename Context>
     EventSubscription(Context* context, void (*callback)(Context*, Args...))
-      : node(),
-        context(context),
+      : context(context),
         callback(reinterpret_cast<Callback>(callback))
     {
     }
@@ -31,7 +30,6 @@ namespace tiny {
     }
 
    private:
-    List::Node node;
     void* context;
     Callback callback;
   };

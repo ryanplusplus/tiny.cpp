@@ -28,13 +28,13 @@ namespace tiny {
 
     auto subscribe(EventSubscription<Args...>& subscription) -> void override
     {
-      subscribers.remove(reinterpret_cast<List::Node*>(&subscription));
-      subscribers.push_back(reinterpret_cast<List::Node*>(&subscription));
+      subscribers.remove(&subscription);
+      subscribers.push_back(&subscription);
     }
 
     auto unsubscribe(EventSubscription<Args...>& subscription) -> void override
     {
-      subscribers.remove(reinterpret_cast<List::Node*>(&subscription));
+      subscribers.remove(&subscription);
     }
 
    private:
