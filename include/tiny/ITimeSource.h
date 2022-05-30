@@ -5,8 +5,8 @@
  * keep time.
  */
 
-#ifndef ITimeSource_h
-#define ITimeSource_h
+#ifndef tiny_ITimeSource_h
+#define tiny_ITimeSource_h
 
 #include <cstdint>
 

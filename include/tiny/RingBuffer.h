@@ -10,8 +10,8 @@
  * - The ring buffer is never allowed to get full
  */
 
-#ifndef RingBuffer_h
-#define RingBuffer_h
+#ifndef tiny_RingBuffer_h
+#define tiny_RingBuffer_h
 
 #include <cstdbool>
 

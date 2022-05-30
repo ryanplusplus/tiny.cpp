@@ -3,8 +3,8 @@
  * @brief Default implementation of a message bus.
  */
 
-#ifndef MessageBus_h
-#define MessageBus_h
+#ifndef tiny_MessageBus_h
+#define tiny_MessageBus_h
 
 #include "tiny/IMessageBus.h"
 #include "tiny/Event.h"

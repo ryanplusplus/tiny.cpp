@@ -3,8 +3,8 @@
  * @brief
  */
 
-#ifndef IDigitalOutput_h
-#define IDigitalOutput_h
+#ifndef tiny_hal_IDigitalOutput_h
+#define tiny_hal_IDigitalOutput_h
 
 namespace tiny {
   class IDigitalOutput {

@@ -3,8 +3,8 @@
  * @brief Assumes chip select is managed by the client.
  */
 
-#ifndef IAsyncSpi_h
-#define IAsyncSpi_h
+#ifndef tiny_hal_IAsyncSpi_h
+#define tiny_hal_IAsyncSpi_h
 
 #include <cstdint>
 

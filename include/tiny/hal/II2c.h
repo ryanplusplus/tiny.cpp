@@ -3,8 +3,8 @@
  * @brief
  */
 
-#ifndef II2c_h
-#define II2c_h
+#ifndef tiny_hal_II2c_h
+#define tiny_hal_II2c_h
 
 #include <cstdint>
 

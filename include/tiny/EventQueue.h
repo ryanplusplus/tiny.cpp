@@ -10,8 +10,8 @@
  * interrupt that is also queueing.
  */
 
-#ifndef EventQueue_h
-#define EventQueue_h
+#ifndef tiny_EventQueue_h
+#define tiny_EventQueue_h
 
 #include "tiny/IEventQueue.h"
 #include "tiny/RingBuffer.h"

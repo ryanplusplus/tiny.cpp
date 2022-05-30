@@ -3,8 +3,8 @@
  * @brief
  */
 
-#ifndef StackAllocator_h
-#define StackAllocator_h
+#ifndef tiny_StackAllocator_h
+#define tiny_StackAllocator_h
 
 #include <cstdint>
 #include <cstddef>

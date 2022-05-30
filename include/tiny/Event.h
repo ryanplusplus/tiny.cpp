@@ -4,8 +4,8 @@
  * subscribers.
  */
 
-#ifndef Event_h
-#define Event_h
+#ifndef tiny_Event_h
+#define tiny_Event_h
 
 #include "tiny/IEvent.h"
 #include "tiny/List.h"

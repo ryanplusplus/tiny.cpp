@@ -3,8 +3,8 @@
  * @brief
  */
 
-#ifndef IDigitalInput_h
-#define IDigitalInput_h
+#ifndef tiny_hal_IDigitalInput_h
+#define tiny_hal_IDigitalInput_h
 
 namespace tiny {
   class IDigitalInput {

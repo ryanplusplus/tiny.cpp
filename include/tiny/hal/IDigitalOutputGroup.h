@@ -3,8 +3,8 @@
  * @brief
  */
 
-#ifndef IDigitalOutputGroup_h
-#define IDigitalOutputGroup_h
+#ifndef tiny_hal_IDigitalOutputGroup_h
+#define tiny_hal_IDigitalOutputGroup_h
 
 #include <cstdint>
 

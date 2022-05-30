@@ -14,8 +14,8 @@
  * be cast back by the client so that the data can be accessed.
  */
 
-#ifndef List_h
-#define List_h
+#ifndef tiny_List_h
+#define tiny_List_h
 
 #include <cstdbool>
 #include <cstdint>

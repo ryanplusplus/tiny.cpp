@@ -3,7 +3,7 @@ BUILD_DIR ?= ./build
 
 INC_DIRS ?= \
   include \
-  test \
+  test/include \
 
 SRC_DIRS ?= \
   src \

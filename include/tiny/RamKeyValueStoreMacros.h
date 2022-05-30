@@ -30,8 +30,8 @@
  * };
  */
 
-#ifndef RamKeyValueStoreMacros_h
-#define RamKeyValueStoreMacros_h
+#ifndef tiny_RamKeyValueStoreMacros_h
+#define tiny_RamKeyValueStoreMacros_h
 
 #include <cstdint>
 #include <cstddef>

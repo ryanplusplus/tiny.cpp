@@ -3,8 +3,8 @@
  * @brief
  */
 
-#ifndef IAsyncI2c_h
-#define IAsyncI2c_h
+#ifndef tiny_hal_IAsyncI2c_h
+#define tiny_hal_IAsyncI2c_h
 
 #include <cstdint>
 

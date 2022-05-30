@@ -3,8 +3,8 @@
  * @brief Key value store using pre-defined keys and fixed-sized values.
  */
 
-#ifndef IKeyValueStore_h
-#define IKeyValueStore_h
+#ifndef tiny_IKeyValueStore_h
+#define tiny_IKeyValueStore_h
 
 #include <cstdint>
 #include "tiny/IEvent.h"

@@ -58,8 +58,8 @@
  * (thus there are not more entry signals that are going to be sent).
  */
 
-#ifndef Hsm_h
-#define Hsm_h
+#ifndef tiny_Hsm_h
+#define tiny_Hsm_h
 
 #include <cstddef>
 #include <cstdint>

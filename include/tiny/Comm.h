@@ -13,8 +13,8 @@
  * Buffers a single packet for send and a single packet for receive.
  */
 
-#ifndef Comm_h
-#define Comm_h
+#ifndef tiny_Comm_h
+#define tiny_Comm_h
 
 #include "tiny/IComm.h"
 #include "tiny/hal/IUart.h"

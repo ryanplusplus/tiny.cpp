@@ -7,7 +7,7 @@
 #include "tiny/Crc16.h"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
-#include "double/UartDouble.h"
+#include "tiny/test_double/Uart.h"
 
 #define and_
 
@@ -26,7 +26,7 @@ TEST_GROUP(Comm)
     receive_buffer_size = 4
   };
 
-  UartDouble uart{};
+  test_double::Uart uart{};
 
   uint8_t send_buffer[send_buffer_size];
   uint8_t receive_buffer[receive_buffer_size];

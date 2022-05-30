@@ -10,8 +10,8 @@
  * @warning If data is written un-aligned it may be published unaligned.
  */
 
-#ifndef RamKeyValueStore_h
-#define RamKeyValueStore_h
+#ifndef tiny_RamKeyValueStore_h
+#define tiny_RamKeyValueStore_h
 
 #include "tiny/IKeyValueStore.h"
 #include "tiny/Event.h"

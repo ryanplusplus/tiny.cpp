@@ -3,8 +3,8 @@
  * @brief Runs one-shot and periodic timers using client-allocated memory.
  */
 
-#ifndef TimerGroup_h
-#define TimerGroup_h
+#ifndef tiny_TimerGroup_h
+#define tiny_TimerGroup_h
 
 #include <cstdint>
 #include <cstdbool>

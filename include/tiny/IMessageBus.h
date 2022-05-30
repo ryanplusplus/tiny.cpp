@@ -3,8 +3,8 @@
  * @brief Synchronously sends messages from a publisher to all subscribers.
  */
 
-#ifndef IMessageBus_h
-#define IMessageBus_h
+#ifndef tiny_IMessageBus_h
+#define tiny_IMessageBus_h
 
 #include <cstdint>
 #include "tiny/IEvent.h"

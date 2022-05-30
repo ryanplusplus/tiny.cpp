@@ -6,7 +6,7 @@
 #include "tiny/Timer.h"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
-#include "double/TimeSourceDouble.h"
+#include "tiny/test_double/TimeSource.h"
 
 using namespace tiny;
 
@@ -15,7 +15,7 @@ static TimerGroup* static_group;
 
 TEST_GROUP(Timer)
 {
-  TimeSourceDouble time_source{};
+  test_double::TimeSource time_source{};
 
   Timer timer_1{};
   Timer timer_2{};

@@ -3,8 +3,8 @@
  * @brief
  */
 
-#ifndef IAnalogInputGroup_h
-#define IAnalogInputGroup_h
+#ifndef tiny_hal_IAnalogInputGroup_h
+#define tiny_hal_IAnalogInputGroup_h
 
 #include <cstdint>
 

@@ -5,8 +5,8 @@
  * Allows event callbacks and data to be queued for later processing.
  */
 
-#ifndef IEventQueue_h
-#define IEventQueue_h
+#ifndef tiny_IEventQueue_h
+#define tiny_IEventQueue_h
 
 #include <cstdint>
 

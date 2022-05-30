@@ -3,8 +3,8 @@
  * @brief Assumes chip select is managed by the client.
  */
 
-#ifndef ISpi_h
-#define ISpi_h
+#ifndef tiny_hal_ISpi_h
+#define tiny_hal_ISpi_h
 
 #include <cstdint>
 

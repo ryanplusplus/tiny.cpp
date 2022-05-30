@@ -10,8 +10,8 @@
  * sent to the new state.
  */
 
-#ifndef Fsm_h
-#define Fsm_h
+#ifndef tiny_Fsm_h
+#define tiny_Fsm_h
 
 #include <cstddef>
 #include <cstdint>

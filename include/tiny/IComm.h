@@ -3,8 +3,8 @@
  * @brief
  */
 
-#ifndef IComm_h
-#define IComm_h
+#ifndef tiny_IComm_h
+#define tiny_IComm_h
 
 #include <cstdint>
 #include <cstdbool>

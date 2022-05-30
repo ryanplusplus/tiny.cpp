@@ -3,8 +3,8 @@
  * @brief
  */
 
-#ifndef IPwm_h
-#define IPwm_h
+#ifndef tiny_hal_IPwm_h
+#define tiny_hal_IPwm_h
 
 #include <cstdint>
 

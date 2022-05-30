@@ -3,8 +3,8 @@
  * @brief
  */
 
-#ifndef IUart_h
-#define IUart_h
+#ifndef tiny_hal_IUart_h
+#define tiny_hal_IUart_h
 
 #include <cstdint>
 #include "tiny/IEvent.h"

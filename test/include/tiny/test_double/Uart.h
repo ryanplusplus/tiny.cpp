@@ -3,17 +3,17 @@
  * @brief
  */
 
-#ifndef UartDouble_h
-#define UartDouble_h
+#ifndef tiny_test_double_Uart_h
+#define tiny_test_double_Uart_h
 
 #include "tiny/hal/IUart.h"
 #include "tiny/Event.h"
 #include "CppUTestExt/MockSupport.h"
 
-namespace tiny {
-  class UartDouble : public IUart {
+namespace tiny::test_double {
+  class Uart : public IUart {
    public:
-    UartDouble()
+    Uart()
       : receive{}, send_complete{}, _sending{false}
     {
     }

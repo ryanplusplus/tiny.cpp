@@ -3,8 +3,8 @@
  * @brief
  */
 
-#ifndef IGpioGroup_h
-#define IGpioGroup_h
+#ifndef tiny_hal_IGpioGroup_h
+#define tiny_hal_IGpioGroup_h
 
 #include <cstdint>
 #include "tiny/hal/IGpio.h"

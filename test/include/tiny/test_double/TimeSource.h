@@ -3,15 +3,15 @@
  * @brief
  */
 
-#ifndef TimeSourceDouble_h
-#define TimeSourceDouble_h
+#ifndef tiny_test_double_TimeSource_h
+#define tiny_test_double_TimeSource_h
 
 #include "tiny/ITimeSource.h"
 
-namespace tiny {
-  class TimeSourceDouble : public ITimeSource {
+namespace tiny::test_double {
+  class TimeSource : public ITimeSource {
    public:
-    TimeSourceDouble()
+    TimeSource()
       : _ticks{}
     {
     }
