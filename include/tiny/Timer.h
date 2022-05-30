@@ -20,10 +20,10 @@ namespace tiny {
     friend class TimerGroup;
 
    public:
-    typedef void (*Callback)(void* context);
-
-   public:
     Timer();
+
+   private:
+    typedef void (*Callback)(void* context);
 
    private:
     List::Node node;
