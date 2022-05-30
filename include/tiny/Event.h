@@ -21,20 +21,20 @@ namespace tiny {
 
     auto publish(Args... args) -> void
     {
-      for(auto i = this->subscribers.begin(); i != this->subscribers.end(); ++i) {
-        reinterpret_cast<EventSubscription<Args...>*>(*i)->publish(args...);
+      for(auto subscriber : subscribers) {
+        reinterpret_cast<EventSubscription<Args...>*>(subscriber)->publish(args...);
       }
     }
 
     auto subscribe(EventSubscription<Args...>& subscription) -> void override
     {
-      this->subscribers.remove(reinterpret_cast<List::Node*>(&subscription));
-      this->subscribers.push_back(reinterpret_cast<List::Node*>(&subscription));
+      subscribers.remove(reinterpret_cast<List::Node*>(&subscription));
+      subscribers.push_back(reinterpret_cast<List::Node*>(&subscription));
     }
 
     auto unsubscribe(EventSubscription<Args...>& subscription) -> void override
     {
-      this->subscribers.remove(reinterpret_cast<List::Node*>(&subscription));
+      subscribers.remove(reinterpret_cast<List::Node*>(&subscription));
     }
 
    private:

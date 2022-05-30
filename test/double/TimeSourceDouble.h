@@ -18,17 +18,17 @@ namespace tiny {
 
     auto ticks() -> ITimeSource::TickCount override
     {
-      return this->_ticks;
+      return _ticks;
     }
 
     auto set_ticks(ITimeSource::TickCount ticks) -> void
     {
-      this->_ticks = ticks;
+      _ticks = ticks;
     }
 
     auto tick(ITimeSource::TickCount ticks = 1) -> void
     {
-      this->_ticks += ticks;
+      _ticks += ticks;
     }
 
    private:

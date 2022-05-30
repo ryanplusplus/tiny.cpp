@@ -10,36 +10,36 @@ using namespace tiny;
 
 auto List::push_back(Node* node) -> void
 {
-  Node* current = this->head.next;
+  Node* current = head.next;
 
-  while(current->next != &this->head) {
+  while(current->next != &head) {
     current = current->next;
   }
 
   current->next = node;
-  node->next = &this->head;
+  node->next = &head;
 }
 
 auto List::pop_back() -> Node*
 {
-  Node* previous = this->head.next;
-  Node* current = this->head.next;
+  Node* previous = head.next;
+  Node* current = head.next;
 
-  while(current->next != &this->head) {
+  while(current->next != &head) {
     previous = current;
     current = current->next;
   }
 
-  previous->next = &this->head;
+  previous->next = &head;
   return current;
 }
 
 auto List::remove(Node* node) -> void
 {
-  Node* previous = &this->head;
-  Node* current = this->head.next;
+  Node* previous = &head;
+  Node* current = head.next;
 
-  while(current != &this->head) {
+  while(current != &head) {
     if(current == node) {
       previous->next = current->next;
       return;
@@ -52,10 +52,10 @@ auto List::remove(Node* node) -> void
 
 auto List::count() -> uint16_t
 {
-  Node* current = this->head.next;
+  Node* current = head.next;
   uint16_t count = 0;
 
-  while(current != &this->head) {
+  while(current != &head) {
     count++;
     current = current->next;
   }
@@ -65,9 +65,9 @@ auto List::count() -> uint16_t
 
 auto List::contains(Node* node) -> bool
 {
-  Node* current = this->head.next;
+  Node* current = head.next;
 
-  while(current != &this->head) {
+  while(current != &head) {
     if(current == node) {
       return true;
     }
@@ -80,7 +80,7 @@ auto List::contains(Node* node) -> bool
 
 auto List::index_of(Node* node) -> uint16_t
 {
-  Node* current = this->head.next;
+  Node* current = head.next;
   uint16_t index = 0;
 
   while(current != node) {

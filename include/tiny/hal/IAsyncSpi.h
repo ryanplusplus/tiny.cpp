@@ -24,7 +24,7 @@ namespace tiny {
       Context& context,
       void (*callback)(Context* context)) -> void
     {
-      this->transfer(
+      transfer(
         write_buffer,
         read_buffer,
         buffer_size,

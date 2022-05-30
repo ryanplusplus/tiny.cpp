@@ -103,7 +103,7 @@ namespace tiny {
         configuration{configuration},
         current{reinterpret_cast<State>(initial)}
     {
-      this->send_entries(top, this->current);
+      send_entries(top, current);
     }
 
     auto send_signal(uint8_t signal, const void* data) -> void;
@@ -111,7 +111,7 @@ namespace tiny {
     template <typename Context>
     auto transition(Hsm::Result (*next)(Context* context, uint8_t signal, const void* data)) -> void
     {
-      this->_transition(reinterpret_cast<State>(next));
+      _transition(reinterpret_cast<State>(next));
     }
 
    private:

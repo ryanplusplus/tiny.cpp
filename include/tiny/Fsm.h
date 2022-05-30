@@ -32,18 +32,18 @@ namespace tiny {
     Fsm(void (*initial)(Context* context, uint8_t signal, const void* data), Context* context)
       : current{reinterpret_cast<State>(initial)}, context{context}
     {
-      this->current(context, FsmSignal::entry, nullptr);
+      current(context, FsmSignal::entry, nullptr);
     }
 
     auto send_signal(uint8_t signal, const void* data) -> void
     {
-      this->current(this->context, signal, data);
+      current(context, signal, data);
     }
 
     template <typename Context>
     auto transition(void (*next)(Context* context, uint8_t signal, const void* data)) -> void
     {
-      this->_transition(reinterpret_cast<State>(next));
+      _transition(reinterpret_cast<State>(next));
     }
 
    private:

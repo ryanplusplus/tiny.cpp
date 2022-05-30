@@ -20,28 +20,27 @@ TimerGroup::TimerGroup(ITimeSource& time_source)
 
 auto TimerGroup::run() -> TimerTicks
 {
-  auto current_ticks = this->time_source.ticks();
-  auto delta = static_cast<ITimeSource::TickCount>(current_ticks - this->last_ticks);
-  this->last_ticks = current_ticks;
+  auto current_ticks = time_source.ticks();
+  auto delta = static_cast<ITimeSource::TickCount>(current_ticks - last_ticks);
+  last_ticks = current_ticks;
 
   auto timer_ready = false;
-  this->next_ready = std::numeric_limits<TimerTicks>::max();
+  next_ready = std::numeric_limits<TimerTicks>::max();
 
-  for(auto i = this->timers.begin(); i != this->timers.end(); ++i) {
-    auto timer = reinterpret_cast<Timer*>(*i);
-
+  for(auto _timer : timers) {
+    auto timer = reinterpret_cast<Timer*>(_timer);
     if(delta < timer->remaining_ticks) {
       timer->remaining_ticks -= delta;
 
-      if(timer->remaining_ticks < this->next_ready) {
-        this->next_ready = timer->remaining_ticks;
+      if(timer->remaining_ticks < next_ready) {
+        next_ready = timer->remaining_ticks;
       }
     }
     else {
       timer->remaining_ticks = 0;
 
       if(timer_ready) {
-        this->next_ready = 0;
+        next_ready = 0;
       }
 
       timer_ready = true;
@@ -49,19 +48,19 @@ auto TimerGroup::run() -> TimerTicks
   }
 
   if(timer_ready) {
-    for(auto i = this->timers.begin(); i != this->timers.end(); ++i) {
-      auto timer = reinterpret_cast<Timer*>(*i);
+    for(auto _timer : timers) {
+      auto timer = reinterpret_cast<Timer*>(_timer);
 
       if(timer->remaining_ticks == 0) {
         if(!timer->periodic) {
-          this->timers.remove(*i);
+          timers.remove(_timer);
         }
 
         timer->callback(timer->context);
 
-        if(timer->periodic && this->is_running(*timer)) {
+        if(timer->periodic && is_running(*timer)) {
           timer->remaining_ticks = timer->start_ticks;
-          this->add_timer(*timer);
+          add_timer(*timer);
         }
 
         break;
@@ -69,7 +68,7 @@ auto TimerGroup::run() -> TimerTicks
     }
   }
 
-  return this->next_ready;
+  return next_ready;
 }
 
 auto TimerGroup::_start(Timer& timer, TimerTicks ticks, void* context, Timer::Callback callback, bool periodic) -> void
@@ -80,15 +79,15 @@ auto TimerGroup::_start(Timer& timer, TimerTicks ticks, void* context, Timer::Ca
   timer.remaining_ticks = ticks;
   timer.periodic = periodic;
 
-  this->add_timer(timer);
+  add_timer(timer);
 }
 
 auto TimerGroup::add_timer(Timer& timer) -> void
 {
-  this->timers.remove(reinterpret_cast<List::Node*>(&timer));
-  this->timers.push_back(reinterpret_cast<List::Node*>(&timer));
+  timers.remove(reinterpret_cast<List::Node*>(&timer));
+  timers.push_back(reinterpret_cast<List::Node*>(&timer));
 
-  if(timer.remaining_ticks < this->next_ready) {
-    this->next_ready = timer.remaining_ticks;
+  if(timer.remaining_ticks < next_ready) {
+    next_ready = timer.remaining_ticks;
   }
 }

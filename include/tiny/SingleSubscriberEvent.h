@@ -25,8 +25,8 @@ namespace tiny {
 
     auto publish(Args... args) const -> void
     {
-      if(this->subscription) {
-        this->subscription->publish(args...);
+      if(subscription) {
+        subscription->publish(args...);
       }
     }
 

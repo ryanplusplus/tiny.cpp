@@ -48,16 +48,16 @@ namespace tiny {
 
     auto push_front(Node* node) -> void
     {
-      node->next = this->head.next;
-      this->head.next = node;
+      node->next = head.next;
+      head.next = node;
     }
 
     auto push_back(Node* node) -> void;
 
     auto pop_front() -> Node*
     {
-      Node* popped = this->head.next;
-      this->head.next = this->head.next->next;
+      Node* popped = head.next;
+      head.next = head.next->next;
       return popped;
     }
 
@@ -102,7 +102,7 @@ namespace tiny {
 
       bool operator==(Iterator& other)
       {
-        return this->current == other.current;
+        return current == other.current;
       }
 
       bool operator!=(Iterator other)
@@ -112,14 +112,14 @@ namespace tiny {
 
       Iterator& operator++()
       {
-        this->current = this->next;
-        this->next = this->current->next;
+        current = next;
+        next = current->next;
         return *this;
       }
 
       Node* operator*() const
       {
-        return this->current;
+        return current;
       }
 
      private:

@@ -27,7 +27,7 @@ namespace tiny {
 
     auto publish(Args... args) const -> void
     {
-      this->callback(this->context, args...);
+      callback(context, args...);
     }
 
    private:
