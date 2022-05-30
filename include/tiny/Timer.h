@@ -16,7 +16,7 @@ namespace tiny {
 
   class TimerGroup;
 
-  class Timer : public List::Node {
+  class Timer : private List::Node {
     friend class TimerGroup;
 
    public:
