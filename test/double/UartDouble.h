@@ -45,7 +45,7 @@ namespace tiny {
       return send_complete;
     }
 
-    virtual auto on_receive() -> IEvent<uint8_t>&
+    virtual auto on_receive() -> IEvent<uint8_t>& override
     {
       return receive;
     }
