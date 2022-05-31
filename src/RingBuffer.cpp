@@ -50,12 +50,14 @@ auto RingBuffer::insert(const void* element) -> void
   memcpy(destination, element, element_size);
 
   if(head == tail && full) {
-    if(++tail == _capacity) {
+    tail = tail + 1;
+    if(tail == _capacity) {
       tail = 0;
     }
   }
 
-  if(++head == _capacity) {
+  head = head + 1;
+  if(head == _capacity) {
     head = 0;
   }
 
@@ -70,7 +72,8 @@ auto RingBuffer::remove(void* element) -> void
     auto source = reinterpret_cast<uint8_t*>(buffer) + tail * element_size;
     memcpy(element, source, element_size);
 
-    if(++tail == _capacity) {
+    tail = tail + 1;
+    if(tail == _capacity) {
       tail = 0;
     }
   }

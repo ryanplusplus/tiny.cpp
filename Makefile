@@ -9,21 +9,25 @@ SRC_DIRS ?= \
   src \
   test \
 
-SRC_FILES ?=
+SRC_FILES ?= \
 
-SRCS := $(SRC_FILES) $(shell find $(SRC_DIRS) -name *.cpp -or -name *.c -or -name *.s)
+SRCS := $(SRC_FILES) $(shell find $(SRC_DIRS) -maxdepth 1 -name *.cpp -or -name *.c -or -name *.s)
 OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
 DEPS := $(OBJS:.o=.d)
 
 INC_DIRS += $(shell find $(SRC_DIRS) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
-CFLAGS += -std=c17
-CPPFLAGS += -fsanitize=address -fno-omit-frame-pointer
+SANITIZE_FLAGS := -fsanitize=address -fsanitize=undefined
+
+CFLAGS += -std=c17 -pedantic
+CPPFLAGS += $(SANITIZE_FLAGS) -fno-omit-frame-pointer
 CPPFLAGS += $(INC_FLAGS) -MMD -MP -g -Wall -Wextra -Wcast-qual -Werror
-CXXFLAGS += -std=c++17
-LDFLAGS := -fsanitize=address
+CXXFLAGS += -std=c++20
+LDFLAGS := $(SANITIZE_FLAGS)
 LDLIBS := -lstdc++ -lCppUTest -lCppUTestExt -lm
+
+BUILD_DEPS += $(MAKEFILE_LIST)
 
 .PHONY: test
 test: $(BUILD_DIR)/$(TARGET)
@@ -32,29 +36,27 @@ test: $(BUILD_DIR)/$(TARGET)
 
 $(BUILD_DIR)/$(TARGET): $(OBJS)
 	@echo Linking $@...
-	@$(MKDIR_P) $(dir $@)
+	@mkdir -p $(dir $@)
 	@$(CC) $(LDFLAGS) $(OBJS) -o $@ $(LDLIBS)
 
-$(BUILD_DIR)/%.s.o: %.s
+$(BUILD_DIR)/%.s.o: %.s $(BUILD_DEPS)
 	@echo Assembling $<...
-	@$(MKDIR_P) $(dir $@)
+	@mkdir -p $(dir $@)
 	@$(AS) $(ASFLAGS) -c $< -o $@
 
-$(BUILD_DIR)/%.c.o: %.c
+$(BUILD_DIR)/%.c.o: %.c $(BUILD_DEPS)
 	@echo Compiling $<...
-	@$(MKDIR_P) $(dir $@)
+	@mkdir -p $(dir $@)
 	@$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
-$(BUILD_DIR)/%.cpp.o: %.cpp
+$(BUILD_DIR)/%.cpp.o: %.cpp $(BUILD_DEPS)
 	@echo Compiling $<...
-	@$(MKDIR_P) $(dir $@)
+	@mkdir -p $(dir $@)
 	@$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
 .PHONY: clean
 clean:
 	@echo Cleaning...
-	@$(RM) -rf $(BUILD_DIR)
-
-MKDIR_P ?= mkdir -p
+	@rm -rf $(BUILD_DIR)
 
 -include $(DEPS)
