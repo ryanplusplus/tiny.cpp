@@ -10,7 +10,7 @@
 #include "tiny/Event.h"
 
 namespace tiny {
-  class MessageBus : public IMessageBus {
+  class MessageBus final : public IMessageBus {
    public:
     MessageBus();
     auto send(Message message, const void* data) -> void override;

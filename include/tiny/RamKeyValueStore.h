@@ -18,7 +18,7 @@
 #include "tiny/RamKeyValueStoreMacros.h"
 
 namespace tiny {
-  class RamKeyValueStore : public IKeyValueStore {
+  class RamKeyValueStore final : public IKeyValueStore {
    public:
     struct KeyValuePair {
       uint16_t value_offset;

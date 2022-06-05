@@ -11,7 +11,7 @@
 #include "CppUTestExt/MockSupport.h"
 
 namespace tiny::test_double {
-  class Uart : public IUart {
+  class Uart final : public IUart {
    public:
     Uart()
       : receive{}, send_complete{}, _sending{false}

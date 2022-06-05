@@ -17,7 +17,7 @@
 #include "tiny/RingBuffer.h"
 
 namespace tiny {
-  class EventQueue : public IEventQueue {
+  class EventQueue final : public IEventQueue {
    public:
     typedef void (*UnableToQueueCallback)(void);
 

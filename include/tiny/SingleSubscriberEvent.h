@@ -13,7 +13,7 @@
 
 namespace tiny {
   template <typename... Args>
-  class SingleSubscriberEvent : public IEvent<Args...> {
+  class SingleSubscriberEvent final : public IEvent<Args...> {
    public:
     SingleSubscriberEvent()
       : subscription{}

@@ -21,7 +21,7 @@
 #include "tiny/Event.h"
 
 namespace tiny {
-  class Comm : public IComm {
+  class Comm final : public IComm {
    public:
     Comm(
       IUart& uart,

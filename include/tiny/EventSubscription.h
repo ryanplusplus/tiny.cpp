@@ -11,7 +11,7 @@
 
 namespace tiny {
   template <typename... Args>
-  class EventSubscription : public List::Node {
+  class EventSubscription final : public List::Node {
    public:
     typedef void (*Callback)(void* context, Args... args);
 

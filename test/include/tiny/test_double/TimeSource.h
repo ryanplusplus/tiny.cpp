@@ -9,7 +9,7 @@
 #include "tiny/ITimeSource.h"
 
 namespace tiny::test_double {
-  class TimeSource : public ITimeSource {
+  class TimeSource final : public ITimeSource {
    public:
     TimeSource()
       : _ticks{}
