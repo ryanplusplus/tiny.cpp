@@ -8,6 +8,7 @@
 #include "CppUTestExt/MockSupport.h"
 
 using namespace tiny;
+using namespace std;
 
 TEST_GROUP(EventQueue)
 {
@@ -15,7 +16,7 @@ TEST_GROUP(EventQueue)
     callback_size = sizeof(EventQueue::UnableToQueueCallback)
   };
 
-  EventQueue* event_queue;
+  unique_ptr<EventQueue> event_queue{};
 
   uint8_t buffer[1024];
 
@@ -24,11 +25,6 @@ TEST_GROUP(EventQueue)
   void setup()
   {
     mock().strictOrder();
-  }
-
-  void teardown()
-  {
-    delete event_queue;
   }
 
   static void callback()
@@ -55,8 +51,7 @@ TEST_GROUP(EventQueue)
 
   void given_that_the_queue_has_been_initialized_with_buffer_size(unsigned buffer_size)
   {
-    delete event_queue;
-    event_queue = new EventQueue{buffer, buffer_size, unable_to_enqueue};
+    event_queue = make_unique<EventQueue>(buffer, buffer_size, unable_to_enqueue);
   }
 
   void given_that_u32_event_has_been_enqueued(uint32_t data)

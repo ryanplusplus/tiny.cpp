@@ -16,6 +16,8 @@ namespace tiny::test_double {
     {
     }
 
+    TimeSource(const TimeSource&) = delete;
+
     auto ticks() -> ITimeSource::TickCount override
     {
       return _ticks;

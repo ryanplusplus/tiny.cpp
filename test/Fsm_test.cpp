@@ -18,7 +18,7 @@ TEST_GROUP(Fsm)
   typedef void (*State)(uint8_t*, uint8_t, const void*);
 
   uint8_t context{};
-  Fsm* fsm{};
+  unique_ptr<Fsm> fsm{};
 
   enum {
     signal_1 = FsmSignal::user_start,
@@ -28,11 +28,6 @@ TEST_GROUP(Fsm)
   void setup()
   {
     mock().strictOrder();
-  }
-
-  void teardown()
-  {
-    delete fsm;
   }
 
   static void state_a(uint8_t * context, uint8_t signal, const void* data)
@@ -63,7 +58,7 @@ TEST_GROUP(Fsm)
 
   void when_the_fsm_is_initialized_with_state(State state)
   {
-    fsm = new Fsm(state, &context);
+    fsm = make_unique<Fsm>(state, &context);
   }
 
   void given_that_the_fsm_has_been_initialized_with_state(State state)

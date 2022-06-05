@@ -13,6 +13,8 @@ namespace tiny {
   class MessageBus final : public IMessageBus {
    public:
     MessageBus();
+    MessageBus(const MessageBus& other) = delete;
+
     auto send(Message message, const void* data) -> void override;
     auto on_receive() -> IEvent<Message, const void*>& override;
 

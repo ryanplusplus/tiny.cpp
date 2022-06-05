@@ -18,6 +18,8 @@ namespace tiny::test_double {
     {
     }
 
+    Uart(const Uart& other) = delete;
+
     auto sending() -> bool
     {
       return _sending;

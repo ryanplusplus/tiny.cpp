@@ -9,22 +9,18 @@
 #include "CppUTestExt/MockSupport.h"
 
 using namespace tiny;
+using namespace std;
 
 TEST_GROUP(RingBuffer)
 {
-  RingBuffer* ring_buffer;
+  unique_ptr<RingBuffer> ring_buffer{};
   uint8_t buffer[1024];
-
-  void teardown()
-  {
-    delete ring_buffer;
-  }
 
   void given_initialization_with_element_size_and_count(
     unsigned element_size,
     unsigned element_count)
   {
-    ring_buffer = new RingBuffer{buffer, element_size, element_count};
+    ring_buffer = make_unique<RingBuffer>(buffer, element_size, element_count);
   }
 
   void after_clearing()

@@ -19,6 +19,8 @@ namespace tiny {
     {
     }
 
+    Event(const Event& other) = delete;
+
     auto publish(Args... args) -> void
     {
       for(auto subscriber : subscribers) {

@@ -30,6 +30,8 @@ namespace tiny {
       uint8_t* receive_buffer,
       uint8_t receive_buffer_size);
 
+    Comm(const Comm& other) = delete;
+
     auto run() -> void;
 
     virtual auto send(const void* payload, uint8_t length) -> void override;

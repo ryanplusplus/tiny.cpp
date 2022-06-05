@@ -21,6 +21,7 @@
  */
 
 using namespace tiny;
+using namespace std;
 
 enum State : uint8_t {
   state_a,
@@ -89,7 +90,7 @@ static const Hsm::Configuration configuration = {
 TEST_GROUP(Hsm)
 {
   uint16_t context{};
-  Hsm* hsm{};
+  unique_ptr<Hsm> hsm{};
 
   enum {
     signal_1 = HsmSignal::user_start,
@@ -102,11 +103,6 @@ TEST_GROUP(Hsm)
   void setup()
   {
     mock().strictOrder();
-  }
-
-  void teardown()
-  {
-    delete hsm;
   }
 
   void signal_should_be_sent_to_state(
@@ -125,7 +121,7 @@ TEST_GROUP(Hsm)
 
   void when_the_hsm_is_initialized_with_state(State state)
   {
-    hsm = new Hsm(&context, configuration, states[state]);
+    hsm = make_unique<Hsm>(&context, configuration, states[state]);
   }
 
   void given_that_the_hsm_has_been_initialized_with_state(State state)

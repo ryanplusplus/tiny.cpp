@@ -15,14 +15,14 @@ namespace tiny {
    public:
     typedef void (*Callback)(void* context, Args... args);
 
-    EventSubscription() = delete;
-
     template <typename Context>
     EventSubscription(Context* context, void (*callback)(Context*, Args...))
       : context(context),
         callback(reinterpret_cast<Callback>(callback))
     {
     }
+
+    EventSubscription(const EventSubscription& other) = delete;
 
     auto publish(Args... args) const -> void
     {
