@@ -27,6 +27,16 @@ namespace tiny {
       friend class List;
 
      public:
+      Node()
+        : next{}
+      {
+      }
+
+      Node(Node* next)
+        : next{next}
+      {
+      }
+
       auto operator==(const Node* other) -> bool
       {
         return this == other;
@@ -40,11 +50,13 @@ namespace tiny {
 
    public:
     List()
+      : head{&head}
     {
-      head.next = &head;
     }
 
     List(const List& other) = delete;
+
+    auto operator=(const List& other) -> void = delete;
 
     auto push_front(Node* node) -> void
     {
@@ -66,8 +78,6 @@ namespace tiny {
     auto count() -> uint16_t;
     auto contains(Node* node) -> bool;
     auto index_of(Node* node) -> uint16_t;
-
-    auto operator=(const List& other) -> void = delete;
 
     auto begin() -> Iterator
     {

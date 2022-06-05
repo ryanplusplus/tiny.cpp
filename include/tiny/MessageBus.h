@@ -15,6 +15,8 @@ namespace tiny {
     MessageBus();
     MessageBus(const MessageBus& other) = delete;
 
+    auto operator=(const MessageBus& other) -> void = delete;
+
     auto send(Message message, const void* data) -> void override;
     auto on_receive() -> IEvent<Message, const void*>& override;
 

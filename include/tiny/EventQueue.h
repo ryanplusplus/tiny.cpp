@@ -27,6 +27,8 @@ namespace tiny {
       unsigned buffer_size,
       UnableToQueueCallback unable_to_queue_callback);
 
+    auto operator=(const EventQueue& other) -> void = delete;
+
     auto run() -> bool;
 
     auto enqueue(Callback callback) -> void override;

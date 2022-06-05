@@ -21,6 +21,8 @@ namespace tiny {
 
     Event(const Event& other) = delete;
 
+    auto operator=(const Event& other) -> void = delete;
+
     auto publish(Args... args) -> void
     {
       for(auto subscriber : subscribers) {

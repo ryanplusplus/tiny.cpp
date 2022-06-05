@@ -106,6 +106,8 @@ namespace tiny {
       send_entries(top, current);
     }
 
+    auto operator=(const Hsm& other) -> void = delete;
+
     auto send_signal(uint8_t signal, const void* data) -> void;
 
     template <typename Context>

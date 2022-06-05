@@ -23,6 +23,8 @@ namespace tiny {
       unsigned element_size,
       unsigned element_count);
 
+    auto operator=(const RingBuffer& other) -> void = delete;
+
    public:
     auto capacity() -> unsigned
     {

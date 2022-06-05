@@ -32,6 +32,8 @@ namespace tiny {
 
     Comm(const Comm& other) = delete;
 
+    auto operator=(const Comm& other) -> void = delete;
+
     auto run() -> void;
 
     virtual auto send(const void* payload, uint8_t length) -> void override;

@@ -21,6 +21,9 @@ namespace tiny {
 
    public:
     Timer();
+    Timer(const Timer& other) = delete;
+
+    auto operator=(const Timer& other) -> void = delete;
 
    private:
     typedef void (*Callback)(void* context);
@@ -36,6 +39,9 @@ namespace tiny {
   class TimerGroup {
    public:
     TimerGroup(ITimeSource& time_source);
+    TimerGroup(const TimerGroup& other) = delete;
+
+    auto operator=(const TimerGroup& other) -> void = delete;
 
     auto run() -> TimerTicks;
 

@@ -22,7 +22,7 @@ SANITIZE_FLAGS := -fsanitize=address -fsanitize=undefined
 
 CFLAGS += -std=c17 -pedantic
 CPPFLAGS += $(SANITIZE_FLAGS) -fno-omit-frame-pointer
-CPPFLAGS += $(INC_FLAGS) -MMD -MP -g -Wall -Wextra -Wcast-qual -Werror
+CPPFLAGS += $(INC_FLAGS) -MMD -MP -g -Wall -Wextra -Wcast-qual -Werror -Weffc++
 CXXFLAGS += -std=c++17
 LDFLAGS := $(SANITIZE_FLAGS)
 LDLIBS := -lstdc++ -lCppUTest -lCppUTestExt -lm
