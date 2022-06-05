@@ -27,16 +27,6 @@ namespace tiny {
       friend class List;
 
      public:
-      Node()
-        : next{}
-      {
-      }
-
-      Node(Node* next)
-        : next{next}
-      {
-      }
-
       auto operator==(const Node* other) -> bool
       {
         return this == other;
@@ -50,8 +40,9 @@ namespace tiny {
 
    public:
     List()
-      : head{&head}
+      : head{}
     {
+      head.next = &head;
     }
 
     List(const List& other) = delete;
