@@ -14,10 +14,7 @@ namespace tiny {
   template <typename... Args>
   class Event final : public IEvent<Args...> {
    public:
-    Event()
-      : subscribers()
-    {
-    }
+    Event() = default;
 
     Event(const Event& other) = delete;
 
@@ -42,7 +39,7 @@ namespace tiny {
     }
 
    private:
-    List subscribers;
+    List subscribers{};
   };
 }
 

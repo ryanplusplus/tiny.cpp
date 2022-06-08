@@ -185,25 +185,12 @@ Comm::Comm(
   uint8_t* receive_buffer,
   uint8_t receive_buffer_size)
   : _uart{uart},
-    receive{},
     _send_complete{this, send_complete_trampoline},
     _byte_received{this, byte_received_trampoline},
     _send_buffer{send_buffer},
-    send_crc{},
     _send_buffer_size{send_buffer_size},
-    send_buffer_count{},
-    send_buffer_offset{},
-    send_state{},
-    send_escaped{},
-    send_in_progress{},
     _receive_buffer{receive_buffer},
-    receive_crc{},
-    receive_calculated_crc{},
-    _receive_buffer_size{receive_buffer_size},
-    receive_count{},
-    receive_state{},
-    receive_escaped{},
-    received_packet_ready{}
+    _receive_buffer_size{receive_buffer_size}
 {
   uart.on_send_complete().subscribe(_send_complete);
   uart.on_receive().subscribe(_byte_received);

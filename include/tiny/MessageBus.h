@@ -21,7 +21,7 @@ namespace tiny {
     auto on_receive() -> IEvent<Message, const void*>& override;
 
    private:
-    Event<Message, const void*> _on_receive;
+    Event<Message, const void*> _on_receive{};
   };
 }
 

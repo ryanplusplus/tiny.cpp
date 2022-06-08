@@ -62,34 +62,34 @@ namespace tiny {
    private:
     IUart& _uart;
 
-    Event<const void*, uint8_t> receive;
+    Event<const void*, uint8_t> receive{};
 
     EventSubscription<> _send_complete;
     EventSubscription<uint8_t> _byte_received;
 
     uint8_t* _send_buffer;
-    uint16_t send_crc;
+    uint16_t send_crc{};
     uint8_t _send_buffer_size;
-    uint8_t send_buffer_count;
-    uint8_t send_buffer_offset;
-    uint8_t send_state;
-    bool send_escaped;
+    uint8_t send_buffer_count{};
+    uint8_t send_buffer_offset{};
+    uint8_t send_state{};
+    bool send_escaped{};
 
     // Makes sure we don't handle send complete
     // while we're setting up another send)
-    volatile bool send_in_progress;
+    volatile bool send_in_progress{};
 
     uint8_t* _receive_buffer;
-    uint16_t receive_crc;
-    uint16_t receive_calculated_crc;
+    uint16_t receive_crc{};
+    uint16_t receive_calculated_crc{};
     uint8_t _receive_buffer_size;
-    uint8_t receive_count;
-    uint8_t receive_state;
-    bool receive_escaped;
+    uint8_t receive_count{};
+    uint8_t receive_state{};
+    bool receive_escaped{};
 
     // Makes sure we don't handle received bytes
     // while waiting for packet to be processed
-    volatile bool received_packet_ready;
+    volatile bool received_packet_ready{};
   };
 }
 

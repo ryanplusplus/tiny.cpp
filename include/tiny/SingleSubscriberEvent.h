@@ -15,10 +15,7 @@ namespace tiny {
   template <typename... Args>
   class SingleSubscriberEvent final : public IEvent<Args...> {
    public:
-    SingleSubscriberEvent()
-      : subscription{}
-    {
-    }
+    SingleSubscriberEvent() = default;
 
     SingleSubscriberEvent(const SingleSubscriberEvent&) = delete;
     bool operator=(const SingleSubscriberEvent&) = delete;
@@ -43,7 +40,7 @@ namespace tiny {
     }
 
    private:
-    EventSubscription<Args...>* subscription;
+    EventSubscription<Args...>* subscription{};
   };
 }
 

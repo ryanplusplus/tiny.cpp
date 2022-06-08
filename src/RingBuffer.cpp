@@ -20,10 +20,7 @@ RingBuffer::RingBuffer(
   unsigned element_count)
   : buffer{buffer},
     element_size{element_size},
-    head{0},
-    tail{0},
-    _capacity{element_count},
-    full{false}
+    _capacity{element_count}
 {
 }
 

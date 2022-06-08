@@ -44,7 +44,7 @@ namespace tiny {
     auto offset(Key key) -> uint16_t;
 
    private:
-    Event<Key, const void*> _on_change;
+    Event<Key, const void*> _on_change{};
     const Configuration& configuration;
     void* storage;
   };

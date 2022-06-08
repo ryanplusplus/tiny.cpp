@@ -9,7 +9,7 @@
 using namespace tiny;
 
 RamKeyValueStore::RamKeyValueStore(const Configuration& configuration, void* storage)
-  : _on_change{}, configuration{configuration}, storage{storage}
+  : configuration{configuration}, storage{storage}
 {
   Key last_key = configuration.key_value_pair_count - 1;
   uint16_t last_offset = offset(last_key);

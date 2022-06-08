@@ -40,10 +40,10 @@ namespace tiny {
    private:
     void* buffer;
     unsigned element_size;
-    volatile unsigned head;
-    volatile unsigned tail;
+    volatile unsigned head{};
+    volatile unsigned tail{};
     unsigned _capacity;
-    bool full;
+    bool full{};
   };
 }
 

@@ -20,7 +20,7 @@ namespace tiny {
     friend class TimerGroup;
 
    public:
-    Timer();
+    Timer() = default;
     Timer(const Timer& other) = delete;
 
     auto operator=(const Timer& other) -> void = delete;
@@ -29,11 +29,11 @@ namespace tiny {
     typedef void (*Callback)(void* context);
 
    private:
-    void* context;
-    Callback callback;
-    TimerTicks start_ticks;
-    TimerTicks remaining_ticks;
-    bool periodic;
+    void* context{};
+    Callback callback{};
+    TimerTicks start_ticks{};
+    TimerTicks remaining_ticks{};
+    bool periodic{};
   };
 
   class TimerGroup {
@@ -78,9 +78,9 @@ namespace tiny {
 
    private:
     ITimeSource& time_source;
-    List timers;
+    List timers{};
     ITimeSource::TickCount last_ticks;
-    TimerTicks next_ready;
+    TimerTicks next_ready{};
   };
 }
 

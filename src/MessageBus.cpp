@@ -8,7 +8,6 @@
 using namespace tiny;
 
 MessageBus::MessageBus()
-  : _on_receive{}
 {
 }
 

@@ -40,7 +40,6 @@ namespace tiny {
 
    public:
     List()
-      : head{}
     {
       head.next = &head;
     }
@@ -81,7 +80,7 @@ namespace tiny {
     }
 
    private:
-    Node head;
+    Node head{};
 
    public:
     class Iterator {
