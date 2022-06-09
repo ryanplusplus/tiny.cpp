@@ -1,6 +1,8 @@
 /*!
  * @file
- * @brief
+ * @brief Allocates memory on the stack and provides it to clients via callback.
+ *
+ * @warning The allocated memory is only valid during the callback.
  */
 
 #ifndef tiny_StackAllocator_h

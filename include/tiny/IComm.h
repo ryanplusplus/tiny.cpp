@@ -1,6 +1,6 @@
 /*!
  * @file
- * @brief
+ * @brief Abstraction over a point-to-point communication link.
  */
 
 #ifndef tiny_IComm_h

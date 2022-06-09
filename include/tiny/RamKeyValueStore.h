@@ -7,7 +7,7 @@
  * tiny_ram_key_value_store_macros.h to create the configuration. It is non-trivial
  * to do this at compile-time so that the configuration can be stored in ROM.
  *
- * @warning If data is written un-aligned it may be published unaligned.
+ * @warning If data is written unaligned it may be published unaligned.
  */
 
 #ifndef tiny_RamKeyValueStore_h

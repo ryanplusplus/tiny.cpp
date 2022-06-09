@@ -20,11 +20,11 @@
  * // hold all values
  * generate_storage_type_for_ram_key_value_pairs(my_key_value_pair_list);
  *
- * static const tiny_ram_key_value_store_key_value_pair_t my_key_value_pairs[] = {
+ * static const tiny::RamKeyValueStore::KeyValuePair my_key_value_pairs[] = {
  *   generate_configuration_pairs_from_ram_key_value_pairs(my_key_value_pair_list)
  * };
  *
- * static const tiny_ram_key_value_store_configuration_t configuration = {
+ * static const tiny::RamKeyValueStore::Configuration configuration = {
  *   my_key_value_pairs,
  *   element_count(my_key_value_pairs)
  * };

@@ -2,16 +2,12 @@
  * @file
  * @brief Linked list that contains nodes allocated by clients.
  *
- * Nodes can contain arbitrary data by defining a type that contains
- * a tiny::List::Node:
+ * Nodes can contain arbitrary data by defining a type that sub-classes
+ * tiny::List::Node:
  *
- * struct ClientNode {
- *   tiny::List::Node;
+ * struct ClientNode : tiny::List::Node {
  *   int data;
  * }
- *
- * This type must be cast to a tiny::List::Node to be added but can
- * be cast back by the client so that the data can be accessed.
  */
 
 #ifndef tiny_List_h
