@@ -5,7 +5,7 @@
  * Nodes can contain arbitrary data by defining a type that sub-classes
  * tiny::List::Node:
  *
- * struct ClientNode : tiny::List::Node {
+ * struct ClientNode : public tiny::List::Node {
  *   int data;
  * }
  */
