@@ -271,7 +271,7 @@ TEST(Timer, should_invoke_at_most_one_callback_per_run)
   after_the_group_is_run();
 }
 
-TEST(Timer, should_indicate_whether_a_callback_was_invoked_during_run)
+TEST(Timer, should_give_the_time_until_the_next_timer_is_ready)
 {
   given_that_timer_has_been_started(timer_1, 3);
   given_that_timer_has_been_started(timer_2, 5);
@@ -291,6 +291,14 @@ TEST(Timer, should_indicate_whether_a_callback_was_invoked_during_run)
   after(2);
   should_run_and_indicate_that_the_next_timer_will_be_ready_in(0);
   should_run_and_indicate_that_the_next_timer_will_be_ready_in(0xFFFFFFFF);
+}
+
+TEST(Timer, should_account_for_restarted_timers_when_giving_time_until_next_ready)
+{
+  given_that_timer_with_restart_has_been_started(timer_with_restart, 5);
+
+  after(5);
+  should_run_and_indicate_that_the_next_timer_will_be_ready_in(5);
 }
 
 TEST(Timer, should_account_for_periodic_timers_when_giving_time_until_next_ready)
