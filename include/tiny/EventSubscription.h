@@ -22,6 +22,12 @@ namespace tiny {
     {
     }
 
+    EventSubscription(void (*callback)(void*, Args...))
+      : context(nullptr),
+        callback(reinterpret_cast<Callback>(callback))
+    {
+    }
+
     EventSubscription(const EventSubscription& other) = delete;
 
     auto operator=(const EventSubscription& other) -> void = delete;
