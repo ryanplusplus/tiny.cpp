@@ -29,7 +29,7 @@ namespace tiny {
       }
 
      private:
-      Node* next;
+      Node* next{};
     };
 
     class Iterator;
@@ -60,10 +60,10 @@ namespace tiny {
     }
 
     auto pop_back() -> Node*;
-    auto remove(Node* node) -> void;
+    auto remove(const Node* node) -> void;
     auto count() -> uint16_t;
-    auto contains(Node* node) -> bool;
-    auto index_of(Node* node) -> uint16_t;
+    auto contains(const Node* node) -> bool;
+    auto index_of(const Node* node) -> uint16_t;
 
     auto begin() -> Iterator
     {
@@ -81,8 +81,9 @@ namespace tiny {
    public:
     class Iterator {
      public:
-      Iterator(Node* current)
-        : current{current}, next{current->next}
+      explicit Iterator(Node* current)
+        : current{current},
+          next{current->next}
       {
       }
 
@@ -96,12 +97,12 @@ namespace tiny {
         return Iterator(&list.head);
       }
 
-      bool operator==(Iterator& other)
+      bool operator==(const Iterator& other)
       {
         return current == other.current;
       }
 
-      bool operator!=(Iterator other)
+      bool operator!=(const Iterator& other)
       {
         return !operator==(other);
       }

@@ -16,7 +16,7 @@ namespace tiny {
 
   class TimerGroup;
 
-  class Timer : private List::Node {
+  class Timer : public List::Node {
     friend class TimerGroup;
 
    public:
@@ -38,7 +38,7 @@ namespace tiny {
 
   class TimerGroup {
    public:
-    TimerGroup(ITimeSource& time_source);
+    explicit TimerGroup(ITimeSource& time_source);
     TimerGroup(const TimerGroup& other) = delete;
 
     auto operator=(const TimerGroup& other) -> void = delete;
@@ -50,12 +50,12 @@ namespace tiny {
       timers.remove(reinterpret_cast<List::Node*>(&timer));
     }
 
-    auto is_running(Timer& timer) -> bool
+    auto is_running(const Timer& timer) -> bool
     {
-      return timers.contains(reinterpret_cast<List::Node*>(&timer));
+      return timers.contains(&timer);
     }
 
-    auto remaining_ticks(Timer& timer) -> TimerTicks
+    auto remaining_ticks(const Timer& timer) -> TimerTicks
     {
       return timer.remaining_ticks;
     }

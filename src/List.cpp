@@ -34,7 +34,7 @@ auto List::pop_back() -> Node*
   return current;
 }
 
-auto List::remove(Node* node) -> void
+auto List::remove(const Node* node) -> void
 {
   Node* previous = &head;
   Node* current = head.next;
@@ -63,7 +63,7 @@ auto List::count() -> uint16_t
   return count;
 }
 
-auto List::contains(Node* node) -> bool
+auto List::contains(const Node* node) -> bool
 {
   Node* current = head.next;
 
@@ -78,7 +78,7 @@ auto List::contains(Node* node) -> bool
   return false;
 }
 
-auto List::index_of(Node* node) -> uint16_t
+auto List::index_of(const Node* node) -> uint16_t
 {
   Node* current = head.next;
   uint16_t index = 0;

@@ -54,10 +54,15 @@ $(BUILD_DIR)/%.cpp.o: %.cpp $(BUILD_DEPS)
 	@mkdir -p $(dir $@)
 	@$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
-.PHONY: tidy
-tidy:
-	@echo Tidying...
-	@clang-tidy --fix --warnings-as-errors=* $(SRCS) -- $(INC_FLAGS)
+.PHONY: clang-tidy
+clang-tidy:
+	@echo Running $@...
+	@clang-tidy --warnings-as-errors=* $(SRCS) -- $(INC_FLAGS) -std=c++17
+
+.PHONY: cppcheck
+cppcheck:
+	@echo Running $@...
+	@cppcheck --enable=all -q $(SRCS) $(INC_FLAGS)
 
 .PHONY: clean
 clean:

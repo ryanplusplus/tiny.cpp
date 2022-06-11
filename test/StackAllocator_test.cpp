@@ -19,9 +19,8 @@ TEST_GROUP(StackAllocator)
 
 TEST(StackAllocator, should_allocate_aligned_memory_of_the_requested_size)
 {
-  static size_t current_size;
-
   for(size_t size = 1; size <= largest_supported_size; size++) {
+    static size_t current_size;
     current_size = size;
 
     StackAllocator::allocate_aligned(
