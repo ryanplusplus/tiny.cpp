@@ -12,9 +12,7 @@ using namespace tiny;
 
 TEST_GROUP(StackAllocator)
 {
-  enum {
-    largest_supported_size = StackAllocator::largest_supported_size
-  };
+  static constexpr size_t largest_supported_size = StackAllocator::largest_supported_size;
 };
 
 TEST(StackAllocator, should_allocate_aligned_memory_of_the_requested_size)
