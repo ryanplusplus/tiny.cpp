@@ -74,8 +74,11 @@ TEST_GROUP(Comm)
   static constexpr uint16_t crc()
   {
     uint16_t crc = 0xFFFF;
-    for(uint8_t byte : (uint8_t[]){bytes...}) {
-      crc = calculate_crc(crc, byte);
+    if constexpr(sizeof...(bytes) > 0) {
+      uint8_t _bytes[] = {bytes...};
+      for(uint8_t byte : _bytes) {
+        crc = calculate_crc(crc, byte);
+      }
     }
     return crc;
   }
@@ -106,8 +109,14 @@ TEST_GROUP(Comm)
   template <uint8_t... bytes>
   void _when_payload_is_sent()
   {
-    uint8_t payload[] = {bytes...};
-    comm.send(payload, sizeof(payload));
+    if constexpr(sizeof...(bytes) > 0) {
+      uint8_t payload[] = {bytes...};
+      comm.send(payload, sizeof(payload));
+    }
+    else {
+      uint8_t dummy;
+      comm.send(&dummy, 0);
+    }
   }
 
 #define given_that_payload_has_been_sent(...) _given_that_payload_has_been_sent<__VA_ARGS__>()
@@ -156,11 +165,18 @@ TEST_GROUP(Comm)
   template <uint8_t... bytes>
   void _should_receive_payload()
   {
-    static const uint8_t payload[] = {bytes...};
+    if constexpr(sizeof...(bytes) > 0) {
+      static const uint8_t payload[] = {bytes...};
 
-    mock()
-      .expectOneCall("payload_received")
-      .withMemoryBufferParameter("payload", payload, sizeof(payload));
+      mock()
+        .expectOneCall("payload_received")
+        .withMemoryBufferParameter("payload", payload, sizeof(payload));
+    }
+    else {
+      mock()
+        .expectOneCall("payload_received")
+        .withMemoryBufferParameter("payload", nullptr, 0); //, sizeof(payload));
+    }
   }
 
   void nothing_should_happen()
