@@ -7,7 +7,7 @@
       "cppStandard": "c++17",
       "includePath": [
         "include",
-        "test"
+        "test/include"
       ]
     }
   ],
