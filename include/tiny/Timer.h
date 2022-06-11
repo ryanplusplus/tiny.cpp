@@ -47,12 +47,12 @@ namespace tiny {
 
     auto stop(Timer& timer) -> void
     {
-      timers.remove(&timer);
+      timers.remove(timer);
     }
 
     auto is_running(const Timer& timer) -> bool
     {
-      return timers.contains(&timer);
+      return timers.contains(timer);
     }
 
     auto remaining_ticks(const Timer& timer) -> TimerTicks

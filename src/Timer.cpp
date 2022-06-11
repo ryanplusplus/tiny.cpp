@@ -22,17 +22,17 @@ auto TimerGroup::run() -> TimerTicks
   auto timer_ready = false;
   next_ready = std::numeric_limits<TimerTicks>::max();
 
-  for(auto _timer : timers) {
-    auto timer = reinterpret_cast<Timer*>(_timer);
-    if(delta < timer->remaining_ticks) {
-      timer->remaining_ticks -= delta;
+  for(auto& _timer : timers) {
+    auto& timer = reinterpret_cast<Timer&>(_timer);
+    if(delta < timer.remaining_ticks) {
+      timer.remaining_ticks -= delta;
 
-      if(timer->remaining_ticks < next_ready) {
-        next_ready = timer->remaining_ticks;
+      if(timer.remaining_ticks < next_ready) {
+        next_ready = timer.remaining_ticks;
       }
     }
     else {
-      timer->remaining_ticks = 0;
+      timer.remaining_ticks = 0;
 
       if(timer_ready) {
         next_ready = 0;
@@ -43,19 +43,19 @@ auto TimerGroup::run() -> TimerTicks
   }
 
   if(timer_ready) {
-    for(auto _timer : timers) {
-      auto timer = reinterpret_cast<Timer*>(_timer);
+    for(auto& _timer : timers) {
+      auto& timer = reinterpret_cast<Timer&>(_timer);
 
-      if(timer->remaining_ticks == 0) {
-        if(!timer->periodic) {
+      if(timer.remaining_ticks == 0) {
+        if(!timer.periodic) {
           timers.remove(_timer);
         }
 
-        timer->callback(timer->context);
+        timer.callback(timer.context);
 
-        if(timer->periodic && is_running(*timer)) {
-          timer->remaining_ticks = timer->start_ticks;
-          add_timer(*timer);
+        if(timer.periodic && is_running(timer)) {
+          timer.remaining_ticks = timer.start_ticks;
+          add_timer(timer);
         }
 
         break;
@@ -79,8 +79,8 @@ auto TimerGroup::_start(Timer& timer, TimerTicks ticks, void* context, Timer::Ca
 
 auto TimerGroup::add_timer(Timer& timer) -> void
 {
-  timers.remove(&timer);
-  timers.push_back(&timer);
+  timers.remove(timer);
+  timers.push_back(timer);
 
   if(timer.remaining_ticks < next_ready) {
     next_ready = timer.remaining_ticks;

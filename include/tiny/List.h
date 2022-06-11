@@ -44,13 +44,13 @@ namespace tiny {
 
     auto operator=(const List& other) -> void = delete;
 
-    auto push_front(Node* node) -> void
+    auto push_front(Node& node) -> void
     {
-      node->next = head.next;
-      head.next = node;
+      node.next = head.next;
+      head.next = &node;
     }
 
-    auto push_back(Node* node) -> void;
+    auto push_back(Node& node) -> void;
 
     auto pop_front() -> Node*
     {
@@ -60,10 +60,10 @@ namespace tiny {
     }
 
     auto pop_back() -> Node*;
-    auto remove(const Node* node) -> void;
+    auto remove(const Node& node) -> void;
     auto count() -> uint16_t;
-    auto contains(const Node* node) -> bool;
-    auto index_of(const Node* node) -> uint16_t;
+    auto contains(const Node& node) -> bool;
+    auto index_of(const Node& node) -> uint16_t;
 
     auto begin() -> Iterator
     {
@@ -80,21 +80,22 @@ namespace tiny {
 
    public:
     class Iterator {
-     public:
-      explicit Iterator(Node* current)
-        : current{current},
-          next{current->next}
+     private:
+      explicit Iterator(Node& current)
+        : current{&current},
+          next{current.next}
       {
       }
 
+     public:
       static auto begin(List& list) -> Iterator
       {
-        return Iterator(list.head.next);
+        return Iterator(*list.head.next);
       }
 
       static auto end(List& list) -> Iterator
       {
-        return Iterator(&list.head);
+        return Iterator(list.head);
       }
 
       bool operator==(const Iterator& other)
@@ -114,9 +115,9 @@ namespace tiny {
         return *this;
       }
 
-      Node* operator*() const
+      Node& operator*() const
       {
-        return current;
+        return *current;
       }
 
      private:

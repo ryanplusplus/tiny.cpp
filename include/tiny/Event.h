@@ -22,20 +22,20 @@ namespace tiny {
 
     auto publish(Args... args) -> void
     {
-      for(auto subscriber : subscribers) {
-        reinterpret_cast<EventSubscription<Args...>*>(subscriber)->publish(args...);
+      for(auto& subscriber : subscribers) {
+        reinterpret_cast<EventSubscription<Args...>&>(subscriber).publish(args...);
       }
     }
 
     auto subscribe(EventSubscription<Args...>& subscription) -> void override
     {
-      subscribers.remove(&subscription);
-      subscribers.push_back(&subscription);
+      subscribers.remove(subscription);
+      subscribers.push_back(subscription);
     }
 
     auto unsubscribe(EventSubscription<Args...>& subscription) -> void override
     {
-      subscribers.remove(&subscription);
+      subscribers.remove(subscription);
     }
 
    private:
