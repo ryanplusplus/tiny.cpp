@@ -47,7 +47,7 @@ namespace tiny {
 
     auto stop(Timer& timer) -> void
     {
-      timers.remove(reinterpret_cast<List::Node*>(&timer));
+      timers.remove(&timer);
     }
 
     auto is_running(const Timer& timer) -> bool
