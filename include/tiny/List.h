@@ -52,14 +52,14 @@ namespace tiny {
 
     auto push_back(Node& node) -> void;
 
-    auto pop_front() -> Node*
+    auto pop_front() -> Node&
     {
       Node* popped = head.next;
       head.next = head.next->next;
-      return popped;
+      return *popped;
     }
 
-    auto pop_back() -> Node*;
+    auto pop_back() -> Node&;
     auto remove(const Node& node) -> void;
     auto count() -> uint16_t;
     auto contains(const Node& node) -> bool;

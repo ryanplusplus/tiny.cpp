@@ -45,7 +45,7 @@ namespace tiny {
 
     auto run() -> TimerTicks;
 
-    auto stop(Timer& timer) -> void
+    auto stop(const Timer& timer) -> void
     {
       timers.remove(timer);
     }

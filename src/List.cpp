@@ -20,7 +20,7 @@ auto List::push_back(Node& node) -> void
   node.next = &head;
 }
 
-auto List::pop_back() -> Node*
+auto List::pop_back() -> Node&
 {
   Node* previous = head.next;
   Node* current = head.next;
@@ -31,7 +31,7 @@ auto List::pop_back() -> Node*
   }
 
   previous->next = &head;
-  return current;
+  return *current;
 }
 
 auto List::remove(const Node& node) -> void

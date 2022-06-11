@@ -38,9 +38,9 @@ TEST(List, should_push_and_pop_nodes_at_front)
   list.push_front(node_2);
   list.push_front(node_3);
 
-  CHECK(&node_3 == list.pop_front());
-  CHECK(&node_2 == list.pop_front());
-  CHECK(&node_1 == list.pop_front());
+  CHECK(node_3 == &list.pop_front());
+  CHECK(node_2 == &list.pop_front());
+  CHECK(node_1 == &list.pop_front());
 }
 
 TEST(List, should_push_and_pop_nodes_at_back)
@@ -49,9 +49,9 @@ TEST(List, should_push_and_pop_nodes_at_back)
   list.push_back(node_2);
   list.push_back(node_3);
 
-  CHECK(&node_3 == list.pop_back());
-  CHECK(&node_2 == list.pop_back());
-  CHECK(&node_1 == list.pop_back());
+  CHECK(node_3 == &list.pop_back());
+  CHECK(node_2 == &list.pop_back());
+  CHECK(node_1 == &list.pop_back());
 }
 
 TEST(List, should_pop_nodes_from_back_in_reverse_order_that_they_were_pushed_front)
@@ -60,9 +60,9 @@ TEST(List, should_pop_nodes_from_back_in_reverse_order_that_they_were_pushed_fro
   list.push_front(node_2);
   list.push_front(node_3);
 
-  CHECK(&node_1 == list.pop_back());
-  CHECK(&node_2 == list.pop_back());
-  CHECK(&node_3 == list.pop_back());
+  CHECK(node_1 == &list.pop_back());
+  CHECK(node_2 == &list.pop_back());
+  CHECK(node_3 == &list.pop_back());
 }
 
 TEST(List, should_pop_nodes_from_front_in_reverse_order_that_they_were_pushed_back)
@@ -71,9 +71,9 @@ TEST(List, should_pop_nodes_from_front_in_reverse_order_that_they_were_pushed_ba
   list.push_back(node_2);
   list.push_back(node_3);
 
-  CHECK(&node_1 == list.pop_front());
-  CHECK(&node_2 == list.pop_front());
-  CHECK(&node_3 == list.pop_front());
+  CHECK(node_1 == &list.pop_front());
+  CHECK(node_2 == &list.pop_front());
+  CHECK(node_3 == &list.pop_front());
 }
 
 TEST(List, should_remove_nodes_from_front)
@@ -84,8 +84,8 @@ TEST(List, should_remove_nodes_from_front)
 
   list.remove(node_3);
 
-  CHECK(&node_2 == list.pop_front());
-  CHECK(&node_1 == list.pop_front());
+  CHECK(node_2 == &list.pop_front());
+  CHECK(node_1 == &list.pop_front());
 }
 
 TEST(List, should_remove_nodes_from_back)
@@ -96,8 +96,8 @@ TEST(List, should_remove_nodes_from_back)
 
   list.remove(node_1);
 
-  CHECK(&node_3 == list.pop_front());
-  CHECK(&node_2 == list.pop_front());
+  CHECK(node_3 == &list.pop_front());
+  CHECK(node_2 == &list.pop_front());
 }
 
 TEST(List, should_remove_nodes_from_middle)
@@ -108,8 +108,8 @@ TEST(List, should_remove_nodes_from_middle)
 
   list.remove(node_2);
 
-  CHECK(&node_3 == list.pop_front());
-  CHECK(&node_1 == list.pop_front());
+  CHECK(node_3 == &list.pop_front());
+  CHECK(node_1 == &list.pop_front());
 }
 
 TEST(List, should_not_fail_if_removed_node_is_not_in_the_list)
@@ -119,8 +119,8 @@ TEST(List, should_not_fail_if_removed_node_is_not_in_the_list)
 
   list.remove(node_3);
 
-  CHECK(&node_2 == list.pop_front());
-  CHECK(&node_1 == list.pop_front());
+  CHECK(node_2 == &list.pop_front());
+  CHECK(node_1 == &list.pop_front());
 }
 
 TEST(List, should_iterate)
