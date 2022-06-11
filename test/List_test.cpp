@@ -3,7 +3,7 @@
  * @brief
  */
 
-#include "tiny/List.h"
+#include "tiny/List.hpp"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
 

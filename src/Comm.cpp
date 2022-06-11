@@ -4,8 +4,8 @@
  */
 
 #include <string.h>
-#include "tiny/Comm.h"
-#include "tiny/Crc16.h"
+#include "tiny/Comm.hpp"
+#include "tiny/Crc16.hpp"
 
 constexpr auto crc_seed = static_cast<uint16_t>(0xFFFF);
 

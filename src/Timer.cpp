@@ -4,7 +4,7 @@
  */
 
 #include <limits>
-#include "tiny/Timer.h"
+#include "tiny/Timer.hpp"
 
 using namespace tiny;
 

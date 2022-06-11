@@ -3,7 +3,7 @@
  * @brief
  */
 
-#include "tiny/Hsm.h"
+#include "tiny/Hsm.hpp"
 
 using namespace tiny;
 

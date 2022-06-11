@@ -10,7 +10,7 @@
 
 #include <cstring>
 #include <cstdint>
-#include "tiny/RingBuffer.h"
+#include "tiny/RingBuffer.hpp"
 
 using namespace tiny;
 

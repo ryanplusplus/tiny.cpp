@@ -4,7 +4,7 @@
  */
 
 #include <cstring>
-#include "tiny/RamKeyValueStore.h"
+#include "tiny/RamKeyValueStore.hpp"
 #include "tiny/utils.h"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"

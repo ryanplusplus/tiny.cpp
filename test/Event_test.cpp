@@ -4,7 +4,7 @@
  */
 
 #include <cstdint>
-#include "tiny/Event.h"
+#include "tiny/Event.hpp"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
 

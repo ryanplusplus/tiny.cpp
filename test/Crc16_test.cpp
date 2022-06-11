@@ -3,7 +3,7 @@
  * @brief
  */
 
-#include "tiny/Crc16.h"
+#include "tiny/Crc16.hpp"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
 

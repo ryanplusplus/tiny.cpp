@@ -1,0 +1,30 @@
+/*!
+ * @file
+ * @brief
+ */
+
+#ifndef tiny_hal_IGpioGroup_hpp
+#define tiny_hal_IGpioGroup_hpp
+
+#include <cstdint>
+#include "tiny/hal/IGpio.hpp"
+
+namespace tiny {
+  class IGpioGroup {
+   public:
+    typedef uint8_t Channel;
+
+    enum class Direction : uint8_t {
+      Input,
+      Output
+    };
+
+   public:
+    virtual ~IGpioGroup(){};
+    virtual auto set_direction(Channel channel, Direction direction) -> void = 0;
+    virtual auto read(Channel channel) -> bool = 0;
+    virtual auto Write(Channel channel, bool state) -> void = 0;
+  };
+}
+
+#endif

@@ -3,7 +3,7 @@
  * @brief
  */
 
-#include "tiny/Hsm.h"
+#include "tiny/Hsm.hpp"
 #include "tiny/utils.h"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"

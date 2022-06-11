@@ -4,7 +4,7 @@
  */
 
 #include <cstdint>
-#include "tiny/RingBuffer.h"
+#include "tiny/RingBuffer.hpp"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
 

@@ -3,8 +3,8 @@
  * @brief
  */
 
-#include "tiny/EventQueue.h"
-#include "tiny/StackAllocator.h"
+#include "tiny/EventQueue.hpp"
+#include "tiny/StackAllocator.hpp"
 #include "tiny/utils.h"
 
 using namespace tiny;

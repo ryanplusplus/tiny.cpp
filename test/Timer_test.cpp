@@ -3,10 +3,10 @@
  * @brief
  */
 
-#include "tiny/Timer.h"
+#include "tiny/Timer.hpp"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
-#include "tiny/test_double/TimeSource.h"
+#include "tiny/test_double/TimeSource.hpp"
 
 using namespace tiny;
 

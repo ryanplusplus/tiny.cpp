@@ -4,7 +4,7 @@
  */
 
 #include <cstring>
-#include "tiny/RamKeyValueStore.h"
+#include "tiny/RamKeyValueStore.hpp"
 
 using namespace tiny;
 

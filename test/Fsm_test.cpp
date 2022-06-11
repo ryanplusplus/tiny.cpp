@@ -4,7 +4,7 @@
  */
 
 #include <cstdint>
-#include "tiny/Fsm.h"
+#include "tiny/Fsm.hpp"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
 

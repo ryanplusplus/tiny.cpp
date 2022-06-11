@@ -3,11 +3,11 @@
  * @brief
  */
 
-#include "tiny/Comm.h"
-#include "tiny/Crc16.h"
+#include "tiny/Comm.hpp"
+#include "tiny/Crc16.hpp"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
-#include "tiny/test_double/Uart.h"
+#include "tiny/test_double/Uart.hpp"
 
 #define and_
 

@@ -4,7 +4,7 @@
  */
 
 #include <cstring>
-#include "tiny/StackAllocator.h"
+#include "tiny/StackAllocator.hpp"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
 

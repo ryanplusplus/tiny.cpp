@@ -3,7 +3,7 @@
  * @brief
  */
 
-#include "tiny/EventQueue.h"
+#include "tiny/EventQueue.hpp"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
 

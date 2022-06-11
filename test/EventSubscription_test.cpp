@@ -4,7 +4,7 @@
  */
 
 #include <cstdint>
-#include "tiny/EventSubscription.h"
+#include "tiny/EventSubscription.hpp"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
 

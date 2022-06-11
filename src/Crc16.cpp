@@ -3,7 +3,7 @@
  * @brief
  */
 
-#include "tiny/Crc16.h"
+#include "tiny/Crc16.hpp"
 
 using namespace tiny;
 
