@@ -57,6 +57,6 @@ namespace tiny::test_double {
     Event<> send_complete;
     bool _sending;
   };
-};
+}
 
 #endif
