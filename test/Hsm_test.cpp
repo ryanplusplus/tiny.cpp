@@ -46,20 +46,22 @@ enum State : uint8_t {
     return result ? Hsm::Result::consumed : Hsm::Result::deferred;                 \
   }
 
-state_function(state_a);
-state_function(state_b);
-state_function(state_c);
-state_function(state_d);
-state_function(state_e);
-state_function(state_f);
+// clang-format off
+state_function(state_a)
+state_function(state_b)
+state_function(state_c)
+state_function(state_d)
+state_function(state_e)
+state_function(state_f)
+  // clang-format on
 
-static const char* state_names[] = {
-  "state_a",
-  "state_b",
-  "state_c",
-  "state_d",
-  "state_e",
-  "state_f",
+  static const char* state_names[] = {
+    "state_a",
+    "state_b",
+    "state_c",
+    "state_d",
+    "state_e",
+    "state_f",
 };
 
 typedef Hsm::Result (*StateFunction)(uint16_t* context, uint8_t signal, const void* data);
