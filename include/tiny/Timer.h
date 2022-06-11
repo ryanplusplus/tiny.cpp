@@ -66,10 +66,20 @@ namespace tiny {
       _start(timer, ticks, context, reinterpret_cast<Timer::Callback>(callback), false);
     }
 
+    auto start(Timer& timer, TimerTicks ticks, void (*callback)(void*)) -> void
+    {
+      _start(timer, ticks, nullptr, reinterpret_cast<Timer::Callback>(callback), false);
+    }
+
     template <typename Context>
     auto start_periodic(Timer& timer, TimerTicks ticks, Context* context, void (*callback)(Context* context)) -> void
     {
       _start(timer, ticks, context, reinterpret_cast<Timer::Callback>(callback), true);
+    }
+
+    auto start_periodic(Timer& timer, TimerTicks ticks, void (*callback)(void*)) -> void
+    {
+      _start(timer, ticks, nullptr, reinterpret_cast<Timer::Callback>(callback), true);
     }
 
    private:
