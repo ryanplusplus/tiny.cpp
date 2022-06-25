@@ -191,3 +191,14 @@ TEST(List, should_give_the_index_of_a_specified_node)
   CHECK(1 == list.index_of(node_2));
   CHECK(2 == list.index_of(node_3));
 }
+
+TEST(List, should_allow_nodes_to_be_inserted_after_a_given_node)
+{
+  list.push_back(node_1);
+  list.push_back(node_2);
+  list.insert_after(node_1, node_3);
+
+  CHECK(0 == list.index_of(node_1));
+  CHECK(1 == list.index_of(node_3));
+  CHECK(2 == list.index_of(node_2));
+}

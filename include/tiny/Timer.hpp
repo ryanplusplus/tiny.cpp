@@ -32,7 +32,7 @@ namespace tiny {
     void* context{};
     Callback callback{};
     TimerTicks start_ticks{};
-    TimerTicks remaining_ticks{};
+    TimerTicks expiration_ticks{};
     bool periodic{};
   };
 
@@ -55,10 +55,7 @@ namespace tiny {
       return timers.contains(timer);
     }
 
-    auto remaining_ticks(const Timer& timer) -> TimerTicks
-    {
-      return timer.remaining_ticks;
-    }
+    auto remaining_ticks(const Timer& timer) -> TimerTicks;
 
     template <typename Context>
     auto start(Timer& timer, TimerTicks ticks, Context* context, void (*callback)(Context* context)) -> void
@@ -85,12 +82,13 @@ namespace tiny {
    private:
     auto _start(Timer& timer, TimerTicks ticks, void* context, Timer::Callback callback, bool periodic) -> void;
     auto add_timer(Timer& timer) -> void;
+    auto pending_ticks() -> ITimeSource::TickCount;
 
    private:
     ITimeSource& time_source;
     List timers{};
-    ITimeSource::TickCount last_ticks;
-    TimerTicks next_ready{};
+    ITimeSource::TickCount last_time_source_ticks;
+    TimerTicks current_ticks{};
   };
 }
 

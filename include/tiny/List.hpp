@@ -52,6 +52,12 @@ namespace tiny {
 
     auto push_back(Node& node) -> void;
 
+    auto insert_after(Node& after, Node& to_insert) -> void
+    {
+      to_insert.next = after.next;
+      after.next = &to_insert;
+    }
+
     auto pop_front() -> Node&
     {
       Node* popped = head.next;

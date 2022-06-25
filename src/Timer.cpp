@@ -9,70 +9,67 @@
 using namespace tiny;
 
 TimerGroup::TimerGroup(ITimeSource& time_source)
-  : time_source{time_source}, last_ticks{time_source.ticks()}
+  : time_source{time_source}, last_time_source_ticks{time_source.ticks()}
 {
 }
 
 auto TimerGroup::run() -> TimerTicks
 {
   auto current_ticks = time_source.ticks();
-  auto delta = static_cast<ITimeSource::TickCount>(current_ticks - last_ticks);
-  last_ticks = current_ticks;
+  auto delta = static_cast<ITimeSource::TickCount>(current_ticks - last_time_source_ticks);
+  last_time_source_ticks = current_ticks;
 
-  auto timer_ready = false;
-  next_ready = std::numeric_limits<TimerTicks>::max();
+  auto last_ticks = this->current_ticks;
+  this->current_ticks += delta;
 
   for(auto& _timer : timers) {
     auto& timer = reinterpret_cast<Timer&>(_timer);
-    if(delta < timer.remaining_ticks) {
-      timer.remaining_ticks -= delta;
+    TimerTicks remaining_ticks = timer.expiration_ticks - last_ticks;
 
-      if(timer.remaining_ticks < next_ready) {
-        next_ready = timer.remaining_ticks;
-      }
-    }
-    else {
-      timer.remaining_ticks = 0;
-
-      if(timer_ready) {
-        next_ready = 0;
+    if(remaining_ticks <= delta) {
+      if(!timer.periodic) {
+        timers.remove(_timer);
       }
 
-      timer_ready = true;
-    }
-  }
+      timer.callback(timer.context);
 
-  if(timer_ready) {
-    for(auto& _timer : timers) {
-      auto& timer = reinterpret_cast<Timer&>(_timer);
-
-      if(timer.remaining_ticks == 0) {
-        if(!timer.periodic) {
-          timers.remove(_timer);
-        }
-
-        timer.callback(timer.context);
-
-        if(timer.periodic && is_running(timer)) {
-          timer.remaining_ticks = timer.start_ticks;
-          add_timer(timer);
-        }
-
-        break;
+      if(timer.periodic && is_running(timer)) {
+        timer.expiration_ticks = current_ticks + timer.start_ticks;
+        add_timer(timer);
       }
+
+      break;
     }
   }
 
-  return next_ready;
+  for(auto& _timer : timers) {
+    auto& timer = reinterpret_cast<Timer&>(_timer);
+    return remaining_ticks(timer);
+  }
+
+  return std::numeric_limits<TimerTicks>::max();
+}
+
+auto TimerGroup::remaining_ticks(const Timer& timer) -> TimerTicks
+{
+  TimerTicks remaining = timer.expiration_ticks - current_ticks;
+  ITimeSource::TickCount pending = pending_ticks();
+
+  if(remaining > pending) {
+    return remaining - pending;
+  }
+  else {
+    return 0;
+  }
 }
 
 auto TimerGroup::_start(Timer& timer, TimerTicks ticks, void* context, Timer::Callback callback, bool periodic) -> void
 {
+  timer.periodic = periodic;
   timer.context = context;
   timer.callback = callback;
   timer.start_ticks = ticks;
-  timer.remaining_ticks = ticks;
-  timer.periodic = periodic;
+  timer.expiration_ticks = current_ticks + ticks + pending_ticks();
 
   add_timer(timer);
 }
@@ -80,9 +77,29 @@ auto TimerGroup::_start(Timer& timer, TimerTicks ticks, void* context, Timer::Ca
 auto TimerGroup::add_timer(Timer& timer) -> void
 {
   timers.remove(timer);
-  timers.push_back(timer);
 
-  if(timer.remaining_ticks < next_ready) {
-    next_ready = timer.remaining_ticks;
+  Timer* after = nullptr;
+  auto _remaining_ticks = remaining_ticks(timer);
+
+  for(auto& _timer : timers) {
+    auto& timer = reinterpret_cast<Timer&>(_timer);
+    if(_remaining_ticks >= remaining_ticks(timer)) {
+      after = &timer;
+    }
+    else {
+      break;
+    }
   }
+
+  if(after) {
+    timers.insert_after(*after, timer);
+  }
+  else {
+    timers.push_front(timer);
+  }
+}
+
+auto TimerGroup::pending_ticks() -> ITimeSource::TickCount
+{
+  return time_source.ticks() - last_time_source_ticks;
 }

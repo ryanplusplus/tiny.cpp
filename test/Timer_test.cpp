@@ -88,6 +88,13 @@ TEST_GROUP(Timer)
     after_timer_is_started(timer, ticks);
   }
 
+  void given_that_ticks_are_pending(ITimeSource::TickCount ticks)
+  {
+    while(ticks--) {
+      time_source.tick();
+    }
+  }
+
   void after_periodic_timer_is_started(Timer & timer, TimerTicks ticks)
   {
     group.start_periodic(timer, ticks, &timer, callback);
@@ -186,6 +193,13 @@ TEST(Timer, should_invoke_timer_callback_even_if_run_after_expiration)
   after(10);
   should_invoke_timer_callback(timer_1);
   after_the_group_is_run();
+}
+
+TEST(Timer, should_consider_pending_ticks_when_starting_timers)
+{
+  given_that_ticks_are_pending(3);
+  given_that_timer_has_been_started(timer_1, 7);
+  should_invoke_timer_callback_after(timer_1, 7);
 }
 
 TEST(Timer, should_not_call_back_timer_again_after_expiration)
@@ -331,6 +345,19 @@ TEST(Timer, should_give_the_remaining_ticks_for_a_running_timer)
 
   given_that_time_has_passed_and_the_group_has_been_run(5);
   remaining_timer_for_timer_should_be(timer_1, 2);
+}
+
+TEST(Timer, should_consider_pending_ticks_when_calculating_remaining_ticks)
+{
+  given_that_timer_has_been_started(timer_1, 7);
+  given_that_ticks_are_pending(3);
+  remaining_timer_for_timer_should_be(timer_1, 4);
+
+  given_that_time_has_passed_and_the_group_has_been_run(2);
+  remaining_timer_for_timer_should_be(timer_1, 2);
+
+  given_that_ticks_are_pending(7);
+  remaining_timer_for_timer_should_be(timer_1, 0);
 }
 
 TEST(Timer, should_allow_a_timer_to_be_restarted_in_its_callback)
