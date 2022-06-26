@@ -11,12 +11,11 @@
 namespace tiny::test_double {
   class TimeSource final : public ITimeSource {
    public:
-    TimeSource()
-      : _ticks{}
-    {
-    }
+    TimeSource() = default;
 
     TimeSource(const TimeSource&) = delete;
+
+    void operator=(const TimeSource& other) = delete;
 
     ITimeSource::TickCount ticks() override
     {
@@ -34,7 +33,7 @@ namespace tiny::test_double {
     }
 
    private:
-    ITimeSource::TickCount _ticks;
+    ITimeSource::TickCount _ticks{};
   };
 }
 

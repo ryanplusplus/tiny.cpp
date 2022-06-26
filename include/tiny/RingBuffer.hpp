@@ -23,6 +23,8 @@ namespace tiny {
       unsigned element_size,
       unsigned element_count);
 
+    RingBuffer(const RingBuffer&) = delete;
+
     void operator=(const RingBuffer& other) = delete;
 
    public:

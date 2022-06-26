@@ -127,9 +127,7 @@ void EventQueue::process_event_with_data()
   read_from_buffer(&context.data_size, sizeof(context.data_size));
 
   StackAllocator::allocate_aligned(
-    context.data_size,
-    &context,
-    +[](Context* context, void* _data) {
+    context.data_size, &context, +[](Context* context, void* _data) {
       auto data = reinterpret_cast<uint8_t*>(_data);
 
       for(uint8_t i = 0; i < context->data_size; i++) {

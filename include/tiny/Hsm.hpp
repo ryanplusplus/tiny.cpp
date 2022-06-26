@@ -106,6 +106,8 @@ namespace tiny {
       send_entries(top, current);
     }
 
+    Hsm(const Hsm&) = delete;
+
     void operator=(const Hsm& other) = delete;
 
     void send_signal(uint8_t signal, const void* data);

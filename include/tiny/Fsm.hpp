@@ -35,6 +35,8 @@ namespace tiny {
       current(context, FsmSignal::entry, nullptr);
     }
 
+    Fsm(const Fsm&) = delete;
+
     void operator=(const Fsm& other) = delete;
 
     void send_signal(uint8_t signal, const void* data)

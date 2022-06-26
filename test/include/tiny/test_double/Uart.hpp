@@ -20,6 +20,8 @@ namespace tiny::test_double {
 
     Uart(const Uart& other) = delete;
 
+    void operator=(const Uart& other) = delete;
+
     bool sending()
     {
       return _sending;
