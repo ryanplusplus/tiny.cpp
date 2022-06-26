@@ -1,8 +1,9 @@
 /*!
  * @file
- * @brief Abstraction for getting the current system time. This can be implemented
- * using something like Arduino's millis() or by using a system tick interrupt to
- * keep time.
+ * @brief Abstraction for getting the current system time.
+ *
+ * This can be implemented using something like Arduino's millis() or by using
+ * a system tick interrupt to keep time.
  */
 
 #ifndef tiny_ITimeSource_hpp
@@ -17,6 +18,10 @@ namespace tiny {
 
    public:
     virtual ~ITimeSource(){};
+
+    /*!
+     * Returns the current time source tick count.
+     */
     virtual TickCount ticks() = 0;
   };
 }

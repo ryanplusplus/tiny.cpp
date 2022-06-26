@@ -1,6 +1,6 @@
 /*!
  * @file
- * @brief
+ * @brief Time source test double.
  */
 
 #ifndef tiny_test_double_TimeSource_hpp
@@ -22,11 +22,17 @@ namespace tiny::test_double {
       return _ticks;
     }
 
+    /*!
+     * Sets the current ticks.
+     */
     void set_ticks(ITimeSource::TickCount ticks)
     {
       _ticks = ticks;
     }
 
+    /*!
+     * Moves the current ticks forward by the specified number of ticks.
+     */
     void tick(ITimeSource::TickCount ticks = 1)
     {
       _ticks += ticks;

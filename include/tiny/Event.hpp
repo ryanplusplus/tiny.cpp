@@ -1,7 +1,6 @@
 /*!
  * @file
- * @brief Default implementation of an event. Supports an arbitrary number of
- * subscribers.
+ * @brief Default implementation of an event. Supports an arbitrary number of subscribers.
  */
 
 #ifndef tiny_Event_hpp
@@ -20,6 +19,9 @@ namespace tiny {
 
     void operator=(const Event& other) = delete;
 
+    /*!
+     * Publishes the event with the given arguments.
+     */
     void publish(Args... args)
     {
       for(auto& subscriber : subscribers) {

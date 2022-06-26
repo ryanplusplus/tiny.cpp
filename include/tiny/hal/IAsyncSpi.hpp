@@ -1,6 +1,8 @@
 /*!
  * @file
- * @brief Assumes chip select is managed by the client.
+ * @brief Abstraction for performing an asynchronous SPI transfer.
+ *
+ * Assumes chip select is managed by the client.
  */
 
 #ifndef tiny_hal_IAsyncSpi_hpp
@@ -32,6 +34,12 @@ namespace tiny {
         reinterpret_cast<IAsyncSpi::Callback>(callback));
     }
 
+    /*!
+     * Performs a simultaneous write/read. If not reading or writing, the corresponding
+     * buffer can be left NULL.
+     *
+     * Clients should assume that the callback is raised from an interrupt.
+     */
    private:
     virtual void transfer(
       const uint8_t* write_buffer,

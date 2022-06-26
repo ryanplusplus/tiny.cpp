@@ -1,6 +1,6 @@
 /*!
  * @file
- * @brief
+ * @brief Abstract asynchronous I2C peripheral.
  */
 
 #ifndef tiny_hal_IAsyncI2c_hpp
@@ -34,6 +34,14 @@ namespace tiny {
         reinterpret_cast<Callback>(callback));
     }
 
+    /*!
+     * Writes bytes from a buffer to the specified address. The stop
+     * condition can be omitted in order to allow for a repeated start
+     * by setting prepare_for_restart.
+     *
+     * Clients should assume that the callback could be invoked from
+     * the interrupt context.
+     */
     virtual void write(
       uint8_t address,
       bool prepare_for_restart,
@@ -60,6 +68,14 @@ namespace tiny {
         reinterpret_cast<Callback>(callback));
     }
 
+    /*!
+     * Read bytes into a buffer from the specified address. The stop
+     * condition can be omitted in order to allow for a repeated start
+     * by setting prepare_for_restart.
+     *
+     * Clients should assume that the callback could be invoked from
+     * the interrupt context.
+     */
     virtual void read(
       uint8_t address,
       bool prepare_for_restart,

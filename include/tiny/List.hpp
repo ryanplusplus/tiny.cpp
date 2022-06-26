@@ -44,20 +44,32 @@ namespace tiny {
 
     void operator=(const List& other) = delete;
 
+    /*!
+     * Adds the node to the front of the list.
+     */
     void push_front(Node& node)
     {
       node.next = head.next;
       head.next = &node;
     }
 
+    /*!
+     * Adds the node to the back of the list.
+     */
     void push_back(Node& node);
 
+    /*!
+     * Inserts a node after the specified node.
+     */
     void insert_after(Node& after, Node& to_insert)
     {
       to_insert.next = after.next;
       after.next = &to_insert;
     }
 
+    /*!
+     * Removes the node from the front of the list. Returns the node.
+     */
     Node& pop_front()
     {
       Node* popped = head.next;
@@ -65,10 +77,29 @@ namespace tiny {
       return *popped;
     }
 
+    /*!
+     * Removes the node at the back of the list. Returns the node.
+     */
     Node& pop_back();
+
+    /*!
+     * Removes a specified node if present in the list.
+     */
     void remove(const Node& node);
+
+    /*!
+     * Returns the number of nodes contained in the list.
+     */
     uint16_t count();
+
+    /*!
+     * Returns true if the specified node is in the list and false otherwise.
+     */
     bool contains(const Node& node);
+
+    /*!
+     * Gives the index of a given node in the list.
+     */
     uint16_t index_of(const Node& node);
 
     Iterator begin()

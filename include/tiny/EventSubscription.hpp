@@ -1,7 +1,6 @@
 /*!
  * @file
- * @brief Manages the combination of an event callback and context for an event
- * subscriber.
+ * @brief Manages the combination of a callback and context for an event subscriber.
  */
 
 #ifndef tiny_EventSubscription_hpp
@@ -32,6 +31,9 @@ namespace tiny {
 
     void operator=(const EventSubscription& other) = delete;
 
+    /*!
+     * Publishes to the event subscriber.
+     */
     void publish(Args... args) const
     {
       callback(context, args...);

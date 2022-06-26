@@ -1,6 +1,6 @@
 /*!
  * @file
- * @brief
+ * @brief Abstract digital input.
  */
 
 #ifndef tiny_hal_IDigitalInput_hpp
@@ -10,6 +10,10 @@ namespace tiny {
   class IDigitalInput {
    public:
     virtual ~IDigitalInput(){};
+
+    /*!
+     * Reads the digital input.
+     */
     virtual bool read() = 0;
   };
 }

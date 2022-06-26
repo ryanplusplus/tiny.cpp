@@ -1,6 +1,6 @@
 /*!
  * @file
- * @brief
+ * @brief Abstract GPIO.
  */
 
 #ifndef tiny_hal_IGpio_hpp
@@ -18,8 +18,20 @@ namespace tiny {
 
    public:
     virtual ~IGpio(){};
+
+    /*!
+     * Set the direction of the GPIO.
+     */
     virtual void set_direction(Direction direction) = 0;
+
+    /*!
+     * Read the state of the GPIO (must be configured as an input).
+     */
     virtual bool read() = 0;
+
+    /*!
+     * Write the state of the GPIO (must be configured as an input).
+     */
     virtual void write(bool state) = 0;
   };
 }

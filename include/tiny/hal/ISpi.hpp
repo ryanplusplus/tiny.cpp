@@ -1,6 +1,8 @@
 /*!
  * @file
- * @brief Assumes chip select is managed by the client.
+ * @brief Abstraction for performing a synchronous SPI transfer.
+ *
+ * Assumes chip select is managed by the client.
  */
 
 #ifndef tiny_hal_ISpi_hpp
@@ -13,6 +15,10 @@ namespace tiny {
    public:
     virtual ~ISpi(){};
 
+    /*!
+     * Perform a simultaneous write/read. If not reading or writing, the corresponding
+     * buffer can be left NULL.
+     */
     virtual void transfer(
       const uint8_t* write_buffer,
       uint8_t* read_buffer,

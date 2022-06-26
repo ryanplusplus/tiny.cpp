@@ -83,6 +83,10 @@ namespace tiny {
     static constexpr State no_parent = nullptr;
     static constexpr State top = nullptr;
 
+    /*!
+     * Configures the parent of each state. Use NULL for the parent to indicate that a state
+     * has no parent.
+     */
     struct StateDescriptor {
       State state;
       State parent;
@@ -94,6 +98,10 @@ namespace tiny {
     };
 
    public:
+    /*!
+     * Initializes an HSM with the specified initial state. Sends entry signals down the
+     * ancestor chain to the initial state.
+     */
     template <typename Context>
     Hsm(
       Context* context,
@@ -110,8 +118,15 @@ namespace tiny {
 
     void operator=(const Hsm& other) = delete;
 
+    /*!
+     * Sends a signal and optional signal data to the current state and, potentially, to
+     * all of the state's parents.
+     */
     void send_signal(uint8_t signal, const void* data);
 
+    /*!
+     * Transitions the HSM to the target state.
+     */
     template <typename Context>
     void transition(Hsm::Result (*next)(Context* context, uint8_t signal, const void* data))
     {

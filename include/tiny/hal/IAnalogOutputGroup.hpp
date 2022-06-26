@@ -1,6 +1,6 @@
 /*!
  * @file
- * @brief
+ * @brief Abstract analog output.
  */
 
 #ifndef tiny_hal_IAnalogOutputGroup_hpp
@@ -16,6 +16,12 @@ namespace tiny {
 
    public:
     virtual ~IAnalogOutputGroup(){};
+
+    /*!
+     * Writes the analog output.
+     *
+     * The output counts are normalized to the full scale range of Counts.
+     */
     virtual void write(Channel channel, Counts counts) = 0;
   };
 }

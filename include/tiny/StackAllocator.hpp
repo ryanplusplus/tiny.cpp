@@ -1,8 +1,6 @@
 /*!
  * @file
- * @brief Allocates memory on the stack and provides it to clients via callback.
- *
- * @warning The allocated memory is only valid during the callback.
+ * @brief Allows for stack data to be dynamically allocated without alloca() or VLAs.
  */
 
 #ifndef tiny_StackAllocator_hpp
@@ -17,6 +15,11 @@ namespace tiny {
     static constexpr size_t largest_supported_size = 256;
 
    public:
+    /*!
+     * Invokes the provided callback to an aligned pointer of the requested size.
+     *
+     * @warning The allocated data is valid only during the callback.
+     */
     template <typename Context>
     static void allocate_aligned(
       size_t size,

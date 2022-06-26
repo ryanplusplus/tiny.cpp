@@ -4,7 +4,7 @@
  * constant time because all keys are are required to be consecutive starting from 0.
  *
  * It is highly recommended to use or at least start with the macros defined in
- * tiny_ram_key_value_store_macros.h to create the configuration. It is non-trivial
+ * RamKeyValueStoreMacros.hpp to create the configuration. It is non-trivial
  * to do this at compile-time so that the configuration can be stored in ROM.
  *
  * @warning If data is written unaligned it may be published unaligned.
@@ -31,9 +31,15 @@ namespace tiny {
     };
 
    public:
+    /*!
+     * Initializes a key value store. All values are initialized to 0.
+     */
     RamKeyValueStore(const Configuration& configuration, void* storage);
+
     RamKeyValueStore(const RamKeyValueStore&) = delete;
+
     bool operator=(const RamKeyValueStore&) = delete;
+
     void read(Key key, void* value) override;
     void write(Key key, const void* value) override;
     bool contains(Key key) override;

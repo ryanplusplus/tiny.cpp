@@ -28,15 +28,41 @@ namespace tiny {
     void operator=(const RingBuffer& other) = delete;
 
    public:
+    /*!
+     * The number of elements the ring buffer can hold.
+     */
     unsigned capacity()
     {
       return _capacity;
     }
 
+    /*!
+     * The number of elements currently stored in the ring buffer.
+     */
     unsigned count();
+
+    /*!
+     * Gets the element at the specified index. If the index is larger than
+     * the size then the element buffer will not be written.
+     */
     void at(unsigned index, void* element);
+
+    /*!
+     * Insert an element into the ring buffer. If the ring buffer is full,
+     * the oldest element will be overwritten.
+     */
     void insert(const void* element);
+
+    /*!
+     * Removes the oldest element from the ring buffer and writes it into the
+     * provided buffer. If the ring buffer is empty then the element will not
+     * be written.
+     */
     void remove(void* element);
+
+    /*!
+     * Removes all elements from the ring buffer.
+     */
     void clear();
 
    private:

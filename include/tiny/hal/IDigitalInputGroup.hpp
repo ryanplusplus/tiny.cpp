@@ -1,6 +1,6 @@
 /*!
  * @file
- * @brief
+ * @brief Abstract group of digital inputs.
  */
 
 #ifndef tiny_hal_IDigitalInputGroup_hpp
@@ -15,6 +15,10 @@ namespace tiny {
 
    public:
     virtual ~IDigitalInputGroup(){};
+
+    /*!
+     * Reads the digital input channel.
+     */
     virtual bool read(Channel channel) = 0;
   };
 }

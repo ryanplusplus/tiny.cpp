@@ -1,6 +1,6 @@
 /*!
  * @file
- * @brief
+ * @brief UART test double.
  */
 
 #ifndef tiny_test_double_Uart_hpp
@@ -22,17 +22,26 @@ namespace tiny::test_double {
 
     void operator=(const Uart& other) = delete;
 
+    /*!
+     * True if a byte was sent without send completing.
+     */
     bool sending()
     {
       return _sending;
     };
 
+    /*!
+     * Causes the double to raise a send complete event.
+     */
     void trigger_send_complete()
     {
       _sending = false;
       send_complete.publish();
     }
 
+    /*!
+     * Causes the double to raise a receive event.
+     */
     void trigger_receive(uint8_t byte)
     {
       receive.publish(byte);

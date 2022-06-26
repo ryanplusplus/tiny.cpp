@@ -34,6 +34,10 @@ namespace tiny {
 
     void operator=(const Comm& other) = delete;
 
+    /*!
+     * Runs the tiny comm instance. If any received packets
+     * are pending, they will be published.
+     */
     void run();
 
     virtual void send(const void* payload, uint8_t length) override;

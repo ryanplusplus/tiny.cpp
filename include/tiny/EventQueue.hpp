@@ -22,6 +22,12 @@ namespace tiny {
     typedef void (*UnableToQueueCallback)(void);
 
    public:
+    /*!
+     * Initializes the event queue with the provided buffer. Larger
+     * buffers allow for more events to be queued simultaneously. When
+     * an event is unable to be queued, the provided callback is used
+     * to notify the client.
+     */
     EventQueue(
       void* buffer,
       unsigned buffer_size,
@@ -31,6 +37,10 @@ namespace tiny {
 
     void operator=(const EventQueue& other) = delete;
 
+    /*!
+     * Dequeues and raises at most one queued event. Returns true if an
+     * event was raised and false otherwise.
+     */
     bool run();
 
     void enqueue(Callback callback) override;

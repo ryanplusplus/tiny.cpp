@@ -1,6 +1,6 @@
 /*!
  * @file
- * @brief
+ * @brief Abstract group of GPIOs.
  */
 
 #ifndef tiny_hal_IGpioGroup_hpp
@@ -21,8 +21,20 @@ namespace tiny {
 
    public:
     virtual ~IGpioGroup(){};
+
+    /*!
+     * Set the direction of the GPIO channel.
+     */
     virtual void set_direction(Channel channel, Direction direction) = 0;
+
+    /*!
+     * Read the state of the GPIO channel (must be configured as an input).
+     */
     virtual bool read(Channel channel) = 0;
+
+    /*!
+     * Write the state of the GPIO channel (must be configured as an input).
+     */
     virtual void Write(Channel channel, bool state) = 0;
   };
 }

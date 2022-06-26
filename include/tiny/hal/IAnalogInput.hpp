@@ -1,6 +1,6 @@
 /*!
  * @file
- * @brief
+ * @brief Abstract analog input.
  */
 
 #ifndef tiny_hal_IAnalogInput_hpp
@@ -15,6 +15,12 @@ namespace {
 
    public:
     virtual ~IAnalogInput(){};
+
+    /*!
+     * Reads the analog input.
+     *
+     * The result is normalized to the full scale range of Counts.
+     */
     virtual Counts read() = 0;
   };
 }

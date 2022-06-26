@@ -13,7 +13,15 @@ namespace tiny {
   class IEvent {
    public:
     virtual ~IEvent(){};
+
+    /*!
+     * Adds a subscriber to the event.
+     */
     virtual void subscribe(EventSubscription<Args...>& subscription) = 0;
+
+    /*!
+     * Removes a subscriber from the event.
+     */
     virtual void unsubscribe(EventSubscription<Args...>& subscription) = 0;
   };
 }

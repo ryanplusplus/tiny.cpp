@@ -1,6 +1,6 @@
 /*!
  * @file
- * @brief
+ * @brief Abstract PWM channel.
  */
 
 #ifndef tiny_hal_IPwm_hpp
@@ -16,7 +16,15 @@ namespace tiny {
 
    public:
     virtual ~IPwm(){};
+
+    /*!
+     * Sets the duty cycle. Range is normalized to 0-0xFFFF.
+     */
     virtual void set_duty_cycle(DutyCycle duty_cycle) = 0;
+
+    /*!
+     * Sets the frequency.
+     */
     virtual void set_frequency(FrequencyHz frequency) = 0;
   };
 }
