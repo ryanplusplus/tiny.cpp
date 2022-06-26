@@ -106,24 +106,24 @@ namespace tiny {
       send_entries(top, current);
     }
 
-    auto operator=(const Hsm& other) -> void = delete;
+    void operator=(const Hsm& other) = delete;
 
-    auto send_signal(uint8_t signal, const void* data) -> void;
+    void send_signal(uint8_t signal, const void* data);
 
     template <typename Context>
-    auto transition(Hsm::Result (*next)(Context* context, uint8_t signal, const void* data)) -> void
+    void transition(Hsm::Result (*next)(Context* context, uint8_t signal, const void* data))
     {
       _transition(reinterpret_cast<State>(next));
     }
 
    private:
-    auto _transition(State next) -> void;
-    auto parent_of(State child) -> State;
-    auto distance_between(State child, State parent) -> uint8_t;
-    auto nth_parent(State state, uint8_t n) -> State;
-    auto send_entries(State after, State to) -> void;
-    auto send_exits(State from, State before) -> void;
-    auto nearest_common_ancestor_of(State a, State b) -> State;
+    void _transition(State next);
+    State parent_of(State child);
+    uint8_t distance_between(State child, State parent);
+    State nth_parent(State state, uint8_t n);
+    void send_entries(State after, State to);
+    void send_exits(State from, State before);
+    State nearest_common_ancestor_of(State a, State b);
 
    private:
     void* context;

@@ -20,34 +20,34 @@ namespace tiny::test_double {
 
     Uart(const Uart& other) = delete;
 
-    auto sending() -> bool
+    bool sending()
     {
       return _sending;
     };
 
-    auto trigger_send_complete() -> void
+    void trigger_send_complete()
     {
       _sending = false;
       send_complete.publish();
     }
 
-    auto trigger_receive(uint8_t byte) -> void
+    void trigger_receive(uint8_t byte)
     {
       receive.publish(byte);
     }
 
-    auto send(uint8_t byte) -> void override
+    void send(uint8_t byte) override
     {
       _sending = true;
       mock().actualCall("send").onObject(this).withParameter("byte", byte);
     }
 
-    virtual auto on_send_complete() -> IEvent<>& override
+    virtual IEvent<>& on_send_complete() override
     {
       return send_complete;
     }
 
-    virtual auto on_receive() -> IEvent<uint8_t>& override
+    virtual IEvent<uint8_t>& on_receive() override
     {
       return receive;
     }

@@ -18,11 +18,10 @@ namespace tiny {
 
    public:
     template <typename Context>
-    static auto allocate_aligned(
+    static void allocate_aligned(
       size_t size,
       Context* context,
       void (*callback)(Context* context, void* data))
-      -> void
     {
       _allocate_aligned(size, context, reinterpret_cast<Callback>(callback));
     }
@@ -52,12 +51,10 @@ namespace tiny {
     };
 
    private:
-    static auto
-      _allocate_aligned(
-        size_t size,
-        void* context,
-        Callback callback)
-        -> void;
+    static void _allocate_aligned(
+      size_t size,
+      void* context,
+      Callback callback);
   };
 }
 

@@ -23,7 +23,7 @@ namespace tiny {
       friend class List;
 
      public:
-      auto operator==(const Node* other) -> bool
+      bool operator==(const Node* other)
       {
         return this == other;
       }
@@ -42,41 +42,41 @@ namespace tiny {
 
     List(const List& other) = delete;
 
-    auto operator=(const List& other) -> void = delete;
+    void operator=(const List& other) = delete;
 
-    auto push_front(Node& node) -> void
+    void push_front(Node& node)
     {
       node.next = head.next;
       head.next = &node;
     }
 
-    auto push_back(Node& node) -> void;
+    void push_back(Node& node);
 
-    auto insert_after(Node& after, Node& to_insert) -> void
+    void insert_after(Node& after, Node& to_insert)
     {
       to_insert.next = after.next;
       after.next = &to_insert;
     }
 
-    auto pop_front() -> Node&
+    Node& pop_front()
     {
       Node* popped = head.next;
       head.next = head.next->next;
       return *popped;
     }
 
-    auto pop_back() -> Node&;
-    auto remove(const Node& node) -> void;
-    auto count() -> uint16_t;
-    auto contains(const Node& node) -> bool;
-    auto index_of(const Node& node) -> uint16_t;
+    Node& pop_back();
+    void remove(const Node& node);
+    uint16_t count();
+    bool contains(const Node& node);
+    uint16_t index_of(const Node& node);
 
-    auto begin() -> Iterator
+    Iterator begin()
     {
       return Iterator::begin(*this);
     }
 
-    auto end() -> Iterator
+    Iterator end()
     {
       return Iterator::end(*this);
     }
@@ -94,12 +94,12 @@ namespace tiny {
       }
 
      public:
-      static auto begin(List& list) -> Iterator
+      static Iterator begin(List& list)
       {
         return Iterator(*list.head.next);
       }
 
-      static auto end(List& list) -> Iterator
+      static Iterator end(List& list)
       {
         return Iterator(list.head);
       }

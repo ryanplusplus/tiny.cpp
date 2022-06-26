@@ -8,7 +8,7 @@
 
 using namespace tiny;
 
-auto List::push_back(Node& node) -> void
+void List::push_back(Node& node)
 {
   Node* current = head.next;
 
@@ -20,7 +20,7 @@ auto List::push_back(Node& node) -> void
   node.next = &head;
 }
 
-auto List::pop_back() -> Node&
+List::Node& List::pop_back()
 {
   Node* previous = head.next;
   Node* current = head.next;
@@ -34,7 +34,7 @@ auto List::pop_back() -> Node&
   return *current;
 }
 
-auto List::remove(const Node& node) -> void
+void List::remove(const Node& node)
 {
   Node* previous = &head;
   Node* current = head.next;
@@ -50,7 +50,7 @@ auto List::remove(const Node& node) -> void
   }
 }
 
-auto List::count() -> uint16_t
+uint16_t List::count()
 {
   Node* current = head.next;
   uint16_t count = 0;
@@ -63,7 +63,7 @@ auto List::count() -> uint16_t
   return count;
 }
 
-auto List::contains(const Node& node) -> bool
+bool List::contains(const Node& node)
 {
   Node* current = head.next;
 
@@ -78,7 +78,7 @@ auto List::contains(const Node& node) -> bool
   return false;
 }
 
-auto List::index_of(const Node& node) -> uint16_t
+uint16_t List::index_of(const Node& node)
 {
   Node* current = head.next;
   uint16_t index = 0;

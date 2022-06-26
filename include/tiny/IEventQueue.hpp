@@ -18,8 +18,8 @@ namespace tiny {
 
    public:
     virtual ~IEventQueue(){};
-    virtual auto enqueue(Callback callback) -> void = 0;
-    virtual auto enqueue(CallbackWithData callback, const void* data, uint8_t dataSize) -> void = 0;
+    virtual void enqueue(Callback callback) = 0;
+    virtual void enqueue(CallbackWithData callback, const void* data, uint8_t dataSize) = 0;
   };
 }
 

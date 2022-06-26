@@ -10,7 +10,7 @@ namespace tiny {
   class IDigitalOutput {
    public:
     virtual ~IDigitalOutput(){};
-    virtual auto write(bool state) -> void = 0;
+    virtual void write(bool state) = 0;
   };
 }
 

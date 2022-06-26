@@ -11,12 +11,12 @@ MessageBus::MessageBus()
 {
 }
 
-auto MessageBus::send(Message message, const void* data) -> void
+void MessageBus::send(Message message, const void* data)
 {
   _on_receive.publish(message, data);
 }
 
-auto MessageBus::on_receive() -> IEvent<Message, const void*>&
+IEvent<MessageBus::Message, const void*>& MessageBus::on_receive()
 {
   return _on_receive;
 }

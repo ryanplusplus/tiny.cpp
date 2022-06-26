@@ -16,8 +16,8 @@ namespace tiny {
 
    public:
     virtual ~IPwm(){};
-    virtual auto set_duty_cycle(DutyCycle duty_cycle) -> void = 0;
-    virtual auto set_frequency(FrequencyHz frequency) -> void = 0;
+    virtual void set_duty_cycle(DutyCycle duty_cycle) = 0;
+    virtual void set_frequency(FrequencyHz frequency) = 0;
   };
 }
 

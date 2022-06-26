@@ -16,11 +16,11 @@ namespace tiny {
 
    public:
     virtual ~IKeyValueStore(){};
-    virtual auto read(Key key, void* value) -> void = 0;
-    virtual auto write(Key key, const void* value) -> void = 0;
-    virtual auto contains(Key key) -> bool = 0;
-    virtual auto size(Key key) -> uint8_t = 0;
-    virtual auto on_change() -> IEvent<Key, const void*>& = 0;
+    virtual void read(Key key, void* value) = 0;
+    virtual void write(Key key, const void* value) = 0;
+    virtual bool contains(Key key) = 0;
+    virtual uint8_t size(Key key) = 0;
+    virtual IEvent<Key, const void*>& on_change() = 0;
   };
 }
 

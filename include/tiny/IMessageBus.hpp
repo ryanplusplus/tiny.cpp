@@ -16,8 +16,8 @@ namespace tiny {
 
    public:
     virtual ~IMessageBus(){};
-    virtual auto send(Message message, const void* data) -> void = 0;
-    virtual auto on_receive() -> IEvent<Message, const void*>& = 0;
+    virtual void send(Message message, const void* data) = 0;
+    virtual IEvent<Message, const void*>& on_receive() = 0;
   };
 }
 

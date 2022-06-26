@@ -16,7 +16,7 @@ namespace tiny {
 
    public:
     virtual ~IAnalogInputGroup(){};
-    virtual auto read(Channel channel) -> Counts = 0;
+    virtual Counts read(Channel channel) = 0;
   };
 }
 

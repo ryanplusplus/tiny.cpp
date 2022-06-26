@@ -17,12 +17,12 @@ RamKeyValueStore::RamKeyValueStore(const Configuration& configuration, void* sto
   memset(storage, 0, last_offset + last_size);
 }
 
-auto RamKeyValueStore::read(Key key, void* value) -> void
+void RamKeyValueStore::read(Key key, void* value)
 {
   memcpy(value, (uint8_t*)storage + offset(key), size(key));
 }
 
-auto RamKeyValueStore::write(Key key, const void* value) -> void
+void RamKeyValueStore::write(Key key, const void* value)
 {
   uint8_t value_size = size(key);
   void* location = (uint8_t*)storage + offset(key);
@@ -33,22 +33,22 @@ auto RamKeyValueStore::write(Key key, const void* value) -> void
   }
 }
 
-auto RamKeyValueStore::contains(Key key) -> bool
+bool RamKeyValueStore::contains(Key key)
 {
   return key < configuration.key_value_pair_count;
 }
 
-auto RamKeyValueStore::size(Key key) -> uint8_t
+uint8_t RamKeyValueStore::size(Key key)
 {
   return configuration.key_value_pairs[key].size;
 }
 
-auto RamKeyValueStore::on_change() -> IEvent<Key, const void*>&
+IEvent<IKeyValueStore::Key, const void*>& RamKeyValueStore::on_change()
 {
   return _on_change;
 }
 
-auto RamKeyValueStore::offset(Key key) -> uint16_t
+uint16_t RamKeyValueStore::offset(Key key)
 {
   return configuration.key_value_pairs[key].value_offset;
 }

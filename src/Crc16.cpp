@@ -7,7 +7,7 @@
 
 using namespace tiny;
 
-auto Crc16::byte(uint16_t seed, uint8_t byte) -> uint16_t
+uint16_t Crc16::byte(uint16_t seed, uint8_t byte)
 {
   auto crc = seed;
   byte = crc >> 8 ^ byte;
@@ -15,7 +15,7 @@ auto Crc16::byte(uint16_t seed, uint8_t byte) -> uint16_t
   return (crc << 8) ^ ((uint16_t)(byte << 12)) ^ ((uint16_t)(byte << 5)) ^ ((uint16_t)byte);
 }
 
-auto Crc16::block(uint16_t seed, const uint8_t* bytes, size_t byte_count) -> uint16_t
+uint16_t Crc16::block(uint16_t seed, const uint8_t* bytes, size_t byte_count)
 {
   auto crc = seed;
   for(auto i = static_cast<size_t>(0); i < byte_count; i++) {

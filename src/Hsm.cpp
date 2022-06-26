@@ -7,7 +7,7 @@
 
 using namespace tiny;
 
-auto Hsm::send_signal(uint8_t signal, const void* data) -> void
+void Hsm::send_signal(uint8_t signal, const void* data)
 {
   auto current = this->current;
 
@@ -19,7 +19,7 @@ auto Hsm::send_signal(uint8_t signal, const void* data) -> void
   }
 }
 
-auto Hsm::_transition(State next) -> void
+void Hsm::_transition(State next)
 {
   if(current == next) {
     current(context, HsmSignal::exit, nullptr);
@@ -33,7 +33,7 @@ auto Hsm::_transition(State next) -> void
   }
 }
 
-auto Hsm::parent_of(State child) -> State
+Hsm::State Hsm::parent_of(State child)
 {
   for(uint8_t i = 0; i < configuration.state_count; i++) {
     if(configuration.states[i].state == child) {
@@ -44,7 +44,7 @@ auto Hsm::parent_of(State child) -> State
   return top;
 }
 
-auto Hsm::distance_between(State child, State parent) -> uint8_t
+uint8_t Hsm::distance_between(State child, State parent)
 {
   uint8_t distance = 0;
   auto current = child;
@@ -57,7 +57,7 @@ auto Hsm::distance_between(State child, State parent) -> uint8_t
   return distance;
 }
 
-auto Hsm::nth_parent(State state, uint8_t n) -> State
+Hsm::State Hsm::nth_parent(State state, uint8_t n)
 {
   auto current = state;
 
@@ -68,7 +68,7 @@ auto Hsm::nth_parent(State state, uint8_t n) -> State
   return current;
 }
 
-auto Hsm::send_entries(State after, State to) -> void
+void Hsm::send_entries(State after, State to)
 {
   if(after == to) {
     return;
@@ -81,7 +81,7 @@ auto Hsm::send_entries(State after, State to) -> void
   to(context, HsmSignal::entry, nullptr);
 }
 
-auto Hsm::send_exits(State from, State before) -> void
+void Hsm::send_exits(State from, State before)
 {
   auto current = from;
 
@@ -91,7 +91,7 @@ auto Hsm::send_exits(State from, State before) -> void
   }
 }
 
-auto Hsm::nearest_common_ancestor_of(State a, State b) -> State
+Hsm::State Hsm::nearest_common_ancestor_of(State a, State b)
 {
   while(a != top) {
     auto bb = b;

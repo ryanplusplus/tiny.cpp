@@ -17,13 +17,13 @@ namespace tiny {
     virtual ~IAsyncI2c(){};
 
     template <typename Context>
-    auto write(
+    void write(
       uint8_t address,
       bool prepare_for_restart,
       const uint8_t* buffer,
       uint16_t buffer_size,
       Context* context,
-      Callback callback) -> void
+      Callback callback)
     {
       write(
         address,
@@ -34,22 +34,22 @@ namespace tiny {
         reinterpret_cast<Callback>(callback));
     }
 
-    virtual auto write(
+    virtual void write(
       uint8_t address,
       bool prepare_for_restart,
       const uint8_t* buffer,
       uint16_t buffer_size,
       void* context,
-      Callback callback) -> void = 0;
+      Callback callback) = 0;
 
     template <typename Context>
-    auto read(
+    void read(
       uint8_t address,
       bool prepare_for_restart,
       uint8_t* buffer,
       uint16_t buffer_size,
       Context* context,
-      Callback callback) -> void
+      Callback callback)
     {
       read(
         address,
@@ -60,15 +60,15 @@ namespace tiny {
         reinterpret_cast<Callback>(callback));
     }
 
-    virtual auto read(
+    virtual void read(
       uint8_t address,
       bool prepare_for_restart,
       uint8_t* buffer,
       uint16_t buffer_size,
       void* context,
-      Callback callback) -> void = 0;
+      Callback callback) = 0;
 
-    virtual auto reset() -> void = 0;
+    virtual void reset() = 0;
   };
 }
 

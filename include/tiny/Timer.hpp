@@ -23,7 +23,7 @@ namespace tiny {
     Timer() = default;
     Timer(const Timer& other) = delete;
 
-    auto operator=(const Timer& other) -> void = delete;
+    void operator=(const Timer& other) = delete;
 
    private:
     typedef void (*Callback)(void* context);
@@ -41,48 +41,48 @@ namespace tiny {
     explicit TimerGroup(ITimeSource& time_source);
     TimerGroup(const TimerGroup& other) = delete;
 
-    auto operator=(const TimerGroup& other) -> void = delete;
+    void operator=(const TimerGroup& other) = delete;
 
-    auto run() -> TimerTicks;
+    TimerTicks run();
 
-    auto stop(const Timer& timer) -> void
+    void stop(const Timer& timer)
     {
       timers.remove(timer);
     }
 
-    auto is_running(const Timer& timer) -> bool
+    bool is_running(const Timer& timer)
     {
       return timers.contains(timer);
     }
 
-    auto remaining_ticks(const Timer& timer) -> TimerTicks;
+    TimerTicks remaining_ticks(const Timer& timer);
 
     template <typename Context>
-    auto start(Timer& timer, TimerTicks ticks, Context* context, void (*callback)(Context* context)) -> void
+    void start(Timer& timer, TimerTicks ticks, Context* context, void (*callback)(Context* context))
     {
       _start(timer, ticks, context, reinterpret_cast<Timer::Callback>(callback), false);
     }
 
-    auto start(Timer& timer, TimerTicks ticks, void (*callback)(void*)) -> void
+    void start(Timer& timer, TimerTicks ticks, void (*callback)(void*))
     {
       _start(timer, ticks, nullptr, reinterpret_cast<Timer::Callback>(callback), false);
     }
 
     template <typename Context>
-    auto start_periodic(Timer& timer, TimerTicks ticks, Context* context, void (*callback)(Context* context)) -> void
+    void start_periodic(Timer& timer, TimerTicks ticks, Context* context, void (*callback)(Context* context))
     {
       _start(timer, ticks, context, reinterpret_cast<Timer::Callback>(callback), true);
     }
 
-    auto start_periodic(Timer& timer, TimerTicks ticks, void (*callback)(void*)) -> void
+    void start_periodic(Timer& timer, TimerTicks ticks, void (*callback)(void*))
     {
       _start(timer, ticks, nullptr, reinterpret_cast<Timer::Callback>(callback), true);
     }
 
    private:
-    auto _start(Timer& timer, TimerTicks ticks, void* context, Timer::Callback callback, bool periodic) -> void;
-    auto add_timer(Timer& timer) -> void;
-    auto pending_ticks() -> ITimeSource::TickCount;
+    void _start(Timer& timer, TimerTicks ticks, void* context, Timer::Callback callback, bool periodic);
+    void add_timer(Timer& timer);
+    ITimeSource::TickCount pending_ticks();
 
    private:
     ITimeSource& time_source;

@@ -32,32 +32,32 @@ namespace tiny {
 
     Comm(const Comm& other) = delete;
 
-    auto operator=(const Comm& other) -> void = delete;
+    void operator=(const Comm& other) = delete;
 
-    auto run() -> void;
+    void run();
 
-    virtual auto send(const void* payload, uint8_t length) -> void override;
+    virtual void send(const void* payload, uint8_t length) override;
 
-    virtual auto sending() -> bool override
+    virtual bool sending() override
     {
       return send_in_progress;
     }
 
-    virtual auto on_receive() -> IEvent<const void*, uint8_t>& override
+    virtual IEvent<const void*, uint8_t>& on_receive() override
     {
       return receive;
     }
 
    private:
-    auto send_complete() -> void;
-    auto byte_received(uint8_t byte) -> void;
+    void send_complete();
+    void byte_received(uint8_t byte);
 
-    auto send_control_character(uint8_t byte) -> void;
-    auto control_character(uint8_t byte) -> bool;
-    auto send_byte(uint8_t byte) -> bool;
+    void send_control_character(uint8_t byte);
+    bool control_character(uint8_t byte);
+    bool send_byte(uint8_t byte);
 
-    static auto send_complete_trampoline(Comm* _this) -> void;
-    static auto byte_received_trampoline(Comm* _this, uint8_t byte) -> void;
+    static void send_complete_trampoline(Comm* _this);
+    static void byte_received_trampoline(Comm* _this, uint8_t byte);
 
    private:
     IUart& _uart;

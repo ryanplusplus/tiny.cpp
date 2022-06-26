@@ -16,7 +16,7 @@ namespace tiny {
 
    public:
     virtual ~IAnalogOutputGroup(){};
-    virtual auto write(Channel channel, Counts counts) -> void = 0;
+    virtual void write(Channel channel, Counts counts) = 0;
   };
 }
 

@@ -35,21 +35,21 @@ namespace tiny {
       current(context, FsmSignal::entry, nullptr);
     }
 
-    auto operator=(const Fsm& other) -> void = delete;
+    void operator=(const Fsm& other) = delete;
 
-    auto send_signal(uint8_t signal, const void* data) -> void
+    void send_signal(uint8_t signal, const void* data)
     {
       current(context, signal, data);
     }
 
     template <typename Context>
-    auto transition(void (*next)(Context* context, uint8_t signal, const void* data)) -> void
+    void transition(void (*next)(Context* context, uint8_t signal, const void* data))
     {
       _transition(reinterpret_cast<State>(next));
     }
 
    private:
-    auto _transition(State next) -> void;
+    void _transition(State next);
 
    private:
     State current;

@@ -14,9 +14,9 @@ namespace tiny {
   class IComm {
    public:
     virtual ~IComm(){};
-    virtual auto send(const void* payload, uint8_t length) -> void = 0;
-    virtual auto sending() -> bool = 0;
-    virtual auto on_receive() -> IEvent<const void*, uint8_t>& = 0;
+    virtual void send(const void* payload, uint8_t length) = 0;
+    virtual bool sending() = 0;
+    virtual IEvent<const void*, uint8_t>& on_receive() = 0;
   };
 }
 

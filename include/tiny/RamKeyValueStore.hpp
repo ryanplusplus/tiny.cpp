@@ -34,14 +34,14 @@ namespace tiny {
     RamKeyValueStore(const Configuration& configuration, void* storage);
     RamKeyValueStore(const RamKeyValueStore&) = delete;
     bool operator=(const RamKeyValueStore&) = delete;
-    auto read(Key key, void* value) -> void override;
-    auto write(Key key, const void* value) -> void override;
-    auto contains(Key key) -> bool override;
-    auto size(Key key) -> uint8_t override;
-    auto on_change() -> IEvent<Key, const void*>& override;
+    void read(Key key, void* value) override;
+    void write(Key key, const void* value) override;
+    bool contains(Key key) override;
+    uint8_t size(Key key) override;
+    IEvent<Key, const void*>& on_change() override;
 
    private:
-    auto offset(Key key) -> uint16_t;
+    uint16_t offset(Key key);
 
    private:
     Event<Key, const void*> _on_change{};

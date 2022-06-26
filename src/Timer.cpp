@@ -13,7 +13,7 @@ TimerGroup::TimerGroup(ITimeSource& time_source)
 {
 }
 
-auto TimerGroup::run() -> TimerTicks
+TimerTicks TimerGroup::run()
 {
   auto current_ticks = time_source.ticks();
   auto delta = static_cast<ITimeSource::TickCount>(current_ticks - last_time_source_ticks);
@@ -50,7 +50,7 @@ auto TimerGroup::run() -> TimerTicks
   return std::numeric_limits<TimerTicks>::max();
 }
 
-auto TimerGroup::remaining_ticks(const Timer& timer) -> TimerTicks
+TimerTicks TimerGroup::remaining_ticks(const Timer& timer)
 {
   TimerTicks remaining = timer.expiration_ticks - current_ticks;
   ITimeSource::TickCount pending = pending_ticks();
@@ -63,7 +63,7 @@ auto TimerGroup::remaining_ticks(const Timer& timer) -> TimerTicks
   }
 }
 
-auto TimerGroup::_start(Timer& timer, TimerTicks ticks, void* context, Timer::Callback callback, bool periodic) -> void
+void TimerGroup::_start(Timer& timer, TimerTicks ticks, void* context, Timer::Callback callback, bool periodic)
 {
   timer.periodic = periodic;
   timer.context = context;
@@ -74,7 +74,7 @@ auto TimerGroup::_start(Timer& timer, TimerTicks ticks, void* context, Timer::Ca
   add_timer(timer);
 }
 
-auto TimerGroup::add_timer(Timer& timer) -> void
+void TimerGroup::add_timer(Timer& timer)
 {
   timers.remove(timer);
 
@@ -99,7 +99,7 @@ auto TimerGroup::add_timer(Timer& timer) -> void
   }
 }
 
-auto TimerGroup::pending_ticks() -> ITimeSource::TickCount
+ITimeSource::TickCount TimerGroup::pending_ticks()
 {
   return time_source.ticks() - last_time_source_ticks;
 }

@@ -26,7 +26,7 @@ enum {
 static constexpr uint8_t event_start_value = event_start;
 static constexpr uint8_t event_with_data_start_value = event_with_data_start;
 
-auto EventQueue::write_to_buffer(const void* _data, uint8_t data_size) -> void
+void EventQueue::write_to_buffer(const void* _data, uint8_t data_size)
 {
   auto data = reinterpret_cast<const uint8_t*>(_data);
 
@@ -35,7 +35,7 @@ auto EventQueue::write_to_buffer(const void* _data, uint8_t data_size) -> void
   }
 }
 
-auto EventQueue::read_from_buffer(void* _data, uint8_t data_size) -> void
+void EventQueue::read_from_buffer(void* _data, uint8_t data_size)
 {
   auto data = reinterpret_cast<uint8_t*>(_data);
 
@@ -44,7 +44,7 @@ auto EventQueue::read_from_buffer(void* _data, uint8_t data_size) -> void
   }
 }
 
-auto EventQueue::drop_from_buffer(uint8_t count) -> void
+void EventQueue::drop_from_buffer(uint8_t count)
 {
   for(uint16_t i = 0; i < count; i++) {
     uint8_t drop;
@@ -52,14 +52,14 @@ auto EventQueue::drop_from_buffer(uint8_t count) -> void
   }
 }
 
-auto EventQueue::peek() -> uint8_t
+uint8_t EventQueue::peek()
 {
   uint8_t peeked;
   ring_buffer.at(0, &peeked);
   return peeked;
 }
 
-auto EventQueue::enqueue(Callback callback) -> void
+void EventQueue::enqueue(Callback callback)
 {
   auto capacity = ring_buffer.capacity();
   auto count = ring_buffer.count();
@@ -74,10 +74,10 @@ auto EventQueue::enqueue(Callback callback) -> void
   write_to_buffer(&callback, sizeof(callback));
 }
 
-auto EventQueue::enqueue(
+void EventQueue::enqueue(
   CallbackWithData callback,
   const void* data,
-  uint8_t data_size) -> void
+  uint8_t data_size)
 {
   auto capacity = ring_buffer.capacity();
   auto count = ring_buffer.count();
@@ -103,7 +103,7 @@ EventQueue::EventQueue(
 {
 }
 
-auto EventQueue::process_event() -> void
+void EventQueue::process_event()
 {
   Callback callback;
 
@@ -112,7 +112,7 @@ auto EventQueue::process_event() -> void
   callback();
 }
 
-auto EventQueue::process_event_with_data() -> void
+void EventQueue::process_event_with_data()
 {
   struct Context {
     EventQueue* self;
@@ -143,7 +143,7 @@ auto EventQueue::process_event_with_data() -> void
   drop_from_buffer(context.data_size);
 }
 
-auto EventQueue::run() -> bool
+bool EventQueue::run()
 {
   if(ring_buffer.count() == 0) {
     return false;

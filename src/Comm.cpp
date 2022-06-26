@@ -31,18 +31,18 @@ enum {
 
 using namespace tiny;
 
-auto Comm::send_control_character(uint8_t byte) -> void
+void Comm::send_control_character(uint8_t byte)
 {
   _uart.send(byte);
 }
 
-auto Comm::control_character(uint8_t byte) -> bool
+bool Comm::control_character(uint8_t byte)
 {
   return byte == stx || byte == etx || byte == dle;
 }
 
 //! Returns true if the character was sent or false if it was escaped
-auto Comm::send_byte(uint8_t byte) -> bool
+bool Comm::send_byte(uint8_t byte)
 {
   if(!send_escaped && control_character(byte)) {
     send_escaped = true;
@@ -56,18 +56,18 @@ auto Comm::send_byte(uint8_t byte) -> bool
   return !send_escaped;
 }
 
-auto Comm::send_complete_trampoline(Comm* _this) -> void
+void Comm::send_complete_trampoline(Comm* _this)
 {
   _this->send_complete();
 }
 
-auto Comm::byte_received_trampoline(Comm* _this, uint8_t byte) -> void
+void Comm::byte_received_trampoline(Comm* _this, uint8_t byte)
 {
   _this->byte_received(byte);
 }
 
 // May be running in an interrupt context
-auto Comm::send_complete() -> void
+void Comm::send_complete()
 {
   // We need to respect this flag because this might be
   // executed from an ISR while a send is being set up
@@ -107,7 +107,7 @@ auto Comm::send_complete() -> void
 }
 
 // May be running in an interrupt context
-auto Comm::byte_received(uint8_t byte) -> void
+void Comm::byte_received(uint8_t byte)
 {
   if(received_packet_ready) {
     return;
@@ -157,7 +157,7 @@ auto Comm::byte_received(uint8_t byte) -> void
   }
 }
 
-auto Comm::send(const void* payload, uint8_t length) -> void
+void Comm::send(const void* payload, uint8_t length)
 {
   if(length > _send_buffer_size) {
     return;
@@ -196,7 +196,7 @@ Comm::Comm(
   uart.on_receive().subscribe(_byte_received);
 }
 
-auto Comm::run() -> void
+void Comm::run()
 {
   if(received_packet_ready) {
     receive.publish(_receive_buffer, receive_count);

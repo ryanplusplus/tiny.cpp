@@ -17,12 +17,12 @@ namespace tiny {
     virtual ~IAsyncSpi(){};
 
     template <typename Context>
-    auto transfer(
+    void transfer(
       const uint8_t* write_buffer,
       uint8_t* read_buffer,
       uint16_t buffer_size,
       Context* context,
-      void (*callback)(Context* context)) -> void
+      void (*callback)(Context* context))
     {
       transfer(
         write_buffer,
@@ -33,12 +33,12 @@ namespace tiny {
     }
 
    private:
-    virtual auto transfer(
+    virtual void transfer(
       const uint8_t* write_buffer,
       uint8_t* read_buffer,
       uint16_t buffer_size,
       void* context,
-      Callback callback) -> void = 0;
+      Callback callback) = 0;
   };
 }
 

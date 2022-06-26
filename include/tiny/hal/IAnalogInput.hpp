@@ -15,7 +15,7 @@ namespace {
 
    public:
     virtual ~IAnalogInput(){};
-    virtual auto read() -> Counts = 0;
+    virtual Counts read() = 0;
   };
 }
 

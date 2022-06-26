@@ -30,9 +30,9 @@ namespace tiny {
 
     EventSubscription(const EventSubscription& other) = delete;
 
-    auto operator=(const EventSubscription& other) -> void = delete;
+    void operator=(const EventSubscription& other) = delete;
 
-    auto publish(Args... args) const -> void
+    void publish(Args... args) const
     {
       callback(context, args...);
     }

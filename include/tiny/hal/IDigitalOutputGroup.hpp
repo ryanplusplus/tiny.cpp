@@ -15,7 +15,7 @@ namespace tiny {
 
    public:
     virtual ~IDigitalOutputGroup(){};
-    virtual auto write(Channel channel, bool state) -> void;
+    virtual void write(Channel channel, bool state);
   };
 }
 

@@ -24,7 +24,7 @@ RingBuffer::RingBuffer(
 {
 }
 
-auto RingBuffer::count() -> unsigned
+unsigned RingBuffer::count()
 {
   if(full) {
     return _capacity;
@@ -34,14 +34,14 @@ auto RingBuffer::count() -> unsigned
   }
 }
 
-auto RingBuffer::at(unsigned index, void* element) -> void
+void RingBuffer::at(unsigned index, void* element)
 {
   auto buffer_index = (tail + index) % _capacity;
   auto source = reinterpret_cast<uint8_t*>(buffer) + buffer_index * element_size;
   memcpy(element, source, element_size);
 }
 
-auto RingBuffer::insert(const void* element) -> void
+void RingBuffer::insert(const void* element)
 {
   auto destination = reinterpret_cast<uint8_t*>(buffer) + head * element_size;
   memcpy(destination, element, element_size);
@@ -63,7 +63,7 @@ auto RingBuffer::insert(const void* element) -> void
   }
 }
 
-auto RingBuffer::remove(void* element) -> void
+void RingBuffer::remove(void* element)
 {
   if(head != tail || full) {
     auto source = reinterpret_cast<uint8_t*>(buffer) + tail * element_size;
@@ -76,7 +76,7 @@ auto RingBuffer::remove(void* element) -> void
   }
 }
 
-auto RingBuffer::clear() -> void
+void RingBuffer::clear()
 {
   head = 0;
   tail = 0;

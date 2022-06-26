@@ -10,7 +10,7 @@ namespace tiny {
   class IDigitalInput {
    public:
     virtual ~IDigitalInput(){};
-    virtual auto read() -> bool = 0;
+    virtual bool read() = 0;
   };
 }
 

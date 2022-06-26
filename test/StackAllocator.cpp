@@ -8,11 +8,10 @@
 
 using namespace tiny;
 
-auto StackAllocator::_allocate_aligned(
+void StackAllocator::_allocate_aligned(
   size_t size,
   void* context,
   Callback callback)
-  -> void
 {
   for(auto worker : workers) {
     if(size <= worker.size) {

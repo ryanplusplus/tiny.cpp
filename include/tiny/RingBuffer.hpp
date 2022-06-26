@@ -23,19 +23,19 @@ namespace tiny {
       unsigned element_size,
       unsigned element_count);
 
-    auto operator=(const RingBuffer& other) -> void = delete;
+    void operator=(const RingBuffer& other) = delete;
 
    public:
-    auto capacity() -> unsigned
+    unsigned capacity()
     {
       return _capacity;
     }
 
-    auto count() -> unsigned;
-    auto at(unsigned index, void* element) -> void;
-    auto insert(const void* element) -> void;
-    auto remove(void* element) -> void;
-    auto clear() -> void;
+    unsigned count();
+    void at(unsigned index, void* element);
+    void insert(const void* element);
+    void remove(void* element);
+    void clear();
 
    private:
     void* buffer;

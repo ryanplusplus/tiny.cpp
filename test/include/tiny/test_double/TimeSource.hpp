@@ -18,17 +18,17 @@ namespace tiny::test_double {
 
     TimeSource(const TimeSource&) = delete;
 
-    auto ticks() -> ITimeSource::TickCount override
+    ITimeSource::TickCount ticks() override
     {
       return _ticks;
     }
 
-    auto set_ticks(ITimeSource::TickCount ticks) -> void
+    void set_ticks(ITimeSource::TickCount ticks)
     {
       _ticks = ticks;
     }
 
-    auto tick(ITimeSource::TickCount ticks = 1) -> void
+    void tick(ITimeSource::TickCount ticks = 1)
     {
       _ticks += ticks;
     }

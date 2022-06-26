@@ -7,7 +7,7 @@
 
 using namespace tiny;
 
-auto Fsm::_transition(State next) -> void
+void Fsm::_transition(State next)
 {
   current(context, FsmSignal::exit, nullptr);
   current = next;

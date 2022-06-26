@@ -18,22 +18,22 @@ namespace tiny {
 
     Event(const Event& other) = delete;
 
-    auto operator=(const Event& other) -> void = delete;
+    void operator=(const Event& other) = delete;
 
-    auto publish(Args... args) -> void
+    void publish(Args... args)
     {
       for(auto& subscriber : subscribers) {
         reinterpret_cast<EventSubscription<Args...>&>(subscriber).publish(args...);
       }
     }
 
-    auto subscribe(EventSubscription<Args...>& subscription) -> void override
+    void subscribe(EventSubscription<Args...>& subscription) override
     {
       subscribers.remove(subscription);
       subscribers.push_back(subscription);
     }
 
-    auto unsubscribe(EventSubscription<Args...>& subscription) -> void override
+    void unsubscribe(EventSubscription<Args...>& subscription) override
     {
       subscribers.remove(subscription);
     }
