@@ -10,11 +10,11 @@
 
 #include <cstring>
 #include <cstdint>
-#include "tiny/RingBuffer.hpp"
+#include "tiny/RawRingBuffer.hpp"
 
 using namespace tiny;
 
-RingBuffer::RingBuffer(
+RawRingBuffer::RawRingBuffer(
   void* buffer,
   unsigned element_size,
   unsigned element_count)
@@ -24,7 +24,7 @@ RingBuffer::RingBuffer(
 {
 }
 
-unsigned RingBuffer::count()
+unsigned RawRingBuffer::count()
 {
   if(full) {
     return _capacity;
@@ -34,14 +34,14 @@ unsigned RingBuffer::count()
   }
 }
 
-void RingBuffer::at(unsigned index, void* element)
+void RawRingBuffer::at(unsigned index, void* element)
 {
   auto buffer_index = (tail + index) % _capacity;
   auto source = reinterpret_cast<uint8_t*>(buffer) + buffer_index * element_size;
   memcpy(element, source, element_size);
 }
 
-void RingBuffer::insert(const void* element)
+void RawRingBuffer::insert(const void* element)
 {
   auto destination = reinterpret_cast<uint8_t*>(buffer) + head * element_size;
   memcpy(destination, element, element_size);
@@ -63,7 +63,7 @@ void RingBuffer::insert(const void* element)
   }
 }
 
-void RingBuffer::remove(void* element)
+void RawRingBuffer::remove(void* element)
 {
   if(head != tail || full) {
     auto source = reinterpret_cast<uint8_t*>(buffer) + tail * element_size;
@@ -76,7 +76,7 @@ void RingBuffer::remove(void* element)
   }
 }
 
-void RingBuffer::clear()
+void RawRingBuffer::clear()
 {
   head = 0;
   tail = 0;

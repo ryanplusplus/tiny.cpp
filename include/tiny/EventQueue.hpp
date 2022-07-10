@@ -14,7 +14,7 @@
 #define tiny_EventQueue_hpp
 
 #include "tiny/IEventQueue.hpp"
-#include "tiny/RingBuffer.hpp"
+#include "tiny/RawRingBuffer.hpp"
 
 namespace tiny {
   class EventQueue final : public IEventQueue {
@@ -55,7 +55,7 @@ namespace tiny {
     void process_event_with_data();
 
    private:
-    RingBuffer ring_buffer;
+    RawRingBuffer ring_buffer;
     UnableToQueueCallback unable_to_queue_callback;
   };
 }

@@ -24,6 +24,7 @@ See [include/hal](include/tiny/hal) for a list of all interfaces.
 ### Data Structures
 `tiny.cpp` provides heapless, arbitrarily-sized (intrusive) list and ring buffer data structures. See:
 - [`List`](include/tiny/List.hpp)
+- [`RawRingBuffer`](include/tiny/RawRingBuffer.hpp)
 - [`RingBuffer`](include/tiny/RingBuffer.hpp)
 
 ### Software Timers

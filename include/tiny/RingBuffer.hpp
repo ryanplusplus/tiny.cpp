@@ -1,27 +1,22 @@
 /*!
  * @file
- * @brief Ring/circular buffer. Usable as a FIFO queue for fixed-size elements.
- *
- * Can be used to pass data from the interrupt context to the non-interrupt
- * context if the follow constraints hold:
- * - `unsigned` is an atomic type
- * - The interrupt context only calls `insert` and `count`
- * - The non-interrupt context only calls `remove`, `at`, and `count`
- * - The ring buffer is never allowed to get full
+ * @brief Wrapper for RawRingBuffer that is type safe and allocates its own buffer.
  */
 
 #ifndef tiny_RingBuffer_hpp
 #define tiny_RingBuffer_hpp
 
-#include <cstdbool>
+#include <array>
+#include "tiny/RawRingBuffer.hpp"
 
 namespace tiny {
+  template <typename T, unsigned element_count>
   class RingBuffer {
    public:
-    RingBuffer(
-      void* buffer,
-      unsigned element_size,
-      unsigned element_count);
+    RingBuffer()
+      : buffer{}, ring_buffer{&buffer, sizeof(T), element_count}
+    {
+    }
 
     RingBuffer(const RingBuffer&) = delete;
 
@@ -33,45 +28,60 @@ namespace tiny {
      */
     unsigned capacity()
     {
-      return _capacity;
+      return ring_buffer.capacity();
     }
 
     /*!
      * The number of elements currently stored in the ring buffer.
      */
-    unsigned count();
+    unsigned count()
+    {
+      return ring_buffer.count();
+    }
 
     /*!
      * Gets the element at the specified index. If the index is larger than
      * the size then the element buffer will not be written.
      */
-    void at(unsigned index, void* element);
+    T at(unsigned index)
+    {
+      T element;
+      ring_buffer.at(index, &element);
+      return element;
+    }
 
     /*!
      * Insert an element into the ring buffer. If the ring buffer is full,
      * the oldest element will be overwritten.
      */
-    void insert(const void* element);
+    void insert(T& element)
+    {
+      ring_buffer.insert(&element);
+    }
 
     /*!
      * Removes the oldest element from the ring buffer and writes it into the
      * provided buffer. If the ring buffer is empty then the element will not
      * be written.
      */
-    void remove(void* element);
+    T remove()
+    {
+      T element;
+      ring_buffer.remove(&element);
+      return element;
+    }
 
     /*!
      * Removes all elements from the ring buffer.
      */
-    void clear();
+    void clear()
+    {
+      ring_buffer.clear();
+    }
 
    private:
-    void* buffer;
-    unsigned element_size;
-    volatile unsigned head{};
-    volatile unsigned tail{};
-    unsigned _capacity;
-    bool full{};
+    std::array<T, element_count> buffer;
+    RawRingBuffer ring_buffer;
   };
 }
 
