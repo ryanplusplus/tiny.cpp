@@ -1,0 +1,24 @@
+name: Clang Tidy
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+
+jobs:
+  clang-tidy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Install CppUTest
+      uses: lyricwulf/abc@v1
+      with:
+        all: cpputest
+
+    - uses: actions/checkout@v3
+      with:
+        submodules: 'recursive'
+
+    - run: make clang-tidy
