@@ -63,26 +63,24 @@ TEST_GROUP(ram_key_value_store)
 
   void key_should_have_value(IKeyValueStore::Key key, uint8_t expected)
   {
-    uint8_t actual;
-    kvs.read(key, &actual);
+    auto actual = kvs.read_value<uint8_t>(key);
     CHECK_EQUAL(expected, actual);
   }
 
   void key_should_have_value(IKeyValueStore::Key key, uint32_t expected)
   {
-    uint32_t actual;
-    kvs.read(key, &actual);
+    auto actual = kvs.read_value<uint32_t>(key);
     CHECK_EQUAL(expected, actual);
   }
 
   void after_key_is_written_with(IKeyValueStore::Key key, uint8_t value)
   {
-    kvs.write(key, &value);
+    kvs.write_value(key, value);
   }
 
   void after_key_is_written_with(IKeyValueStore::Key key, uint32_t value)
   {
-    kvs.write(key, &value);
+    kvs.write_value(key, value);
   }
 
   void given_that_an_on_change_subscription_is_active()

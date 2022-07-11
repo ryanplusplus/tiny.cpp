@@ -26,11 +26,31 @@ namespace tiny {
     virtual void read(Key key, void* value) = 0;
 
     /*!
+     * Reads a key by value.
+     */
+    template <typename T>
+    T read_value(Key key)
+    {
+      T value;
+      read(key, &value);
+      return value;
+    }
+
+    /*!
      * Writes the value from the provided buffer to the storage associated with the provided
      * key. Note that ensuring that the provided buffer is sized appropriately is the
      * responsibility of the client.
      */
     virtual void write(Key key, const void* value) = 0;
+
+    /*!
+     * Writes a key by value.
+     */
+    template <typename T>
+    void write_value(Key key, T value)
+    {
+      write(key, &value);
+    }
 
     /*!
      * Returns true if the key value store contains data corresponding to the provided key.
