@@ -43,36 +43,41 @@ void RawRingBuffer::at(unsigned index, void* element)
 
 void RawRingBuffer::insert(const void* element)
 {
-  auto destination = reinterpret_cast<uint8_t*>(buffer) + head * element_size;
+  auto initial_head = head;
+  auto destination = reinterpret_cast<uint8_t*>(buffer) + initial_head * element_size;
   memcpy(destination, element, element_size);
 
-  if(head == tail && full) {
+  if(initial_head == tail && full) {
     tail = tail + 1;
     if(tail == _capacity) {
       tail = 0;
     }
   }
 
-  head = head + 1;
-  if(head == _capacity) {
-    head = 0;
+  auto new_head = initial_head + 1;
+  if(new_head == _capacity) {
+    new_head = 0;
   }
+  head = new_head;
 
-  if(head == tail) {
+  if(new_head == tail) {
     full = true;
   }
 }
 
 void RawRingBuffer::remove(void* element)
 {
-  if(head != tail || full) {
-    auto source = reinterpret_cast<uint8_t*>(buffer) + tail * element_size;
+  auto initial_tail = tail;
+
+  if(head != initial_tail || full) {
+    auto source = reinterpret_cast<uint8_t*>(buffer) + initial_tail * element_size;
     memcpy(element, source, element_size);
 
-    tail = tail + 1;
-    if(tail == _capacity) {
-      tail = 0;
+    auto new_tail = initial_tail + 1;
+    if(new_tail == _capacity) {
+      new_tail = 0;
     }
+    tail = new_tail;
   }
 }
 
