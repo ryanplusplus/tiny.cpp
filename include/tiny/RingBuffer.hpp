@@ -6,7 +6,6 @@
 #ifndef tiny_RingBuffer_hpp
 #define tiny_RingBuffer_hpp
 
-#include <array>
 #include "tiny/RawRingBuffer.hpp"
 
 namespace tiny {
@@ -89,7 +88,7 @@ namespace tiny {
     }
 
    private:
-    std::array<T, element_count> buffer;
+    T buffer[element_count];
     RawRingBuffer ring_buffer;
   };
 }

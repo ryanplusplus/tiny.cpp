@@ -14,7 +14,6 @@
 #define tiny_RawRingBuffer_hpp
 
 #include <cstdbool>
-#include <array>
 
 namespace tiny {
   class RawRingBuffer {
