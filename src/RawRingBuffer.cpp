@@ -14,6 +14,14 @@
 
 using namespace tiny;
 
+static inline unsigned increment_with_wrap(unsigned x, unsigned limit)
+{
+  if(++x >= limit) {
+    x = 0;
+  }
+  return x;
+}
+
 RawRingBuffer::RawRingBuffer(
   void* buffer,
   unsigned element_size,
@@ -30,13 +38,23 @@ unsigned RawRingBuffer::count()
     return _capacity;
   }
   else {
-    return (head - tail) % _capacity;
+    auto count = head - tail;
+
+    if(count > _capacity) {
+      count += _capacity;
+    }
+
+    return count;
   }
 }
 
 void RawRingBuffer::at(unsigned index, void* element)
 {
-  auto buffer_index = (tail + index) % _capacity;
+  auto buffer_index = (tail + index);
+  if(buffer_index >= _capacity) {
+    buffer_index -= _capacity;
+  }
+
   auto source = reinterpret_cast<uint8_t*>(buffer) + buffer_index * element_size;
   memcpy(element, source, element_size);
 }
@@ -44,20 +62,15 @@ void RawRingBuffer::at(unsigned index, void* element)
 void RawRingBuffer::insert(const void* element)
 {
   auto initial_head = head;
+  auto initial_tail = tail;
   auto destination = reinterpret_cast<uint8_t*>(buffer) + initial_head * element_size;
   memcpy(destination, element, element_size);
 
-  if(initial_head == tail && full) {
-    tail = tail + 1;
-    if(tail == _capacity) {
-      tail = 0;
-    }
+  if(initial_head == initial_tail && full) {
+    tail = increment_with_wrap(initial_tail, _capacity);
   }
 
-  auto new_head = initial_head + 1;
-  if(new_head == _capacity) {
-    new_head = 0;
-  }
+  auto new_head = increment_with_wrap(initial_head, _capacity);
   head = new_head;
 
   if(new_head == tail) {
@@ -73,11 +86,7 @@ void RawRingBuffer::remove(void* element)
     auto source = reinterpret_cast<uint8_t*>(buffer) + initial_tail * element_size;
     memcpy(element, source, element_size);
 
-    auto new_tail = initial_tail + 1;
-    if(new_tail == _capacity) {
-      new_tail = 0;
-    }
-    tail = new_tail;
+    tail = increment_with_wrap(initial_tail, _capacity);
   }
 }
 
