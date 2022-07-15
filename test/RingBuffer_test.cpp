@@ -177,3 +177,11 @@ TEST(RingBuffer, should_allow_elements_to_be_accessed_by_index)
   the_element_at_index_should_be(1, 440000);
   the_element_at_index_should_be(2, 550000);
 }
+
+TEST(RingBuffer, should_allow_rvalues_to_be_inserted)
+{
+  given_that_the_ring_buffer_has_been_initialized();
+
+  ring_buffer->insert(5);
+  the_element_at_index_should_be(0, 5);
+}

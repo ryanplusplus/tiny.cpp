@@ -60,6 +60,15 @@ namespace tiny {
     }
 
     /*!
+     * Insert an element into the ring buffer. If the ring buffer is full,
+     * the oldest element will be overwritten.
+     */
+    void insert(T&& element)
+    {
+      insert(element);
+    }
+
+    /*!
      * Removes the oldest element from the ring buffer and writes it into the
      * provided buffer. If the ring buffer is empty then the element will not
      * be written.
