@@ -8,6 +8,7 @@
 
 #include <cstdint>
 #include <cstddef>
+#include <cstddef>
 
 namespace tiny {
   class StackAllocator {
@@ -35,7 +36,8 @@ namespace tiny {
     template <size_t size>
     static void worker(StackAllocator::Callback callback, void* context)
     {
-      uint64_t data[size / sizeof(uint64_t)];
+      constexpr auto max_align = sizeof(std::max_align_t);
+      std::max_align_t data[(size > max_align ? size : max_align) / max_align];
       callback(context, data);
     }
 
