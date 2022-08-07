@@ -62,7 +62,7 @@ state_function(state_f)
     "state_d",
     "state_e",
     "state_f",
-};
+  };
 
 typedef Hsm::Result (*StateFunction)(uint16_t* context, uint8_t signal, const void* data);
 
@@ -76,12 +76,12 @@ static const StateFunction states[] = {
 };
 
 static const Hsm::StateDescriptor descriptors[] = {
-  {reinterpret_cast<Hsm::State>(_state_a), Hsm::no_parent},
-  {reinterpret_cast<Hsm::State>(_state_b), reinterpret_cast<Hsm::State>(_state_a)},
-  {reinterpret_cast<Hsm::State>(_state_c), reinterpret_cast<Hsm::State>(_state_b)},
-  {reinterpret_cast<Hsm::State>(_state_d), reinterpret_cast<Hsm::State>(_state_a)},
-  {reinterpret_cast<Hsm::State>(_state_e), reinterpret_cast<Hsm::State>(_state_d)},
-  {reinterpret_cast<Hsm::State>(_state_f), Hsm::no_parent},
+  { reinterpret_cast<Hsm::State>(_state_a), Hsm::no_parent },
+  { reinterpret_cast<Hsm::State>(_state_b), reinterpret_cast<Hsm::State>(_state_a) },
+  { reinterpret_cast<Hsm::State>(_state_c), reinterpret_cast<Hsm::State>(_state_b) },
+  { reinterpret_cast<Hsm::State>(_state_d), reinterpret_cast<Hsm::State>(_state_a) },
+  { reinterpret_cast<Hsm::State>(_state_e), reinterpret_cast<Hsm::State>(_state_d) },
+  { reinterpret_cast<Hsm::State>(_state_f), Hsm::no_parent },
 };
 
 static const Hsm::Configuration configuration = {
@@ -99,8 +99,8 @@ TEST_GROUP(Hsm)
     signal_2
   };
 
-  static constexpr Hsm::Result deferred{Hsm::Result::deferred};
-  static constexpr Hsm::Result consumed{Hsm::Result::consumed};
+  static constexpr Hsm::Result deferred{ Hsm::Result::deferred };
+  static constexpr Hsm::Result consumed{ Hsm::Result::consumed };
 
   void setup()
   {

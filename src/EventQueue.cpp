@@ -98,8 +98,8 @@ EventQueue::EventQueue(
   void* buffer,
   unsigned buffer_size,
   UnableToQueueCallback unable_to_queue_callback)
-  : ring_buffer{buffer, 1, buffer_size},
-    unable_to_queue_callback{unable_to_queue_callback}
+  : ring_buffer{ buffer, 1, buffer_size },
+    unable_to_queue_callback{ unable_to_queue_callback }
 {
 }
 
@@ -120,7 +120,7 @@ void EventQueue::process_event_with_data()
     uint8_t data_size;
   };
 
-  Context context = {this, nullptr, 0};
+  Context context = { this, nullptr, 0 };
 
   drop_from_buffer(1);
   read_from_buffer(&context.callback, sizeof(context.callback));

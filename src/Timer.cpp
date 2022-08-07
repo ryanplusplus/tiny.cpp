@@ -9,7 +9,7 @@
 using namespace tiny;
 
 TimerGroup::TimerGroup(ITimeSource& time_source)
-  : time_source{time_source}, last_time_source_ticks{time_source.ticks()}
+  : time_source{ time_source }, last_time_source_ticks{ time_source.ticks() }
 {
 }
 

@@ -26,9 +26,9 @@ RawRingBuffer::RawRingBuffer(
   void* buffer,
   unsigned element_size,
   unsigned element_count)
-  : buffer{buffer},
-    element_size{element_size},
-    _capacity{element_count}
+  : buffer{ buffer },
+    element_size{ element_size },
+    _capacity{ element_count }
 {
 }
 

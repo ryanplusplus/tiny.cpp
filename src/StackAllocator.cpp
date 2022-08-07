@@ -24,12 +24,12 @@ struct Worker {
 };
 
 static constexpr Worker workers[] = {
-  {8, worker<8>},
-  {16, worker<16>},
-  {32, worker<32>},
-  {64, worker<64>},
-  {128, worker<128>},
-  {256, worker<256>},
+  { 8, worker<8> },
+  { 16, worker<16> },
+  { 32, worker<32> },
+  { 64, worker<64> },
+  { 128, worker<128> },
+  { 256, worker<256> },
 };
 
 void StackAllocator::_allocate_aligned(

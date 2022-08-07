@@ -24,7 +24,8 @@ enumerate_ram_key_value_pairs(my_key_value_pair_list);
 generate_storage_type_for_ram_key_value_pairs(my_key_value_pair_list);
 
 static const RamKeyValueStore::KeyValuePair my_key_value_pairs[] = {
-  generate_configuration_pairs_from_ram_key_value_pairs(my_key_value_pair_list)};
+  generate_configuration_pairs_from_ram_key_value_pairs(my_key_value_pair_list)
+};
 
 static const RamKeyValueStore::Configuration configuration = {
   my_key_value_pairs,
@@ -33,9 +34,9 @@ static const RamKeyValueStore::Configuration configuration = {
 
 TEST_GROUP(ram_key_value_store)
 {
-  Storage storage{{0xA5}, {0xA5, 0xA5, 0xA5, 0xA5}};
-  RamKeyValueStore kvs{configuration, &storage};
-  EventSubscription<RamKeyValueStore::Key, const void*> on_change_subscription{(void*)nullptr, value_changed};
+  Storage storage{ { 0xA5 }, { 0xA5, 0xA5, 0xA5, 0xA5 } };
+  RamKeyValueStore kvs{ configuration, &storage };
+  EventSubscription<RamKeyValueStore::Key, const void*> on_change_subscription{ (void*)nullptr, value_changed };
 
   static void value_changed(void* context, RamKeyValueStore::Key key, const void* value)
   {

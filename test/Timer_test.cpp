@@ -22,7 +22,7 @@ TEST_GROUP(Timer)
   Timer timer_3{};
   Timer timer_with_restart{};
 
-  TimerGroup group{time_source};
+  TimerGroup group{ time_source };
 
   void setup()
   {

@@ -14,7 +14,7 @@ TEST_GROUP(SingleSubscriberEvent)
 {
   uint16_t context{};
   SingleSubscriberEvent<uint8_t> event{};
-  EventSubscription<uint8_t> subscription{&context, subscriber};
+  EventSubscription<uint8_t> subscription{ &context, subscriber };
 
   static void subscriber(uint16_t * context, uint8_t args)
   {

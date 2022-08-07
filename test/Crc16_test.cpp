@@ -18,6 +18,6 @@ TEST(Crc16, should_seem_to_work_for_bytes)
 
 TEST(Crc16, should_seem_to_work_for_blocks)
 {
-  uint8_t block[] = {1, 2, 3};
+  uint8_t block[] = { 1, 2, 3 };
   CHECK_EQUAL(0x6131, Crc16::block(0x0000, block, sizeof(block)));
 }

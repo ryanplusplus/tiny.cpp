@@ -15,10 +15,10 @@ TEST_GROUP(Event)
   Event<uint8_t> event{};
 
   uint16_t context_1{};
-  EventSubscription<uint8_t> subscription_1{&context_1, subscriber_1};
+  EventSubscription<uint8_t> subscription_1{ &context_1, subscriber_1 };
 
   uint32_t context_2{};
-  EventSubscription<uint8_t> subscription_2{&context_2, subscriber_2};
+  EventSubscription<uint8_t> subscription_2{ &context_2, subscriber_2 };
 
   static void subscriber_1(uint16_t * context, uint8_t args)
   {

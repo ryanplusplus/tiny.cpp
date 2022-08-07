@@ -31,9 +31,9 @@ TEST_GROUP(Comm)
   uint8_t send_buffer[send_buffer_size];
   uint8_t receive_buffer[receive_buffer_size];
 
-  Comm comm{uart, send_buffer, send_buffer_size, receive_buffer, receive_buffer_size};
+  Comm comm{ uart, send_buffer, send_buffer_size, receive_buffer, receive_buffer_size };
 
-  EventSubscription<const void*, uint8_t> receive_subscription{static_cast<void*>(nullptr), payload_received};
+  EventSubscription<const void*, uint8_t> receive_subscription{ static_cast<void*>(nullptr), payload_received };
 
   void setup()
   {
@@ -63,7 +63,7 @@ TEST_GROUP(Comm)
   template <uint8_t... bytes>
   void _bytes_should_be_sent()
   {
-    for(auto byte : {bytes...}) {
+    for(auto byte : { bytes... }) {
       byte_should_be_sent(byte);
     }
   }
@@ -75,7 +75,7 @@ TEST_GROUP(Comm)
   {
     uint16_t crc = 0xFFFF;
     if constexpr(sizeof...(bytes) > 0) {
-      uint8_t _bytes[] = {bytes...};
+      uint8_t _bytes[] = { bytes... };
       for(uint8_t byte : _bytes) {
         crc = calculate_crc(crc, byte);
       }
@@ -110,7 +110,7 @@ TEST_GROUP(Comm)
   void _when_payload_is_sent()
   {
     if constexpr(sizeof...(bytes) > 0) {
-      uint8_t payload[] = {bytes...};
+      uint8_t payload[] = { bytes... };
       comm.send(payload, sizeof(payload));
     }
     else {
@@ -156,7 +156,7 @@ TEST_GROUP(Comm)
   template <uint8_t... bytes>
   void _after_bytes_are_received()
   {
-    for(auto byte : {bytes...}) {
+    for(auto byte : { bytes... }) {
       uart.trigger_receive(byte);
     }
   }
@@ -166,7 +166,7 @@ TEST_GROUP(Comm)
   void _should_receive_payload()
   {
     if constexpr(sizeof...(bytes) > 0) {
-      static const uint8_t payload[] = {bytes...};
+      static const uint8_t payload[] = { bytes... };
 
       mock()
         .expectOneCall("payload_received")
