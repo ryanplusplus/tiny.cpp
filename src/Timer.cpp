@@ -96,11 +96,13 @@ void TimerGroup::add_timer(Timer& timer)
   timer.expired = false;
 
   Timer* after = nullptr;
-  auto _remaining_ticks = remaining_ticks(timer);
+  auto to_add_remaining_ticks = timer.expiration_ticks - current_ticks;
 
   for(auto& _timer : timers) {
     auto& timer = reinterpret_cast<Timer&>(_timer);
-    if(_remaining_ticks >= remaining_ticks(timer)) {
+    TimerTicks current_remaining_ticks = timer.expiration_ticks - current_ticks;
+
+    if(timer.expired || (to_add_remaining_ticks >= current_remaining_ticks)) {
       after = &timer;
     }
     else {
