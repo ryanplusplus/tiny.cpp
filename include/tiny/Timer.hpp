@@ -39,6 +39,7 @@ namespace tiny {
     TimerTicks start_ticks{};
     TimerTicks expiration_ticks{};
     bool periodic{};
+    bool expired{};
   };
 
   class TimerGroup {

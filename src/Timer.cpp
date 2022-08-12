@@ -27,6 +27,16 @@ TimerTicks TimerGroup::run()
     TimerTicks remaining_ticks = timer.expiration_ticks - last_ticks;
 
     if(remaining_ticks <= delta) {
+      timer.expired = true;
+    }
+    else {
+      break;
+    }
+  }
+
+  for(auto& _timer : timers) {
+    auto& timer = reinterpret_cast<Timer&>(_timer);
+    if(timer.expired) {
       if(!timer.periodic) {
         timers.remove(_timer);
       }
@@ -37,9 +47,9 @@ TimerTicks TimerGroup::run()
         timer.expiration_ticks = current_ticks + timer.start_ticks;
         add_timer(timer);
       }
-
-      break;
     }
+
+    break;
   }
 
   for(auto& _timer : timers) {
@@ -55,7 +65,7 @@ TimerTicks TimerGroup::remaining_ticks(const Timer& timer)
   TimerTicks remaining = timer.expiration_ticks - current_ticks;
   ITimeSource::TickCount pending = pending_ticks();
 
-  if(remaining > pending) {
+  if(!timer.expired && (remaining > pending)) {
     return remaining - pending;
   }
   else {
@@ -77,6 +87,8 @@ void TimerGroup::_start(Timer& timer, TimerTicks ticks, void* context, Timer::Ca
 void TimerGroup::add_timer(Timer& timer)
 {
   timers.remove(timer);
+
+  timer.expired = false;
 
   Timer* after = nullptr;
   auto _remaining_ticks = remaining_ticks(timer);
