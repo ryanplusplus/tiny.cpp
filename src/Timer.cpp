@@ -24,6 +24,11 @@ TimerTicks TimerGroup::run()
 
   for(auto& _timer : timers) {
     auto& timer = reinterpret_cast<Timer&>(_timer);
+
+    if(timer.expired) {
+      continue;
+    }
+
     TimerTicks remaining_ticks = timer.expiration_ticks - last_ticks;
 
     if(remaining_ticks <= delta) {
