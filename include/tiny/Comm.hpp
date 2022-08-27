@@ -80,7 +80,7 @@ namespace tiny {
     bool send_escaped{};
 
     // Makes sure we don't handle send complete
-    // while we're setting up another send)
+    // while we're setting up another send
     volatile bool send_in_progress{};
 
     uint8_t* _receive_buffer;
