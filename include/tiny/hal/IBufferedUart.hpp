@@ -15,12 +15,6 @@
 namespace tiny {
   class IBufferedUart {
    public:
-    struct {
-      const void* buffer;
-      uint16_t buffer_size;
-    } tiny_buffered_uart_on_receive_args_t;
-
-   public:
     virtual ~IBufferedUart(){};
 
     /*!
