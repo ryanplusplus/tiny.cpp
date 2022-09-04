@@ -18,6 +18,12 @@ namespace tiny {
    public:
     virtual ~IAsyncSpi(){};
 
+    /*!
+     * Performs a simultaneous write/read. If not reading or writing, the corresponding
+     * buffer can be left NULL.
+     *
+     * Clients should assume that the callback is raised from an interrupt.
+     */
     template <typename Context>
     void transfer(
       const uint8_t* write_buffer,
@@ -26,7 +32,7 @@ namespace tiny {
       Context* context,
       void (*callback)(Context* context))
     {
-      transfer(
+      _transfer(
         write_buffer,
         read_buffer,
         buffer_size,
@@ -34,14 +40,22 @@ namespace tiny {
         reinterpret_cast<IAsyncSpi::Callback>(callback));
     }
 
-    /*!
-     * Performs a simultaneous write/read. If not reading or writing, the corresponding
-     * buffer can be left NULL.
-     *
-     * Clients should assume that the callback is raised from an interrupt.
-     */
+    void transfer(
+      const uint8_t* write_buffer,
+      uint8_t* read_buffer,
+      uint16_t buffer_size,
+      Callback callback)
+    {
+      _transfer(
+        write_buffer,
+        read_buffer,
+        buffer_size,
+        nullptr,
+        callback);
+    }
+
    private:
-    virtual void transfer(
+    virtual void _transfer(
       const uint8_t* write_buffer,
       uint8_t* read_buffer,
       uint16_t buffer_size,
