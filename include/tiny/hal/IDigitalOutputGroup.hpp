@@ -19,7 +19,7 @@ namespace tiny {
     /*!
      * Writes the digital output channel.
      */
-    virtual void write(Channel channel, bool state);
+    virtual void write(Channel channel, bool state) = 0;
   };
 }
 

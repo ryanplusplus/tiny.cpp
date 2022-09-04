@@ -20,24 +20,24 @@ namespace tiny {
     /*!
      * Sends a buffer. The buffer must remain valid until the send completes.
      */
-    virtual void send(const void* buffer, uint16_t buffer_size);
+    virtual void send(const void* buffer, uint16_t buffer_size) = 0;
 
     /*!
      * Event raised when a buffer is finished being sent. This is raised only
      * during a call to run().
      */
-    virtual IEvent<>& on_send_complete();
+    virtual IEvent<>& on_send_complete() = 0;
 
     /*!
      * Event raised when bytes are received. This is raised only during a call
      * to run().
      */
-    virtual IEvent<const void* /* buffer */, uint16_t /* buffer length */>& on_receive();
+    virtual IEvent<const void* /* buffer */, uint16_t /* buffer length */>& on_receive() = 0;
 
     /*!
      * Raises receive and send complete events as necessary.
      */
-    virtual void run();
+    virtual void run() = 0;
   };
 }
 
