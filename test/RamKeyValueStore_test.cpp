@@ -4,8 +4,8 @@
  */
 
 #include <cstring>
+#include <iterator>
 #include "tiny/RamKeyValueStore.hpp"
-#include "tiny/utils.h"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
 
@@ -29,7 +29,7 @@ static const RamKeyValueStore::KeyValuePair my_key_value_pairs[] = {
 
 static const RamKeyValueStore::Configuration configuration = {
   my_key_value_pairs,
-  element_count(my_key_value_pairs),
+  std::size(my_key_value_pairs),
 };
 
 TEST_GROUP(ram_key_value_store)

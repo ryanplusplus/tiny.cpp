@@ -3,8 +3,8 @@
  * @brief
  */
 
+#include <iterator>
 #include "tiny/Hsm.hpp"
-#include "tiny/utils.h"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
 
@@ -86,7 +86,7 @@ static const Hsm::StateDescriptor descriptors[] = {
 
 static const Hsm::Configuration configuration = {
   descriptors,
-  element_count(descriptors),
+  std::size(descriptors),
 };
 
 TEST_GROUP(Hsm)

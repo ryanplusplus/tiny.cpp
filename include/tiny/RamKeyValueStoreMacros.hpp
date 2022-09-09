@@ -26,7 +26,7 @@
  *
  * static const tiny::RamKeyValueStore::Configuration configuration = {
  *   my_key_value_pairs,
- *   element_count(my_key_value_pairs)
+ *   std::size(my_key_value_pairs)
  * };
  */
 

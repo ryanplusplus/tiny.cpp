@@ -4,7 +4,6 @@
  */
 
 #include "tiny/StackAllocator.hpp"
-#include "tiny/utils.h"
 
 using namespace tiny;
 

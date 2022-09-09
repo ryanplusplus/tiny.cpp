@@ -4,7 +4,6 @@
  */
 
 #include "tiny/MessageBus.hpp"
-#include "tiny/utils.h"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
 
