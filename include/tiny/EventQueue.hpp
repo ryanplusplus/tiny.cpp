@@ -49,8 +49,6 @@ namespace tiny {
    private:
     void write_to_buffer(const void* _data, uint8_t data_size);
     void read_from_buffer(void* _data, uint8_t data_size);
-    void drop_from_buffer(uint8_t count);
-    uint8_t peek();
     void process_event();
     void process_event_with_data();
 

@@ -8,10 +8,12 @@
 
 using namespace tiny;
 
-enum {
-  event_start,
-  event_with_data_start,
+enum class event_type : uint8_t {
+  event,
+  event_with_data,
+};
 
+enum {
   event_overhead =
     sizeof(uint8_t) + // start
     sizeof(EventQueue::Callback), // callback
@@ -22,8 +24,8 @@ enum {
     sizeof(uint8_t) // data size
 };
 
-static constexpr uint8_t event_start_value = event_start;
-static constexpr uint8_t event_with_data_start_value = event_with_data_start;
+static constexpr auto event_type_value = event_type::event;
+static constexpr auto event_with_data_type_value = event_type::event_with_data;
 
 void EventQueue::write_to_buffer(const void* _data, uint8_t data_size)
 {
@@ -43,21 +45,6 @@ void EventQueue::read_from_buffer(void* _data, uint8_t data_size)
   }
 }
 
-void EventQueue::drop_from_buffer(uint8_t count)
-{
-  for(uint16_t i = 0; i < count; i++) {
-    uint8_t drop;
-    ring_buffer.remove(&drop);
-  }
-}
-
-uint8_t EventQueue::peek()
-{
-  uint8_t peeked;
-  ring_buffer.at(0, &peeked);
-  return peeked;
-}
-
 void EventQueue::enqueue(Callback callback)
 {
   auto capacity = ring_buffer.capacity();
@@ -69,7 +56,7 @@ void EventQueue::enqueue(Callback callback)
     return;
   }
 
-  write_to_buffer(&event_start_value, sizeof(event_start_value));
+  write_to_buffer(&event_type_value, sizeof(event_type_value));
   write_to_buffer(&callback, sizeof(callback));
 }
 
@@ -87,7 +74,7 @@ void EventQueue::enqueue(
     return;
   }
 
-  write_to_buffer(&event_with_data_start_value, sizeof(event_with_data_start_value));
+  write_to_buffer(&event_with_data_type_value, sizeof(event_with_data_type_value));
   write_to_buffer(&callback, sizeof(callback));
   write_to_buffer(&data_size, sizeof(data_size));
   write_to_buffer(data, data_size);
@@ -105,8 +92,6 @@ EventQueue::EventQueue(
 void EventQueue::process_event()
 {
   Callback callback;
-
-  drop_from_buffer(1);
   read_from_buffer(&callback, sizeof(callback));
   callback();
 }
@@ -121,23 +106,14 @@ void EventQueue::process_event_with_data()
 
   Context context = { this, nullptr, 0 };
 
-  drop_from_buffer(1);
   read_from_buffer(&context.callback, sizeof(context.callback));
   read_from_buffer(&context.data_size, sizeof(context.data_size));
 
   StackAllocator::allocate_aligned(
-    context.data_size, &context, +[](Context* context, void* _data) {
-      auto data = reinterpret_cast<uint8_t*>(_data);
-
-      for(uint8_t i = 0; i < context->data_size; i++) {
-        context->self->read_from_buffer(data, sizeof(*data));
-        data++;
-      }
-
-      context->callback(_data);
+    context.data_size, &context, +[](Context* context, void* data) {
+      context->self->read_from_buffer(data, context->data_size);
+      context->callback(data);
     });
-
-  drop_from_buffer(context.data_size);
 }
 
 bool EventQueue::run()
@@ -146,12 +122,15 @@ bool EventQueue::run()
     return false;
   }
 
-  switch(peek()) {
-    case event_start:
+  event_type type;
+  read_from_buffer(&type, sizeof(type));
+
+  switch(type) {
+    case event_type::event:
       process_event();
       break;
 
-    case event_with_data_start:
+    case event_type::event_with_data:
       process_event_with_data();
       break;
   }
