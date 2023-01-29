@@ -32,8 +32,10 @@ namespace tiny {
       Node* next{};
     };
 
-    class Iterator;
-    class ConstIterator;
+    template <typename List, typename Node>
+    class IteratorImpl;
+    using Iterator = IteratorImpl<List, Node>;
+    using ConstIterator = IteratorImpl<const List, const Node>;
 
    public:
     List()
@@ -127,36 +129,37 @@ namespace tiny {
     Node head{};
 
    public:
-    class Iterator {
+    template <typename List, typename Node>
+    class IteratorImpl {
      private:
-      explicit Iterator(Node& current)
+      explicit IteratorImpl(Node& current)
         : current{ &current },
           next{ current.next }
       {
       }
 
      public:
-      static Iterator begin(List& list)
+      static IteratorImpl<List, Node> begin(List& list)
       {
-        return Iterator(*list.head.next);
+        return IteratorImpl<List, Node>(*list.head.next);
       }
 
-      static Iterator end(List& list)
+      static IteratorImpl<List, Node> end(List& list)
       {
-        return Iterator(list.head);
+        return IteratorImpl<List, Node>(list.head);
       }
 
-      bool operator==(const Iterator& other) const
+      bool operator==(const IteratorImpl<List, Node>& other) const
       {
         return current == other.current;
       }
 
-      bool operator!=(const Iterator& other) const
+      bool operator!=(const IteratorImpl<List, Node>& other) const
       {
         return !operator==(other);
       }
 
-      Iterator& operator++()
+      IteratorImpl<List, Node>& operator++()
       {
         current = next;
         next = current->next;
@@ -171,52 +174,6 @@ namespace tiny {
      private:
       Node* current;
       Node* next;
-    };
-
-    class ConstIterator {
-     private:
-      explicit ConstIterator(const Node& current)
-        : current{ &current },
-          next{ current.next }
-      {
-      }
-
-     public:
-      static ConstIterator begin(const List& list)
-      {
-        return ConstIterator(*list.head.next);
-      }
-
-      static ConstIterator end(const List& list)
-      {
-        return ConstIterator(list.head);
-      }
-
-      bool operator==(const ConstIterator& other) const
-      {
-        return current == other.current;
-      }
-
-      bool operator!=(const ConstIterator& other)
-      {
-        return !operator==(other);
-      }
-
-      ConstIterator& operator++()
-      {
-        current = next;
-        next = current->next;
-        return *this;
-      }
-
-      const Node& operator*() const
-      {
-        return *current;
-      }
-
-     private:
-      const Node* current;
-      const Node* next;
     };
   };
 }
