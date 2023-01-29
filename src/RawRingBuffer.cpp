@@ -32,7 +32,7 @@ RawRingBuffer::RawRingBuffer(
 {
 }
 
-unsigned RawRingBuffer::count()
+unsigned RawRingBuffer::count() const
 {
   if(full) {
     return _capacity;
@@ -48,7 +48,7 @@ unsigned RawRingBuffer::count()
   }
 }
 
-void RawRingBuffer::at(unsigned index, void* element)
+void RawRingBuffer::at(unsigned index, void* element) const
 {
   auto buffer_index = (tail + index);
   if(buffer_index >= _capacity) {

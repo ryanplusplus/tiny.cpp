@@ -22,10 +22,10 @@ namespace tiny {
     /*!
      * Publishes the event with the given arguments.
      */
-    void publish(Args... args)
+    void publish(Args... args) const
     {
-      for(auto& subscriber : subscribers) {
-        reinterpret_cast<EventSubscription<Args...>&>(subscriber).publish(args...);
+      for(const auto& subscriber : subscribers) {
+        reinterpret_cast<const EventSubscription<Args...>&>(subscriber).publish(args...);
       }
     }
 

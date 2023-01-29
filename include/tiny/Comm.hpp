@@ -42,7 +42,7 @@ namespace tiny {
 
     virtual void send(const void* payload, uint8_t length) override;
 
-    virtual bool sending() override
+    virtual bool sending() const override
     {
       return send_in_progress;
     }

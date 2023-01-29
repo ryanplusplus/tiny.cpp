@@ -14,7 +14,7 @@ namespace tiny {
     /*!
      * Reads the digital input.
      */
-    virtual bool read() = 0;
+    virtual bool read() const = 0;
   };
 }
 

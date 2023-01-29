@@ -23,13 +23,13 @@ namespace tiny {
      * Reads the value corresponding to the key into the provided buffer. Note that ensuring
      * that the buffer is large enough to store the value is the responsibility of the client.
      */
-    virtual void read(Key key, void* value) = 0;
+    virtual void read(Key key, void* value) const = 0;
 
     /*!
      * Reads a key by value.
      */
     template <typename T>
-    T read_value(Key key)
+    T read_value(Key key) const
     {
       T value;
       read(key, &value);
@@ -55,12 +55,12 @@ namespace tiny {
     /*!
      * Returns true if the key value store contains data corresponding to the provided key.
      */
-    virtual bool contains(Key key) = 0;
+    virtual bool contains(Key key) const = 0;
 
     /*!
      * Returns the size in bytes of the value associated with the provided key.
      */
-    virtual uint8_t size(Key key) = 0;
+    virtual uint8_t size(Key key) const = 0;
 
     /*!
      * Provides access to an event raised each time the value for a key-value pair changes.

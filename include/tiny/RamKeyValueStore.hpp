@@ -40,14 +40,14 @@ namespace tiny {
 
     bool operator=(const RamKeyValueStore&) = delete;
 
-    void read(Key key, void* value) override;
+    void read(Key key, void* value) const override;
     void write(Key key, const void* value) override;
-    bool contains(Key key) override;
-    uint8_t size(Key key) override;
+    bool contains(Key key) const override;
+    uint8_t size(Key key) const override;
     IEvent<Key, const void*>& on_change() override;
 
    private:
-    uint16_t offset(Key key);
+    uint16_t offset(Key key) const;
 
    private:
     Event<Key, const void*> _on_change{};

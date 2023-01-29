@@ -23,7 +23,7 @@ namespace tiny {
     /*!
      * Indicates whether a message is currently being sent.
      */
-    virtual bool sending() = 0;
+    virtual bool sending() const = 0;
 
     /*!
      * Event raised when a message is received.

@@ -31,7 +31,7 @@ namespace tiny {
     /*!
      * The number of elements the ring buffer can hold.
      */
-    unsigned capacity()
+    unsigned capacity() const
     {
       return _capacity;
     }
@@ -39,13 +39,13 @@ namespace tiny {
     /*!
      * The number of elements currently stored in the ring buffer.
      */
-    unsigned count();
+    unsigned count() const;
 
     /*!
      * Gets the element at the specified index. If the index is larger than
      * the size then the element buffer will not be written.
      */
-    void at(unsigned index, void* element);
+    void at(unsigned index, void* element) const;
 
     /*!
      * Insert an element into the ring buffer. If the ring buffer is full,

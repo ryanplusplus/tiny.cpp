@@ -19,7 +19,7 @@ namespace tiny {
     /*!
      * Reads the digital input channel.
      */
-    virtual bool read(Channel channel) = 0;
+    virtual bool read(Channel channel) const = 0;
   };
 }
 

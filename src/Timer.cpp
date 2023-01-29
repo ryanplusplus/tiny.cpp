@@ -57,15 +57,15 @@ TimerTicks TimerGroup::run()
     break;
   }
 
-  for(auto& _timer : timers) {
-    auto& timer = reinterpret_cast<Timer&>(_timer);
+  for(const auto& _timer : timers) {
+    const auto& timer = reinterpret_cast<const Timer&>(_timer);
     return remaining_ticks(timer);
   }
 
   return std::numeric_limits<TimerTicks>::max();
 }
 
-TimerTicks TimerGroup::remaining_ticks(const Timer& timer)
+TimerTicks TimerGroup::remaining_ticks(const Timer& timer) const
 {
   TimerTicks remaining = timer.expiration_ticks - current_ticks;
   ITimeSource::TickCount pending = pending_ticks();
@@ -118,7 +118,7 @@ void TimerGroup::add_timer(Timer& timer)
   }
 }
 
-ITimeSource::TickCount TimerGroup::pending_ticks()
+ITimeSource::TickCount TimerGroup::pending_ticks() const
 {
   return time_source.ticks() - last_time_source_ticks;
 }

@@ -50,7 +50,7 @@ void List::remove(const Node& node)
   }
 }
 
-uint16_t List::count()
+uint16_t List::count() const
 {
   Node* current = head.next;
   uint16_t count = 0;
@@ -63,7 +63,7 @@ uint16_t List::count()
   return count;
 }
 
-bool List::contains(const Node& node)
+bool List::contains(const Node& node) const
 {
   Node* current = head.next;
 
@@ -78,7 +78,7 @@ bool List::contains(const Node& node)
   return false;
 }
 
-uint16_t List::index_of(const Node& node)
+uint16_t List::index_of(const Node& node) const
 {
   Node* current = head.next;
   uint16_t index = 0;

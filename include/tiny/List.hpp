@@ -33,6 +33,7 @@ namespace tiny {
     };
 
     class Iterator;
+    class ConstIterator;
 
    public:
     List()
@@ -90,26 +91,36 @@ namespace tiny {
     /*!
      * Returns the number of nodes contained in the list.
      */
-    uint16_t count();
+    uint16_t count() const;
 
     /*!
      * Returns true if the specified node is in the list and false otherwise.
      */
-    bool contains(const Node& node);
+    bool contains(const Node& node) const;
 
     /*!
      * Gives the index of a given node in the list.
      */
-    uint16_t index_of(const Node& node);
+    uint16_t index_of(const Node& node) const;
 
     Iterator begin()
     {
       return Iterator::begin(*this);
     }
 
+    ConstIterator begin() const
+    {
+      return ConstIterator::begin(*this);
+    }
+
     Iterator end()
     {
       return Iterator::end(*this);
+    }
+
+    ConstIterator end() const
+    {
+      return ConstIterator::end(*this);
     }
 
    private:
@@ -119,8 +130,8 @@ namespace tiny {
     class Iterator {
      private:
       explicit Iterator(Node& current)
-        : current{&current},
-          next{current.next}
+        : current{ &current },
+          next{ current.next }
       {
       }
 
@@ -135,12 +146,12 @@ namespace tiny {
         return Iterator(list.head);
       }
 
-      bool operator==(const Iterator& other)
+      bool operator==(const Iterator& other) const
       {
         return current == other.current;
       }
 
-      bool operator!=(const Iterator& other)
+      bool operator!=(const Iterator& other) const
       {
         return !operator==(other);
       }
@@ -160,6 +171,52 @@ namespace tiny {
      private:
       Node* current;
       Node* next;
+    };
+
+    class ConstIterator {
+     private:
+      explicit ConstIterator(const Node& current)
+        : current{ &current },
+          next{ current.next }
+      {
+      }
+
+     public:
+      static ConstIterator begin(const List& list)
+      {
+        return ConstIterator(*list.head.next);
+      }
+
+      static ConstIterator end(const List& list)
+      {
+        return ConstIterator(list.head);
+      }
+
+      bool operator==(const ConstIterator& other) const
+      {
+        return current == other.current;
+      }
+
+      bool operator!=(const ConstIterator& other)
+      {
+        return !operator==(other);
+      }
+
+      ConstIterator& operator++()
+      {
+        current = next;
+        next = current->next;
+        return *this;
+      }
+
+      const Node& operator*() const
+      {
+        return *current;
+      }
+
+     private:
+      const Node* current;
+      const Node* next;
     };
   };
 }

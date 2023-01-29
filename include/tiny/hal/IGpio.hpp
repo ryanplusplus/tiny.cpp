@@ -27,7 +27,7 @@ namespace tiny {
     /*!
      * Read the state of the GPIO (must be configured as an input).
      */
-    virtual bool read() = 0;
+    virtual bool read() const = 0;
 
     /*!
      * Write the state of the GPIO (must be configured as an input).

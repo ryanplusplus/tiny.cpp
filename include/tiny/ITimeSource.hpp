@@ -22,7 +22,7 @@ namespace tiny {
     /*!
      * Returns the current time source tick count.
      */
-    virtual TickCount ticks() = 0;
+    virtual TickCount ticks() const = 0;
   };
 }
 

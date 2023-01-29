@@ -30,12 +30,12 @@ namespace tiny {
     /*!
      * Read the state of the GPIO channel (must be configured as an input).
      */
-    virtual bool read(Channel channel) = 0;
+    virtual bool read(Channel channel) const = 0;
 
     /*!
      * Write the state of the GPIO channel (must be configured as an input).
      */
-    virtual void Write(Channel channel, bool state) = 0;
+    virtual void write(Channel channel, bool state) = 0;
   };
 }
 

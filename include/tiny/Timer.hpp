@@ -101,7 +101,7 @@ namespace tiny {
     /*!
      * Returns true if the specified timer is running and false otherwise.
      */
-    bool is_running(const Timer& timer)
+    bool is_running(const Timer& timer) const
     {
       return timers.contains(timer);
     }
@@ -109,12 +109,12 @@ namespace tiny {
     /*!
      * Returns the remaining ticks for a running timer.
      */
-    TimerTicks remaining_ticks(const Timer& timer);
+    TimerTicks remaining_ticks(const Timer& timer) const;
 
    private:
     void _start(Timer& timer, TimerTicks ticks, void* context, Timer::Callback callback, bool periodic);
     void add_timer(Timer& timer);
-    ITimeSource::TickCount pending_ticks();
+    ITimeSource::TickCount pending_ticks() const;
 
    private:
     ITimeSource& time_source;

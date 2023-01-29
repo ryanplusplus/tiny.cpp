@@ -21,7 +21,7 @@ namespace {
      *
      * The result is normalized to the full scale range of Counts.
      */
-    virtual Counts read() = 0;
+    virtual Counts read() const = 0;
   };
 }
 

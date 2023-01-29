@@ -14,7 +14,7 @@ namespace tiny::test_double {
   class Uart final : public IUart {
    public:
     Uart()
-      : receive{}, send_complete{}, _sending{false}
+      : receive{}, send_complete{}, _sending{ false }
     {
     }
 
@@ -25,7 +25,7 @@ namespace tiny::test_double {
     /*!
      * True if a byte was sent without send completing.
      */
-    bool sending()
+    bool sending() const
     {
       return _sending;
     };
