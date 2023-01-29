@@ -12,7 +12,7 @@ uint16_t Crc16::byte(uint16_t seed, uint8_t byte)
   auto crc = seed;
   byte = crc >> 8 ^ byte;
   byte ^= byte >> 4;
-  return (crc << 8) ^ ((uint16_t)(byte << 12)) ^ ((uint16_t)(byte << 5)) ^ ((uint16_t)byte);
+  return (crc << 8) ^ (static_cast<uint16_t>(byte << 12)) ^ (static_cast<uint16_t>(byte << 5)) ^ (static_cast<uint16_t>(byte));
 }
 
 uint16_t Crc16::block(uint16_t seed, const uint8_t* bytes, size_t byte_count)

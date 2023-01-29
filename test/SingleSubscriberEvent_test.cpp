@@ -27,7 +27,7 @@ TEST_GROUP(SingleSubscriberEvent)
 
 TEST(SingleSubscriberEvent, should_do_nothing_when_published_with_no_subscribers)
 {
-  event.publish((uint8_t)0x12);
+  event.publish(0x12);
 }
 
 TEST(SingleSubscriberEvent, should_publish_to_all_subscribers)
@@ -37,8 +37,8 @@ TEST(SingleSubscriberEvent, should_publish_to_all_subscribers)
   mock()
     .expectOneCall("subscriber")
     .withParameter("context", &context)
-    .withParameter("args", (uint8_t)0x12);
-  event.publish((uint8_t)0x12);
+    .withParameter("args", 0x12);
+  event.publish(0x12);
 }
 
 TEST(SingleSubscriberEvent, should_not_publish_to_subscribers_that_have_unsubscribed)
@@ -46,5 +46,5 @@ TEST(SingleSubscriberEvent, should_not_publish_to_subscribers_that_have_unsubscr
   event.subscribe(subscription);
   event.unsubscribe(subscription);
 
-  event.publish((uint8_t)0x12);
+  event.publish(0x12);
 }

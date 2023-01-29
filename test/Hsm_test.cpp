@@ -35,8 +35,8 @@ enum State : uint8_t {
 #define state_function(_name)                                                      \
   static Hsm::Result _##_name(uint16_t* context, uint8_t signal, const void* data) \
   {                                                                                \
-    auto result =                                                                  \
-      (bool)mock()                                                                 \
+    bool result =                                                                  \
+      mock()                                                                       \
         .actualCall(#_name)                                                        \
         .withParameter("context", context)                                         \
         .withParameter("signal", signal)                                           \
@@ -118,7 +118,7 @@ TEST_GROUP(Hsm)
       .withParameter("context", &context)
       .withParameter("signal", signal)
       .withParameter("data", data)
-      .andReturnValue((int)result);
+      .andReturnValue(static_cast<int>(result));
   }
 
   void when_the_hsm_is_initialized_with_state(State state)
@@ -168,25 +168,25 @@ TEST(Hsm, should_enter_the_initial_state_and_its_parents)
 TEST(Hsm, should_send_a_signal_to_the_current_state)
 {
   given_that_the_hsm_has_been_initialized_with_state(state_c);
-  signal_should_be_sent_to_state(state_c, signal_1, (void*)0x1234);
-  when_signal_is_sent(signal_1, (void*)0x1234);
+  signal_should_be_sent_to_state(state_c, signal_1, reinterpret_cast<void*>(0x1234));
+  when_signal_is_sent(signal_1, reinterpret_cast<void*>(0x1234));
 }
 
 TEST(Hsm, should_propagate_signals_when_they_are_not_consumed)
 {
   given_that_the_hsm_has_been_initialized_with_state(state_c);
-  signal_should_be_sent_to_state(state_c, signal_2, (void*)0x5678, deferred);
-  signal_should_be_sent_to_state(state_b, signal_2, (void*)0x5678, deferred);
-  signal_should_be_sent_to_state(state_a, signal_2, (void*)0x5678, deferred);
-  when_signal_is_sent(signal_2, (void*)0x5678);
+  signal_should_be_sent_to_state(state_c, signal_2, reinterpret_cast<void*>(0x5678), deferred);
+  signal_should_be_sent_to_state(state_b, signal_2, reinterpret_cast<void*>(0x5678), deferred);
+  signal_should_be_sent_to_state(state_a, signal_2, reinterpret_cast<void*>(0x5678), deferred);
+  when_signal_is_sent(signal_2, reinterpret_cast<void*>(0x5678));
 }
 
 TEST(Hsm, should_stop_propagating_a_signal_once_consumed)
 {
   given_that_the_hsm_has_been_initialized_with_state(state_c);
-  signal_should_be_sent_to_state(state_c, signal_2, (void*)0x5678, deferred);
-  signal_should_be_sent_to_state(state_b, signal_2, (void*)0x5678, consumed);
-  when_signal_is_sent(signal_2, (void*)0x5678);
+  signal_should_be_sent_to_state(state_c, signal_2, reinterpret_cast<void*>(0x5678), deferred);
+  signal_should_be_sent_to_state(state_b, signal_2, reinterpret_cast<void*>(0x5678), consumed);
+  when_signal_is_sent(signal_2, reinterpret_cast<void*>(0x5678));
 }
 
 TEST(Hsm, should_exit_and_reenter_state_during_a_self_transition)
@@ -227,6 +227,6 @@ TEST(Hsm, should_update_state_during_a_transition)
 {
   given_that_the_hsm_has_been_initialized_with_state(state_c);
   given_that_the_hsm_has_been_transitioned_to(state_e);
-  signal_should_be_sent_to_state(state_e, signal_1, (void*)0x1234);
-  when_signal_is_sent(signal_1, (void*)0x1234);
+  signal_should_be_sent_to_state(state_e, signal_1, reinterpret_cast<void*>(0x1234));
+  when_signal_is_sent(signal_1, reinterpret_cast<void*>(0x1234));
 }

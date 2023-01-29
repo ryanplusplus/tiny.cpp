@@ -35,7 +35,7 @@ TEST_GROUP(Fsm)
     mock()
       .actualCall("state_a")
       .withParameter("context", context)
-      .withParameter("signal", (uint8_t)signal)
+      .withParameter("signal", static_cast<uint8_t>(signal))
       .withParameter("data", data);
   }
 
@@ -44,7 +44,7 @@ TEST_GROUP(Fsm)
     mock()
       .actualCall("state_b")
       .withParameter("context", context)
-      .withParameter("signal", (uint8_t)signal)
+      .withParameter("signal", static_cast<uint8_t>(signal))
       .withParameter("data", data);
   }
 
@@ -52,7 +52,7 @@ TEST_GROUP(Fsm)
   {
     ((state == state_a) ? mock().expectOneCall("state_a") : mock().expectOneCall("state_b"))
       .withParameter("context", &context)
-      .withParameter("signal", (uint8_t)signal)
+      .withParameter("signal", static_cast<uint8_t>(signal))
       .withParameter("data", data);
   }
 
@@ -104,10 +104,10 @@ TEST(Fsm, should_send_exit_to_current_state_then_entry_to_new_state_during_trans
 TEST(Fsm, should_send_signals_to_the_current_state)
 {
   given_that_the_fsm_has_been_initialized_with_state(state_a);
-  signal_should_be_sent_to_state(state_a, signal_1, (const void*)0x1234);
-  when_signal_is_sent(signal_1, (const void*)0x1234);
+  signal_should_be_sent_to_state(state_a, signal_1, reinterpret_cast<const void*>(0x1234));
+  when_signal_is_sent(signal_1, reinterpret_cast<const void*>(0x1234));
 
   given_that_the_fsm_has_been_transitioned_to(state_b);
-  signal_should_be_sent_to_state(state_b, signal_2, (const void*)0x4567);
-  when_signal_is_sent(signal_2, (const void*)0x4567);
+  signal_should_be_sent_to_state(state_b, signal_2, reinterpret_cast<const void*>(0x4567));
+  when_signal_is_sent(signal_2, reinterpret_cast<const void*>(0x4567));
 }

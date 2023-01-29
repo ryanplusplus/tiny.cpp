@@ -13,8 +13,8 @@ TEST_GROUP(MessageBus)
 {
   MessageBus bus{};
 
-  EventSubscription<MessageBus::Message, const void*> subscription_1{ (void*)nullptr, subscriber_1 };
-  EventSubscription<MessageBus::Message, const void*> subscription_2{ (void*)nullptr, subscriber_2 };
+  EventSubscription<MessageBus::Message, const void*> subscription_1{ static_cast<void*>(nullptr), subscriber_1 };
+  EventSubscription<MessageBus::Message, const void*> subscription_2{ static_cast<void*>(nullptr), subscriber_2 };
 
   static void subscriber_1(void* context, MessageBus::Message message, const void* data)
   {
@@ -43,11 +43,11 @@ TEST(MessageBus, should_send_messages_to_all_subscribers)
   mock()
     .expectOneCall("subscriber_1")
     .withParameter("message", 123)
-    .withParameter("data", (const void*)0x1234);
+    .withParameter("data", reinterpret_cast<const void*>(0x1234));
   mock()
     .expectOneCall("subscriber_2")
     .withParameter("message", 123)
-    .withParameter("data", (const void*)0x1234);
+    .withParameter("data", reinterpret_cast<const void*>(0x1234));
 
-  bus.send(123, (const void*)0x1234);
+  bus.send(123, reinterpret_cast<const void*>(0x1234));
 }

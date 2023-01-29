@@ -36,7 +36,7 @@ TEST_GROUP(ram_key_value_store)
 {
   Storage storage{ { 0xA5 }, { 0xA5, 0xA5, 0xA5, 0xA5 } };
   RamKeyValueStore kvs{ configuration, &storage };
-  EventSubscription<RamKeyValueStore::Key, const void*> on_change_subscription{ (void*)nullptr, value_changed };
+  EventSubscription<RamKeyValueStore::Key, const void*> on_change_subscription{ static_cast<void*>(nullptr), value_changed };
 
   static void value_changed(void* context, RamKeyValueStore::Key key, const void* value)
   {
@@ -44,7 +44,7 @@ TEST_GROUP(ram_key_value_store)
     mock()
       .actualCall("value_changed")
       .withParameter("key", key)
-      .withParameter("value", *(const uint32_t*)value);
+      .withParameter("value", *reinterpret_cast<const uint32_t*>(value));
   }
 
   void should_contain_key(IKeyValueStore::Key key)
@@ -114,22 +114,22 @@ TEST(ram_key_value_store, should_give_the_size_of_contained_values)
 
 TEST(ram_key_value_store, should_initialize_all_values_to_zero)
 {
-  key_should_have_value(key_foo, (uint8_t)0);
-  key_should_have_value(key_bar, (uint32_t)0);
+  key_should_have_value(key_foo, static_cast<uint8_t>(0));
+  key_should_have_value(key_bar, static_cast<uint32_t>(0));
 }
 
 TEST(ram_key_value_store, should_allow_items_to_be_written_and_read)
 {
-  after_key_is_written_with(key_foo, (uint8_t)0xAB);
-  key_should_have_value(key_foo, (uint8_t)0xAB);
+  after_key_is_written_with(key_foo, static_cast<uint8_t>(0xAB));
+  key_should_have_value(key_foo, static_cast<uint8_t>(0xAB));
 
-  after_key_is_written_with(key_bar, (uint32_t)0x12345678);
-  key_should_have_value(key_bar, (uint32_t)0x12345678);
+  after_key_is_written_with(key_bar, static_cast<uint32_t>(0x12345678));
+  key_should_have_value(key_bar, static_cast<uint32_t>(0x12345678));
 }
 
 TEST(ram_key_value_store, should_raise_on_change_event_when_a_value_changes)
 {
   given_that_an_on_change_subscription_is_active();
   an_on_change_publication_should_be_received(key_bar, 0x12345678);
-  after_key_is_written_with(key_bar, (uint32_t)0x12345678);
+  after_key_is_written_with(key_bar, static_cast<uint32_t>(0x12345678));
 }

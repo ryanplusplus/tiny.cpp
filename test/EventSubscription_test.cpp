@@ -29,7 +29,7 @@ TEST(EventSubscription, should_invoke_callback_when_published)
   mock()
     .expectOneCall("callback")
     .withParameter("context", &context)
-    .withParameter("args", (uint16_t)0x1234);
+    .withParameter("args", 0x1234);
 
-  subscription.publish((uint16_t)0x1234);
+  subscription.publish(0x1234);
 }

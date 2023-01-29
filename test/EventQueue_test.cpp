@@ -30,14 +30,14 @@ TEST_GROUP(EventQueue)
 
   static void u16_callback(const void* data)
   {
-    CHECK_EQUAL(0, (uintptr_t)data % sizeof(uint16_t));
-    mock().actualCall("u16_callback").withParameter("data", *(const uint16_t*)data);
+    CHECK_EQUAL(0, reinterpret_cast<uintptr_t>(data) % sizeof(uint16_t));
+    mock().actualCall("u16_callback").withParameter("data", *reinterpret_cast<const uint16_t*>(data));
   }
 
   static void u32_callback(const void* data)
   {
-    CHECK_EQUAL(0, (uintptr_t)data % sizeof(uint32_t));
-    mock().actualCall("u32_callback").withParameter("data", *(const uint32_t*)data);
+    CHECK_EQUAL(0, reinterpret_cast<uintptr_t>(data) % sizeof(uint32_t));
+    mock().actualCall("u32_callback").withParameter("data", *reinterpret_cast<const uint32_t*>(data));
   }
 
   static void unable_to_enqueue()

@@ -22,8 +22,8 @@ TEST(StackAllocator, should_allocate_aligned_memory_of_the_requested_size)
     current_size = size;
 
     StackAllocator::allocate_aligned(
-      size, (void*)(0x1234), +[](void* context, void* data) {
-        CHECK(context == (void*)0x1234);
+      size, reinterpret_cast<void*>(0x1234), +[](void* context, void* data) {
+        CHECK(context == reinterpret_cast<void*>(0x1234));
         memset(data, 0xA5, current_size);
       });
   }

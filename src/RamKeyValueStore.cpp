@@ -19,13 +19,13 @@ RamKeyValueStore::RamKeyValueStore(const Configuration& configuration, void* sto
 
 void RamKeyValueStore::read(Key key, void* value) const
 {
-  memcpy(value, (uint8_t*)storage + offset(key), size(key));
+  memcpy(value, static_cast<uint8_t*>(storage) + offset(key), size(key));
 }
 
 void RamKeyValueStore::write(Key key, const void* value)
 {
   uint8_t value_size = size(key);
-  void* location = (uint8_t*)storage + offset(key);
+  void* location = static_cast<uint8_t*>(storage) + offset(key);
 
   if(memcmp(location, value, value_size)) {
     memcpy(location, value, value_size);

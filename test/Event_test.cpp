@@ -39,7 +39,7 @@ TEST_GROUP(Event)
 
 TEST(Event, should_do_nothing_when_published_with_no_subscribers)
 {
-  event.publish((uint8_t)0x12);
+  event.publish(0x12);
 }
 
 TEST(Event, should_publish_to_all_subscribers)
@@ -50,12 +50,12 @@ TEST(Event, should_publish_to_all_subscribers)
   mock()
     .expectOneCall("subscriber_1")
     .withParameter("context", &context_1)
-    .withParameter("args", (uint8_t)0x12);
+    .withParameter("args", 0x12);
   mock()
     .expectOneCall("subscriber_2")
     .withParameter("context", &context_2)
-    .withParameter("args", (uint8_t)0x12);
-  event.publish((uint8_t)0x12);
+    .withParameter("args", 0x12);
+  event.publish(0x12);
 }
 
 TEST(Event, should_not_publish_to_subscribers_that_have_unsubscribed)
@@ -67,8 +67,8 @@ TEST(Event, should_not_publish_to_subscribers_that_have_unsubscribed)
   mock()
     .expectOneCall("subscriber_2")
     .withParameter("context", &context_2)
-    .withParameter("args", (uint8_t)0x56);
-  event.publish((uint8_t)0x56);
+    .withParameter("args", 0x56);
+  event.publish(0x56);
 }
 
 TEST(Event, should_allow_subscribers_to_resubscribe)
@@ -80,10 +80,10 @@ TEST(Event, should_allow_subscribers_to_resubscribe)
   mock()
     .expectOneCall("subscriber_1")
     .withParameter("context", &context_1)
-    .withParameter("args", (uint8_t)0x56);
+    .withParameter("args", 0x56);
   mock()
     .expectOneCall("subscriber_2")
     .withParameter("context", &context_2)
-    .withParameter("args", (uint8_t)0x56);
-  event.publish((uint8_t)0x56);
+    .withParameter("args", 0x56);
+  event.publish(0x56);
 }
