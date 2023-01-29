@@ -114,7 +114,7 @@ TEST_GROUP(Comm)
       comm.send(payload, sizeof(payload));
     }
     else {
-      uint8_t dummy;
+      uint8_t dummy = 0;
       comm.send(&dummy, 0);
     }
   }

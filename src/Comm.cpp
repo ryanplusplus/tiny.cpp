@@ -56,16 +56,6 @@ bool Comm::send_byte(uint8_t byte)
   return !send_escaped;
 }
 
-void Comm::send_complete_trampoline(Comm* _this)
-{
-  _this->send_complete();
-}
-
-void Comm::byte_received_trampoline(Comm* _this, uint8_t byte)
-{
-  _this->byte_received(byte);
-}
-
 // May be running in an interrupt context
 void Comm::send_complete()
 {
@@ -185,8 +175,8 @@ Comm::Comm(
   uint8_t* receive_buffer,
   uint8_t receive_buffer_size)
   : _uart{ uart },
-    _send_complete{ this, send_complete_trampoline },
-    _byte_received{ this, byte_received_trampoline },
+    _send_complete{ this, +[](Comm* _this) { _this->send_complete(); } },
+    _byte_received{ this, +[](Comm* _this, uint8_t byte) { _this->byte_received(byte); } },
     _send_buffer{ send_buffer },
     _send_buffer_size{ send_buffer_size },
     _receive_buffer{ receive_buffer },

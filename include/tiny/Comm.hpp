@@ -60,9 +60,6 @@ namespace tiny {
     bool control_character(uint8_t byte);
     bool send_byte(uint8_t byte);
 
-    static void send_complete_trampoline(Comm* _this);
-    static void byte_received_trampoline(Comm* _this, uint8_t byte);
-
    private:
     IUart& _uart;
 
