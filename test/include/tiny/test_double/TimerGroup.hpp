@@ -6,6 +6,7 @@
 #ifndef tiny_test_double_TimerGroup_hpp
 #define tiny_test_double_TimerGroup_hpp
 
+#include <algorithm>
 #include "tiny/Timer.hpp"
 #include "tiny/test_double/TimeSource.hpp"
 
@@ -22,10 +23,10 @@ namespace tiny::test_double {
     /*!
      * Elapses time and runs the timer group.
      */
-    void elapse_time(tiny::TimerTicks ticks, tiny::ITimeSource::TickCount ticks_per_run = 1)
+    void elapse_time(tiny::TimerTicks ticks)
     {
       while(ticks) {
-        auto ticks_to_elapse = ticks >= ticks_per_run ? ticks_per_run : ticks;
+        auto ticks_to_elapse = std::min(ticks, _timer_group.ticks_until_next_ready());
 
         time_source.tick(ticks_to_elapse);
         _timer_group.run();
@@ -36,7 +37,7 @@ namespace tiny::test_double {
 
    private:
     tiny::test_double::TimeSource time_source{};
-    tiny::TimerGroup _timer_group{time_source};
+    tiny::TimerGroup _timer_group{ time_source };
   };
 }
 

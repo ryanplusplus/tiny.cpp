@@ -57,6 +57,11 @@ TimerTicks TimerGroup::run()
     break;
   }
 
+  return ticks_until_next_ready();
+}
+
+TimerTicks TimerGroup::ticks_until_next_ready()
+{
   for(const auto& _timer : timers) {
     const auto& timer = reinterpret_cast<const Timer&>(_timer);
     return remaining_ticks(timer);

@@ -157,6 +157,7 @@ TEST_GROUP(Timer)
     mock().disable();
     auto actual = group.run();
     CHECK_EQUAL(expected, actual);
+    CHECK_EQUAL(actual, group.ticks_until_next_ready());
     mock().enable();
   }
 

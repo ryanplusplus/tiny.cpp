@@ -57,6 +57,11 @@ namespace tiny {
     TimerTicks run();
 
     /*!
+     * Returns the ticks until the next timer will be ready to execute.
+     */
+    TimerTicks ticks_until_next_ready();
+
+    /*!
      * Starts a timer.
      */
     template <typename Context>
