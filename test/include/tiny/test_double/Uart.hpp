@@ -6,9 +6,9 @@
 #ifndef tiny_test_double_Uart_hpp
 #define tiny_test_double_Uart_hpp
 
-#include "tiny/hal/IUart.hpp"
-#include "tiny/Event.hpp"
 #include "CppUTestExt/MockSupport.h"
+#include "tiny/Event.hpp"
+#include "tiny/hal/IUart.hpp"
 
 namespace tiny::test_double {
   class Uart final : public IUart {

@@ -107,9 +107,9 @@ namespace tiny {
       Context* context,
       const Configuration& configuration,
       Result (*initial)(Context* context, uint8_t signal, const void* data))
-      : context{context},
-        configuration{configuration},
-        current{reinterpret_cast<State>(initial)}
+      : context{ context },
+        configuration{ configuration },
+        current{ reinterpret_cast<State>(initial) }
     {
       send_entries(top, current);
     }

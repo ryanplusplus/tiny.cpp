@@ -8,8 +8,8 @@
  * - remove must write to the tail pointer after copying the element
  */
 
-#include <cstring>
 #include <cstdint>
+#include <cstring>
 #include "tiny/RawRingBuffer.hpp"
 
 using namespace tiny;

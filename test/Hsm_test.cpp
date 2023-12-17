@@ -4,9 +4,9 @@
  */
 
 #include <iterator>
-#include "tiny/Hsm.hpp"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
+#include "tiny/Hsm.hpp"
 
 /*!
  * +---------------------+ +---+

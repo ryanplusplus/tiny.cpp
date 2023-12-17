@@ -5,9 +5,9 @@
 
 #include <cstring>
 #include <iterator>
-#include "tiny/RamKeyValueStore.hpp"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
+#include "tiny/RamKeyValueStore.hpp"
 
 using namespace tiny;
 

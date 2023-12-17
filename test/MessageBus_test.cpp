@@ -3,9 +3,9 @@
  * @brief
  */
 
-#include "tiny/MessageBus.hpp"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
+#include "tiny/MessageBus.hpp"
 
 using namespace tiny;
 

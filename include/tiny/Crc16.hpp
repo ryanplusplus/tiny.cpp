@@ -6,8 +6,8 @@
 #ifndef tiny_Crc16_hpp
 #define tiny_Crc16_hpp
 
-#include <cstdint>
 #include <cstddef>
+#include <cstdint>
 
 namespace tiny {
   class Crc16 {

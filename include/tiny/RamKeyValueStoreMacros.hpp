@@ -33,8 +33,8 @@
 #ifndef tiny_RamKeyValueStoreMacros_hpp
 #define tiny_RamKeyValueStoreMacros_hpp
 
-#include <cstdint>
 #include <cstddef>
+#include <cstdint>
 
 #define ram_key_value_pairs_expand_as_enumeration(_key, value_type) _key,
 
@@ -52,7 +52,7 @@
   }
 
 #define ram_key_value_pairs_expand_as_configuration_item(_key, _value_type) \
-  {offsetof(_storage_type_name, _key), sizeof(_value_type)},
+  { offsetof(_storage_type_name, _key), sizeof(_value_type) },
 
 #define generate_configuration_pairs_from_ram_key_value_pairs(_key_value_pairs) \
   _key_value_pairs(ram_key_value_pairs_expand_as_configuration_item)

@@ -3,10 +3,10 @@
  * @brief
  */
 
-#include "tiny/Comm.hpp"
-#include "tiny/Crc16.hpp"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
+#include "tiny/Comm.hpp"
+#include "tiny/Crc16.hpp"
 #include "tiny/test_double/Uart.hpp"
 
 #define and_

@@ -13,7 +13,7 @@ namespace tiny {
   class RingBuffer {
    public:
     RingBuffer()
-      : buffer{}, ring_buffer{&buffer, sizeof(T), element_count}
+      : buffer{}, ring_buffer{ &buffer, sizeof(T), element_count }
     {
     }
 

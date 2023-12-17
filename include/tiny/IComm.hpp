@@ -6,8 +6,8 @@
 #ifndef tiny_IComm_hpp
 #define tiny_IComm_hpp
 
-#include <cstdint>
 #include <cstdbool>
+#include <cstdint>
 #include "tiny/IEvent.hpp"
 
 namespace tiny {

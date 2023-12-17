@@ -6,8 +6,8 @@
 #ifndef tiny_MessageBus_hpp
 #define tiny_MessageBus_hpp
 
-#include "tiny/IMessageBus.hpp"
 #include "tiny/Event.hpp"
+#include "tiny/IMessageBus.hpp"
 
 namespace tiny {
   class MessageBus final : public IMessageBus {

@@ -4,9 +4,9 @@
  */
 
 #include <cstring>
-#include "tiny/StackAllocator.hpp"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
+#include "tiny/StackAllocator.hpp"
 
 using namespace tiny;
 

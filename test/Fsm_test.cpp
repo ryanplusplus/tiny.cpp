@@ -4,9 +4,9 @@
  */
 
 #include <cstdint>
-#include "tiny/Fsm.hpp"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
+#include "tiny/Fsm.hpp"
 
 using namespace tiny;
 using namespace std;

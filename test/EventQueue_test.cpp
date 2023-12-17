@@ -3,9 +3,9 @@
  * @brief
  */
 
-#include "tiny/EventQueue.hpp"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
+#include "tiny/EventQueue.hpp"
 
 using namespace tiny;
 using namespace std;

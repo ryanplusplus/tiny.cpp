@@ -16,9 +16,9 @@
 #ifndef tiny_Comm_hpp
 #define tiny_Comm_hpp
 
+#include "tiny/Event.hpp"
 #include "tiny/IComm.hpp"
 #include "tiny/hal/IUart.hpp"
-#include "tiny/Event.hpp"
 
 namespace tiny {
   class Comm final : public IComm {

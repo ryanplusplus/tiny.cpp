@@ -4,9 +4,9 @@
  */
 
 #include <cstdint>
-#include "tiny/RingBuffer.hpp"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
+#include "tiny/RingBuffer.hpp"
 
 using namespace tiny;
 using namespace std;

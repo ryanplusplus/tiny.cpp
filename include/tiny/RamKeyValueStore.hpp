@@ -13,8 +13,8 @@
 #ifndef tiny_RamKeyValueStore_hpp
 #define tiny_RamKeyValueStore_hpp
 
-#include "tiny/IKeyValueStore.hpp"
 #include "tiny/Event.hpp"
+#include "tiny/IKeyValueStore.hpp"
 #include "tiny/RamKeyValueStoreMacros.hpp"
 
 namespace tiny {

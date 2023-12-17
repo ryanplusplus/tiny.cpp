@@ -6,9 +6,8 @@
 #ifndef tiny_StackAllocator_hpp
 #define tiny_StackAllocator_hpp
 
+#include <cstddef>
 #include <cstdint>
-#include <cstddef>
-#include <cstddef>
 
 namespace tiny {
   class StackAllocator {

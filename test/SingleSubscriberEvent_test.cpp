@@ -4,9 +4,9 @@
  */
 
 #include <cstdint>
-#include "tiny/SingleSubscriberEvent.hpp"
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
+#include "tiny/SingleSubscriberEvent.hpp"
 
 using namespace tiny;
 
