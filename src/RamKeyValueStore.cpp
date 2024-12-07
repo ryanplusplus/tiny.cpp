@@ -11,7 +11,7 @@ using namespace tiny;
 RamKeyValueStore::RamKeyValueStore(const Configuration& configuration, void* storage)
   : configuration{ configuration }, storage{ storage }
 {
-  Key last_key = configuration.key_value_pair_count - 1;
+  auto last_key = static_cast<Key>(configuration.key_value_pair_count - 1);
   uint16_t last_offset = offset(last_key);
   uint8_t last_size = size(last_key);
   memset(storage, 0, last_offset + last_size);
