@@ -85,10 +85,10 @@ TEST_GROUP(Comm)
 
   static constexpr uint16_t calculate_crc(uint16_t seed, uint8_t byte)
   {
-    uint16_t crc = seed;
-    byte = crc >> 8 ^ byte;
-    byte ^= byte >> 4;
-    return (crc << 8) ^ (static_cast<uint16_t>(byte << 12)) ^ (static_cast<uint16_t>(byte << 5)) ^ (static_cast<uint16_t>(byte));
+    auto crc = seed;
+    byte = static_cast<uint8_t>(crc >> 8 ^ byte);
+    byte ^= static_cast<uint8_t>(byte >> 4);
+    return static_cast<uint16_t>((crc << 8) ^ (static_cast<uint16_t>(byte << 12)) ^ (static_cast<uint16_t>(byte << 5)) ^ (static_cast<uint16_t>(byte)));
   }
 
 #define crc_msb(...) _crc_msb<__VA_ARGS__>()

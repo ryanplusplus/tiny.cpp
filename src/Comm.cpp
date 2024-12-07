@@ -67,7 +67,7 @@ void Comm::send_complete()
 
   switch(send_state) {
     case send_state_send_crc_msb:
-      if(send_byte(send_crc >> 8)) {
+      if(send_byte(static_cast<uint8_t>(send_crc >> 8))) {
         send_state = send_state_send_crc_lsb;
       }
       break;
@@ -125,7 +125,7 @@ void Comm::byte_received(uint8_t byte)
 
     switch(receive_state) {
       case receive_state_receive_crc_msb:
-        receive_crc = byte << 8;
+        receive_crc = static_cast<uint16_t>(byte << 8);
         receive_state = receive_state_receive_crc_lsb;
         break;
 

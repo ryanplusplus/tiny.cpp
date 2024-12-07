@@ -145,7 +145,7 @@ TEST_GROUP(Timer)
     mock().enable();
   }
 
-  void should_invoke_timer_callback_after(Timer & timer, TimerTicks ticks)
+  void should_invoke_timer_callback_after(Timer & timer, ITimeSource::TickCount ticks)
   {
     after_time_passes_and_the_group_is_run(ticks - 1);
     should_invoke_timer_callback(timer);
