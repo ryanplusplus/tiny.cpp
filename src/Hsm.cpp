@@ -74,7 +74,7 @@ void Hsm::send_entries(State after, State to)
     return;
   }
 
-  for(uint8_t n = distance_between(to, after) - 1; n > 0; n--) {
+  for(auto n = static_cast<uint8_t>(distance_between(to, after) - 1); n > 0; n--) {
     nth_parent(to, n)(context, HsmSignal::entry, nullptr);
   }
 
