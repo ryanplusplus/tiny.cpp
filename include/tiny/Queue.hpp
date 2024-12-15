@@ -23,7 +23,7 @@ namespace tiny {
     void dequeue(void* element, uint16_t* size);
     void discard();
     void peek(void* element, uint16_t* size, uint16_t index);
-    void peek_partial(void* element, uint16_t size_limit, uint16_t index);
+    void peek_partial(void* element, uint16_t size, uint16_t offset, uint16_t index);
     void peek_size(uint16_t* size, uint16_t index);
     uint16_t count();
 

@@ -116,10 +116,10 @@ void tiny::Queue::peek(void* element, uint16_t* size_storage, uint16_t element_i
   peek_element_at_ring_buffer_index(element, *size_storage, i + sizeof(uint16_t));
 }
 
-void tiny::Queue::peek_partial(void* element, uint16_t size, uint16_t element_index)
+void tiny::Queue::peek_partial(void* element, uint16_t size, uint16_t offset, uint16_t element_index)
 {
   uint16_t i = ring_buffer_index_for_element_index(element_index);
-  peek_element_at_ring_buffer_index(element, size, i + sizeof(uint16_t));
+  peek_element_at_ring_buffer_index(element, size, (uint16_t)(i + offset + sizeof(uint16_t)));
 }
 
 void tiny::Queue::peek_size(uint16_t* size_storage, uint16_t element_index)
