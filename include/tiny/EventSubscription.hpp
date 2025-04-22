@@ -23,7 +23,7 @@ namespace tiny {
 
     explicit EventSubscription(void (*callback)(void*, Args...))
       : context(nullptr),
-        callback(reinterpret_cast<Callback>(callback))
+        callback(callback)
     {
     }
 
