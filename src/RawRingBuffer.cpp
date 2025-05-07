@@ -87,6 +87,7 @@ void RawRingBuffer::remove(void* element)
     memcpy(element, source, element_size);
 
     tail = increment_with_wrap(initial_tail, _capacity);
+    full = false;
   }
 }
 

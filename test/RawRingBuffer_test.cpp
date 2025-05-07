@@ -90,6 +90,18 @@ TEST(RawRingBuffer, should_give_the_correct_count_when_full)
   the_count_should_be(3);
 }
 
+TEST(RawRingBuffer, should_give_the_correct_count_after_having_been_when_full)
+{
+  given_initialization_with_element_size_and_count(sizeof(uint16_t), 3);
+
+  after_inserting_element<uint16_t>(111);
+  after_inserting_element<uint16_t>(222);
+  after_inserting_element<uint16_t>(333);
+  after_removing_element<uint16_t>();
+  after_removing_element<uint16_t>();
+  the_count_should_be(1);
+}
+
 TEST(RawRingBuffer, should_give_the_correct_count_after_overwriting)
 {
   given_initialization_with_element_size_and_count(sizeof(uint16_t), 3);
