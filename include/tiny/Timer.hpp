@@ -11,7 +11,6 @@
 #ifndef tiny_TimerGroup_hpp
 #define tiny_TimerGroup_hpp
 
-#include <cstdbool>
 #include <cstdint>
 #include "tiny/ITimeSource.hpp"
 #include "tiny/List.hpp"

@@ -13,8 +13,6 @@
 #ifndef tiny_RawRingBuffer_hpp
 #define tiny_RawRingBuffer_hpp
 
-#include <cstdbool>
-
 namespace tiny {
   class RawRingBuffer {
    public:

@@ -6,14 +6,13 @@
 #ifndef tiny_IComm_hpp
 #define tiny_IComm_hpp
 
-#include <cstdbool>
 #include <cstdint>
 #include "tiny/IEvent.hpp"
 
 namespace tiny {
   class IComm {
    public:
-    virtual ~IComm(){};
+    virtual ~IComm() {};
 
     /*!
      * Sends a message. Only valid when sending() is false.

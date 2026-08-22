@@ -13,7 +13,6 @@
 #ifndef tiny_List_hpp
 #define tiny_List_hpp
 
-#include <cstdbool>
 #include <cstdint>
 
 namespace tiny {
